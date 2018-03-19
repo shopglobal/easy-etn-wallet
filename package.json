@@ -1,11 +1,11 @@
 {
-  "name": "angular-electron",
-  "version": "3.0.1",
-  "description": "Angular 5 with Electron (Typescript + SASS + Hot Reload)",
-  "homepage": "https://github.com/maximegris/angular-electron",
+  "name": "GUI-Wallet-ETN",
+  "version": "1.0.0",
+  "description": "ETN GUI Wallet",
+  "homepage": "https://github.com/travis1234/ETNWalletGUI.git",
   "author": {
-    "name": "Maxime GRIS",
-    "email": "maxime.gris@gmail.com"
+    "name": "Travis Winsor",
+    "email": "travis_winsor@hotmail.com"
   },
   "keywords": [
     "angular",
@@ -22,16 +22,16 @@
     "start": "node hooks/environments/set_profile.js && npm-run-all -p ng:serve electron:serve",
     "build": "node hooks/environments/set_profile.js && ng build && npm run electron:tsc",
     "build:prod": "node hooks/environments/set_profile.js && ng build --prod && npm run electron:tsc",
-    "ng:serve": "ng serve -o",
+    "ng:serve": "ng serve --host pmwim059.vicpolice.internal --port 4200",
     "electron:tsc": "tsc main.ts",
-    "electron:serve": "wait-on http-get://localhost:4200/ && npm run electron:tsc && electron . --serve",
+    "electron:serve": "wait-on http-get://pmwim059.vicpolice.internal:4200/ && npm run electron:tsc && electron . --serve",
     "electron:local": "npm run build:prod && electron .",
     "electron:linux": "npm run build:prod && npx electron-builder build --linux",
     "electron:windows": "npm run build:prod && npx electron-builder build --windows",
     "electron:mac": "npm run build:prod && npx electron-builder build --mac",
     "test": "karma start ./karma.conf.js",
     "pree2e:build": "webdriver-manager update --gecko false && npm run ng:serve",
-    "pree2e:protractor": "wait-on http-get://localhost:4200/ && protractor ./protractor.conf.js",
+    "pree2e:protractor": "wait-on http-get://pmwim059.vicpolice.internal:4200/ && protractor ./protractor.conf.js",
     "e2e": "npm-run-all -p pree2e:build pree2e:protractor"
   },
   "dependencies": {},

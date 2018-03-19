@@ -21,8 +21,11 @@ function createWindow() {
   win = new BrowserWindow({
     x: 0,
     y: 0,
-    width: size.width,
-    height: size.height
+    width: size.width * .85,
+    height: size.height * .9,
+    icon: __dirname + '/favicon.ico',
+    frame: false,
+    resizable: false
   });
 
   if (serve) {
@@ -37,7 +40,7 @@ function createWindow() {
     }));
   }
 
-  win.webContents.openDevTools();
+  // win.webContents.openDevTools();
 
   // Emitted when the window is closed.
   win.on('closed', () => {
@@ -54,6 +57,11 @@ try {
   // initialization and is ready to create browser windows.
   // Some APIs can only be used after this event occurs.
   app.on('ready', createWindow);
+
+  // diable default menu
+  // app.on('browser-window-created',function(e,window) {
+  //   window.setMenu(null);
+  // });
 
   // Quit when all windows are closed.
   app.on('window-all-closed', () => {

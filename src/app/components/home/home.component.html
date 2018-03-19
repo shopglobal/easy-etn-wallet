@@ -1,5 +1,100 @@
-<div class="container">
-  <h1 class="title">
-    {{ 'PAGES.HOME.TITLE' | translate }}
-  </h1>
+<div class="container-fluid">
+  <!-- Image and text -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand mr-5" href="#">
+      <img src="assets/logo-color.png" class="d-inline-block align-top" alt="">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active mx-3">
+          <a class="nav-link" href="#"><i class="fas fa-balance-scale mr-3"></i>Balance <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item mx-3">
+          <a class="nav-link" href="#"><i class="fas fa-paper-plane mr-3"></i>Send</a>
+        </li>
+        <li class="nav-item mx-3">
+          <a class="nav-link" href="#"><i class="fas fa-inbox mr-3"></i>Recieve</a>
+        </li>
+      </ul>
+      <span class="navbar-text mx-4">
+        GUI Wallet
+      </span>
+      <span class="navbar-text mx-3">
+        <i class="fas fa-cog"></i>
+      </span>
+    </div>
+  </nav>
+
+
+  <div class="row content">
+
+    <div class="card text-center" style="width: 30rem; max-height: 250px; margin-right: 10rem;">
+      <div class="card-body p-4" stlye="max-height: 250px;">
+        <h5 class="card-title mb-2">Wallet Balance</h5>
+        <h6 class="card-subtitle mb-2">43.41 ETN</h6>
+        <p class="card-text">Available Balance: 43.41 ETN</p>
+      </div>
+      <div class="card-footer text-muted bg-white">
+        <span class="float-left">Updated 25 mins ago</span>
+        <span class="float-right"><a href="#"><i class="fas fa-sync-alt text-secondary"></i></a></span>
+      </div>
+    </div>
+
+    <div class="card" style="width: 45rem;">
+      <div class="card-body p-4">
+        <h5 class="card-text mb-3">Recent Transactions</h5>
+        <div class="list-group">
+          <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" style="margin-bottom: 10px;">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">Received (Mobile Miner)</h5>
+              <span class="text-success font-weight-bold">10.07 ETN</span>
+            </div>
+            <small class="text-muted">TxHash: etn47f7cff7a5e671884629c93b368cb18f58a993f4b19c2a53a8662e3f1482f690</small>
+            <div class="d-flex w-100 justify-content-between mt-1">
+              <span>5 minutes ago</span>
+              <span>Status: <span class="text-success">Complete</span></span>
+            </div>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action flex-column" style="margin-bottom: 10px;">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">Received (Mobile Miner)</h5>
+              <span class="text-success font-weight-bold">23.09 ETN</span>
+            </div>
+            <small class="text-muted">TxHash: etn47f7cff7a5e671884629c93b368cb18f58a993f4b19c2a53a8662e3f1482f690</small>
+            <div class="d-flex w-100 justify-content-between mt-1">
+              <span>3 days ago</span>
+              <span>Status: <span class="text-success">Complete</span></span>
+            </div>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action flex-column list-group-item-info" style="margin-bottom: 10px;">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">Sent</h5>
+              <span class="text-success font-weight-bold">103.02 ETN</span>
+            </div>
+            <small class="text-muted">TxHash: etn47f7cff7a5e671884629c93b368cb18f58a993f4b19c2a53a8662e3f1482f690</small>
+            <div class="d-flex w-100 justify-content-between mt-1">
+              <span>8 days ago</span>
+              <span>Status: <span class="text-success">Complete</span></span>
+            </div>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action flex-column align-items-end">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">Received</h5>
+              <span class="text-success font-weight-bold">16.05 ETN</span>
+            </div>
+            <small class="text-muted">TxHash: etn47f7cff7a5e671884629c93b368cb18f58a993f4b19c2a53a8662e3f1482f690</small>
+            <div class="d-flex w-100 justify-content-between mt-1">
+              <span>2 weeks ago</span>
+              <span>Status: <span class="text-success">Complete</span></span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
 </div>
