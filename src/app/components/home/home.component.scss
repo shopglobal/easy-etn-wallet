@@ -29,7 +29,7 @@
     left: 0;
     height: 80px;
     width: 100%;
-    font-size: 24px;
+    font-size: 20px;
 
     .navbar-brand img {
       height: 95px;
@@ -67,6 +67,13 @@
 
   }
 
+  .list-group-item.sent {
+    border-left: 8px solid #007bff;
+  }
+
+  .list-group-item.received {
+    border-left: 8px solid #28a745;
+  }
 
 }
 
