@@ -25,6 +25,7 @@ import { TransfersComponent } from './components/transfers/transfers.component';
 import { PaymentsComponent } from './components/payments/payments.component';
 import { ContactsComponent } from './components/contacts/contacts.component';
 import { MinerComponent } from './components/miner/miner.component';
+import { SettingsComponent } from './components/settings/settings.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -41,6 +42,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     PaymentsComponent,
     ContactsComponent,
     MinerComponent,
+    SettingsComponent,
     WebviewDirective
   ],
   imports: [

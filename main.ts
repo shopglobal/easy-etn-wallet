@@ -19,13 +19,11 @@ function createWindow() {
 
   // Create the browser window.
   win = new BrowserWindow({
-    x: 0,
-    y: 0,
     width: size.width * .75,
     height: size.height * .8,
     icon: __dirname + '/favicon.ico',
-    //frame: false,
-    //resizable: false
+    frame: true,
+    resizable: true
   });
 
   if (serve) {
@@ -59,9 +57,9 @@ try {
   app.on('ready', createWindow);
 
   // diable default menu
-  // app.on('browser-window-created',function(e,window) {
-  //   window.setMenu(null);
-  // });
+  app.on('browser-window-created',function(e,window) {
+    window.setMenu(null);
+  });
 
   // Quit when all windows are closed.
   app.on('window-all-closed', () => {
