@@ -18,7 +18,13 @@ import { ElectronService } from './providers/electron.service';
 import { WebviewDirective } from './directives/webview.directive';
 
 import { AppComponent } from './app.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
+import { TransactionsComponent } from './components/transactions/transactions.component';
+import { TransfersComponent } from './components/transfers/transfers.component';
+import { PaymentsComponent } from './components/payments/payments.component';
+import { ContactsComponent } from './components/contacts/contacts.component';
+import { MinerComponent } from './components/miner/miner.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -28,7 +34,13 @@ export function HttpLoaderFactory(http: HttpClient) {
 @NgModule({
   declarations: [
     AppComponent,
+    NavbarComponent,
     HomeComponent,
+    TransactionsComponent,
+    TransfersComponent,
+    PaymentsComponent,
+    ContactsComponent,
+    MinerComponent,
     WebviewDirective
   ],
   imports: [

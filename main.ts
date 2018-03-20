@@ -24,8 +24,8 @@ function createWindow() {
     width: size.width * .75,
     height: size.height * .8,
     icon: __dirname + '/favicon.ico',
-    frame: false,
-    resizable: false
+    //frame: false,
+    //resizable: false
   });
 
   if (serve) {
@@ -40,7 +40,7 @@ function createWindow() {
     }));
   }
 
-  // win.webContents.openDevTools();
+  //win.webContents.openDevTools();
 
   // Emitted when the window is closed.
   win.on('closed', () => {
