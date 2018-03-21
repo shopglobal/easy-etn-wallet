@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { trigger, transition, query, style, stagger, animate } from '@angular/animations';
 
 export interface wallet {
   address: string;
@@ -20,7 +21,20 @@ export interface transactions {
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
+  animations: [
+    trigger('stagger', [
+      transition('* => *', [
+        query('#items', style({ opacity: 0, transform: 'translateX(-40px)' })),
+        query('#items', stagger('300ms', [
+          animate('600ms 1.2s ease-out', style({ opacity: 1, transform: 'translateX(0)' })),
+        ])),
+        query('#items', [
+          animate(1000, style('*'))
+        ])
+      ])
+    ])
+  ]
 })
 export class HomeComponent implements OnInit {
 

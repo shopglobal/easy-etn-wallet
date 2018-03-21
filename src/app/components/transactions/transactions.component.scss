@@ -5,9 +5,15 @@
 }
 
 .table {
-
+ 
   tbody {
     background: transparent;
+    tr {
+      background:#fff;
+    }
+    tr:hover {
+      background: rgba($color: #fff, $alpha: 0.8)
+    }
   }
 
   td, th {
