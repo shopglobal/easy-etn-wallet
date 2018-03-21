@@ -1,5 +1,5 @@
 import { app, BrowserWindow, screen } from 'electron';
-require('electron-debug')({showDevTools: false});
+//require('electron-debug')({showDevTools: false});
 import * as path from 'path';
 import * as url from 'url';
 
