@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MomentModule } from 'angular2-moment';
 import { ClipboardModule } from 'ngx-clipboard';
 
@@ -57,6 +58,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppRoutingModule,
     MomentModule,
     ClipboardModule,
+    NgbModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

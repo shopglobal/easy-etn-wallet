@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { trigger, transition, query, style, stagger, animate } from '@angular/animations';
+import { makeUrl, Wallet, Atomic, Xmr, generatePaymentId } from 'rx-monero-wallet';
 
-export interface wallet {
+export interface walletdata {
   address: string;
   payid: string;
   balance: string;
@@ -38,9 +39,12 @@ export interface transactions {
 })
 export class HomeComponent implements OnInit {
 
+  url = makeUrl('http', '127.0.0.1', '18082', 'json_rpc');
+  wallet = Wallet(this.url);
+
   isCopied: boolean = false;
 
-  public wallet: wallet[] =
+  public walletdata: walletdata[] =
     [
       {
         address: 'etn47f7cff7a5e671884629c93b368cb18f58a993f4b19c2a53a8662e3f1482',
@@ -90,6 +94,9 @@ export class HomeComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    this.wallet.getaddress()
+    .map((res) => res.address)
+    .subscribe(console.log);
   }
 
 }

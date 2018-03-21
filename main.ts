@@ -1,5 +1,4 @@
 import { app, BrowserWindow, screen } from 'electron';
-//require('electron-debug')({showDevTools: false});
 import * as path from 'path';
 import * as url from 'url';
 
@@ -40,7 +39,7 @@ function createWindow() {
     }));
   }
 
-  //win.webContents.openDevTools();
+  win.webContents.openDevTools();
 
   // Emitted when the window is closed.
   win.on('closed', () => {
