@@ -2,8 +2,11 @@ import 'zone.js/dist/zone-mix';
 import 'reflect-metadata';
 import '../polyfills';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+
+import { MomentModule } from 'angular2-moment';
 
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
@@ -24,7 +27,7 @@ import { TransactionsComponent } from './components/transactions/transactions.co
 import { TransfersComponent } from './components/transfers/transfers.component';
 import { PaymentsComponent } from './components/payments/payments.component';
 import { ContactsComponent } from './components/contacts/contacts.component';
-import { MinerComponent } from './components/miner/miner.component';
+import { MiningComponent } from './components/mining/mining.component';
 import { SettingsComponent } from './components/settings/settings.component';
 
 // AoT requires an exported function for factories
@@ -41,15 +44,17 @@ export function HttpLoaderFactory(http: HttpClient) {
     TransfersComponent,
     PaymentsComponent,
     ContactsComponent,
-    MinerComponent,
+    MiningComponent,
     SettingsComponent,
     WebviewDirective
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
+    MomentModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

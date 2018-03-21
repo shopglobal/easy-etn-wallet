@@ -3,7 +3,7 @@ import { TransactionsComponent } from './components/transactions/transactions.co
 import { TransfersComponent } from './components/transfers/transfers.component';
 import { PaymentsComponent } from './components/payments/payments.component';
 import { ContactsComponent } from './components/contacts/contacts.component';
-import { MinerComponent } from './components/miner/miner.component';
+import { MiningComponent } from './components/mining/mining.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -15,7 +15,7 @@ const routes: Routes = [
 	{ path: 'transfers', component: TransfersComponent },
 	{ path: 'payments', component: PaymentsComponent },
 	{ path: 'contacts', component: ContactsComponent },
-	{ path: 'miner', component: MinerComponent },
+	{ path: 'mining', component: MiningComponent },
 	{ path: 'settings', component: SettingsComponent },
 
 ];
