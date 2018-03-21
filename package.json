@@ -36,7 +36,8 @@
   },
   "dependencies": {
     "electron-settings": "^3.1.4",
-    "electron-titlebar": "0.0.3"
+    "electron-titlebar": "0.0.3",
+    "ngx-clipboard": "^10.0.0"
   },
   "devDependencies": {
     "@angular/cli": "1.7.3",

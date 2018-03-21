@@ -7,6 +7,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { MomentModule } from 'angular2-moment';
+import { ClipboardModule } from 'ngx-clipboard';
 
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
@@ -55,6 +56,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     HttpClientModule,
     AppRoutingModule,
     MomentModule,
+    ClipboardModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

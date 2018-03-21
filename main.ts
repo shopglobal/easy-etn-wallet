@@ -1,4 +1,5 @@
 import { app, BrowserWindow, screen } from 'electron';
+require('electron-debug')({showDevTools: false});
 import * as path from 'path';
 import * as url from 'url';
 
@@ -23,7 +24,8 @@ function createWindow() {
     height: size.height * .8,
     icon: __dirname + '/favicon.ico',
     frame: true,
-    resizable: true
+    resizable: true,
+    backgroundColor: '#0e2942'
   });
 
   if (serve) {

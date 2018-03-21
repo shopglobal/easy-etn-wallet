@@ -20,7 +20,7 @@
               <tr *ngFor="let key of transactions">
                 <th [class.text-info]="key.type == 'Sent'" [class.text-success]="key.type == 'Received'">{{key.type}}</th>
                 <td><span class="font-weight-bold">{{key.amount}}</span> ETN</td>
-                <td class="text-muted">{{key.txhash}}</td>
+                <td class="text-muted"><a href="https://blockexplorer.electroneum.com/search?value={{key.txhash}}" target="_blank">{{key.txhash}}</a></td>
                 <td>{{key.type}} {{key.date | amTimeAgo:true}} ago</td>
                 <td [class.text-danger]="key.status == 'Failed'" [class.text-warning]="key.status == 'Pending'" [class.text-success]="key.status == 'Completed'">{{key.status}}</td>
               </tr>

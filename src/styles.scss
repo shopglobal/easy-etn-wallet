@@ -19,7 +19,7 @@ html, body {
   padding: 0;
   font-family: 'Roboto', sans-serif;
   background: url(assets/default.gif) repeat 0 0;
-  background-color: #091b26;
+  background-color: rgba(14, 41, 66, 0.8);
   animation: 30s linear 0s normal none infinite animate;
   &::before {
     content: "";
@@ -32,6 +32,10 @@ html, body {
   }
 }
 
+.container-fluid {
+  padding-top: 90px;
+}
+
 .vh-center {
   display: flex;
   flex-direction: column;
@@ -40,8 +44,8 @@ html, body {
 
 .content {
   position: relative;
-  margin: auto;
-  padding-top: 90px;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 @keyframes animate {

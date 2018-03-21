@@ -24,11 +24,13 @@ export interface transactions {
 })
 export class HomeComponent implements OnInit {
 
+  isCopied: boolean = false;
+
   public wallet: wallet[] =
     [
       {
         address: 'etn47f7cff7a5e671884629c93b368cb18f58a993f4b19c2a53a8662e3f1482',
-        payid: '96842365445855',
+        payid: 'f6e418dd00062204',
         balance: '43.41',
         available: '43.41',
         updated: '2018-03-20 14:23:45',
@@ -43,7 +45,7 @@ export class HomeComponent implements OnInit {
         type: 'Received',
         status: 'Completed',
         amount: '40.45',
-        txhash: '57f7cff7a5e671884629c93b368cb18f58a993f4b19c2a53a8662e3f1482f694'
+        txhash: '6fbddbdb1cbe5b95ecd3b9517649493b8f9523d2c0d17af17b1c00e37f542786'
       },
       {
         id: 2,
@@ -51,7 +53,7 @@ export class HomeComponent implements OnInit {
         type: 'Received',
         status: 'Failed',
         amount: '40.45',
-        txhash: '57f7cff7a5e671884629c93b368cb18f58a993f4b19c2a53a8662e3f1482f694'
+        txhash: '8c82611ba33c00b8f86f2f84b30e68a669af0f5adbd5040a0bf44f870b3864c5'
       },
       {
         id: 3,
@@ -59,7 +61,7 @@ export class HomeComponent implements OnInit {
         type: 'Sent',
         status: 'Completed',
         amount: '60.34',
-        txhash: 'n7f7cff7a5e671884629c93b368cb18f58a993f4b19c2a53a8662e3f1482f696'
+        txhash: '0e3e14d92ac6005de587144e8905c7188eab4e65b6114be08e3d326c6fb4d20d'
       },
       {
         id: 4,
@@ -67,7 +69,7 @@ export class HomeComponent implements OnInit {
         type: 'Received',
         status: 'Pending',
         amount: '11.76',
-        txhash: '87f7cff7a5e671884629c93b368cb18f58a993f4b19c2a53a8662e3f1482f697'
+        txhash: '62bdfcf96e7b2e95f29c977227dc049a4e7a78f760c4bccb3e72455d9940eb64'
       }
     ]
 
