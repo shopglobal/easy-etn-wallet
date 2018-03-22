@@ -24,7 +24,10 @@ function createWindow() {
     icon: __dirname + '/favicon.ico',
     frame: true,
     resizable: true,
-    backgroundColor: '#0e2942'
+    backgroundColor: '#0e2942',
+    webPreferences: {
+      webSecurity : false
+    }
   });
 
   if (serve) {

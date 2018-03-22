@@ -1,0 +1,1 @@
+.\electroneum-wallet-rpc.exe --wallet-file yourwallet --password yourpass --disable-rpc-login --rpc-bind-port 8080

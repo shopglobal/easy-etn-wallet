@@ -8,14 +8,29 @@
         <div class="transfers">
           <div class="row m-0 p-0">
 
+            <!-- Wallet -->
+            <div class="col-4 mx-auto mb-3">
+              <div class="card">
+                <div class="card-body text-center p-4">
+                  <h2 class="card-title mb-2">Available Balance</h2>
+                  <h3 class="card-title text-success mb-4">42.41 ETN</h3>
+                  <h4 class="card-title mb-3">Spend</h4>
+                  <input type="text" class="form-control" id="spend" placeholder="00.00">
+                </div>
+                <div class="card-footer bg-white">
+                  <button type="button" class="btn btn-success float-right">Next</button>
+                </div>
+              </div>
+            </div>
+
             <!-- Manaul Address -->
-            <div class="col-5 mx-auto mb-3">
+            <div class="col-4 mx-auto mb-3">
               <div class="card">
                 <div class="card-body p-4">
                   <h5 class="card-title mb-3">Recipient Address</h5>
                   <textarea class="form-control mb-4" id="address" rows="3" placeholder="etnkGmQZG1c1g8nXSe9qR6foYDdZxySnNS8odiHtLuB8WqhGQHEcsv17rUUyiW8wnagTKkcw29gQyNPSHnprf8Nz7sYNs2Mf2g" required></textarea>
                   <h5 class="card-subtitle mb-3">Payment ID <small class="text-muted">(optional)</small></h5>
-                  <input type="text" class="form-control mb-3" id="payid" placeholder="f6e418dd00062204">                 
+                  <input type="text" class="form-control" id="payid" placeholder="f6e418dd00062204">                 
                 </div>
                 <div class="card-footer bg-white">
                   <button type="button" class="btn btn-success float-right">Next</button>
@@ -24,11 +39,18 @@
             </div>
 
             <!-- Contacts Address -->
-            <div class="col-5 mx-auto mb-3">
+            <div class="col-4 mx-auto mb-3">
               <div class="card">
                 <div class="card-body p-4">
                   <h5 class="card-title mb-3">Contacts</h5>
-                  <ss-multiselect-dropdown [options]="myOptions" [texts]="DefaultTexts" [settings]="DefaultTexts" [(ngModel)]="optionsModel" (ngModelChange)="onChange($event)"></ss-multiselect-dropdown>              
+                  <ng-select class="mb-3"
+                    [items]="contacts"
+                    bindLabel="name"
+                    bindValue="id"
+                    placeholder="Select Contact"
+                    [(ngModel)]="contactsId">
+                  </ng-select>
+                  <p>Selected Contact ID: {{contactsId}}</p>
                 </div>
                 <div class="card-footer bg-white">
                   <button type="button" class="btn btn-success float-right">Next</button>
