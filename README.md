@@ -6,7 +6,7 @@
 Clone this repository locally :
 
 ``` bash
-git clone https://github.com/travis1234/ETNWalletGUI.git
+git clone https://github.com/travis1234/easy-etn-wallet.git
 ```
 
 Install dependencies with npm :
