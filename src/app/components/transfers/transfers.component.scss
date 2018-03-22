@@ -1,0 +1,12 @@
+textarea {
+  padding: 15px;
+  color: #444;
+  background: transparent;
+  border: 2px dashed #ccc;
+}
+textarea::placeholder {
+  color: #ccc;  
+}
+input::placeholder {
+  color: #ccc;  
+}

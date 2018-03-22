@@ -1,9 +1,45 @@
-<div class="container-fluid">
-  <div class="content text-white">
+<div class="container-fluid vh-center">
+  <div class="content">
 
     <!-- Begin Page Content -->
     <div class="row mx-auto">
-      <h1>Transfers</h1>
+      <div class="col-12 p-4">
+
+        <div class="transfers">
+          <div class="row m-0 p-0">
+
+            <!-- Manaul Address -->
+            <div class="col-5 mx-auto mb-3">
+              <div class="card">
+                <div class="card-body p-4">
+                  <h5 class="card-title mb-3">Recipient Address</h5>
+                  <textarea class="form-control mb-4" id="address" rows="3" placeholder="etnkGmQZG1c1g8nXSe9qR6foYDdZxySnNS8odiHtLuB8WqhGQHEcsv17rUUyiW8wnagTKkcw29gQyNPSHnprf8Nz7sYNs2Mf2g" required></textarea>
+                  <h5 class="card-subtitle mb-3">Payment ID <small class="text-muted">(optional)</small></h5>
+                  <input type="text" class="form-control mb-3" id="payid" placeholder="f6e418dd00062204">                 
+                </div>
+                <div class="card-footer bg-white">
+                  <button type="button" class="btn btn-success float-right">Next</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Contacts Address -->
+            <div class="col-5 mx-auto mb-3">
+              <div class="card">
+                <div class="card-body p-4">
+                  <h5 class="card-title mb-3">Contacts</h5>
+                  <ss-multiselect-dropdown [options]="myOptions" [texts]="DefaultTexts" [settings]="DefaultTexts" [(ngModel)]="optionsModel" (ngModelChange)="onChange($event)"></ss-multiselect-dropdown>              
+                </div>
+                <div class="card-footer bg-white">
+                  <button type="button" class="btn btn-success float-right">Next</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
     </div>
 
   </div>

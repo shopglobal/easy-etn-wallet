@@ -47,7 +47,7 @@ export class HomeComponent implements OnInit {
   public walletdata: walletdata[] =
     [
       {
-        address: 'etn47f7cff7a5e671884629c93b368cb18f58a993f4b19c2a53a8662e3f1482',
+        address: 'etnkGmQZG1c1g8nXSe9qR6foYDdZxySnNS8odiHtLuB8WqhGQHEcsv17rUUyiW8wnagTKkcw29gQyNPSHnprf8Nz7sYNs2Mf2g',
         payid: 'f6e418dd00062204',
         balance: '43.41',
         available: '43.41',

@@ -3,6 +3,44 @@
  * Component-specific style should not go here and be included directly as part of the components.
  */
 
+//
+// Color system
+//
+
+$white:  #fff;
+$gray-100: #f8f9fa;
+$gray-200: #e9ecef;
+$gray-300: #dee2e6;
+$gray-400: #ced4da;
+$gray-500: #adb5bd;
+$gray-600: #868e96;
+$gray-700: #495057;
+$gray-800: #343a40;
+$gray-900: #212529;
+$black:  #000;
+
+$blue:    #0073dd;
+$indigo:  #6610f2;
+$purple:  #6f42c1;
+$pink:    #e83e8c;
+$red:     #dc3545;
+$orange:  #fd7e14;
+$yellow:  #ffc107;
+$green:   #18bc9c;
+$teal:    #20c997;
+$cyan:    #17a2b8;
+
+$theme-colors: (
+  primary: #3f5871, // Denmin
+  secondary: #ddd, // French Blue
+  success: $green,
+  info: $cyan,
+  warning: $yellow,
+  danger: $red,
+  light: #f7f7f7, // White Wash
+  dark: #f1f3f4, // Gunmental
+);
+
 // 3rd party libraries
 @import "~bootstrap/scss/bootstrap";
 
@@ -10,6 +48,8 @@
 // in components.
 @import "~bootstrap/scss/_functions";
 @import "~bootstrap/scss/_variables";
+
+@import "~@ng-select/ng-select/themes/default.theme.css";
 
 /* You can add global styles to this file, and also import other style files */
 html, body {

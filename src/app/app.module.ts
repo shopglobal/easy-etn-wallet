@@ -1,27 +1,33 @@
+// Deps
 import 'zone.js/dist/zone-mix';
 import 'reflect-metadata';
 import '../polyfills';
+
+// Angular 
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { MomentModule } from 'angular2-moment';
-import { ClipboardModule } from 'ngx-clipboard';
-
 import { HttpClientModule, HttpClient } from '@angular/common/http';
-
-import { AppRoutingModule } from './app-routing.module';
 
 // NG Translate
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
-import { ElectronService } from './providers/electron.service';
+// 3rd Party 
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MomentModule } from 'angular2-moment';
+import { ClipboardModule } from 'ngx-clipboard';
+import { NgSelectModule } from '@ng-select/ng-select';
 
+// App Services & Directives
+import { ElectronService } from './providers/electron.service';
 import { WebviewDirective } from './directives/webview.directive';
 
+// App Routing
+import { AppRoutingModule } from './app-routing.module';
+
+// App Components
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
@@ -30,6 +36,7 @@ import { TransfersComponent } from './components/transfers/transfers.component';
 import { PaymentsComponent } from './components/payments/payments.component';
 import { ContactsComponent } from './components/contacts/contacts.component';
 import { MiningComponent } from './components/mining/mining.component';
+import { MarketsComponent } from './components/markets/markets.component';
 import { SettingsComponent } from './components/settings/settings.component';
 
 // AoT requires an exported function for factories
@@ -47,6 +54,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     PaymentsComponent,
     ContactsComponent,
     MiningComponent,
+    MarketsComponent,
     SettingsComponent,
     WebviewDirective
   ],
@@ -58,6 +66,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppRoutingModule,
     MomentModule,
     ClipboardModule,
+    NgSelectModule,
     NgbModule.forRoot(),
     TranslateModule.forRoot({
       loader: {

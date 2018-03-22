@@ -32,7 +32,10 @@ textarea {
   padding: 15px;
   color: #fff;
   background: transparent;
-  border: 3px dashed #ccc;
+  border: 2px dashed #ccc;
+}
+textarea::placeholder {
+  color: #ccc;  
 }
 
 .list-group-item {

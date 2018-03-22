@@ -19,7 +19,7 @@
         <div class="card text-center">
           <div class="card-body p-4">
             <h5 class="card-title mb-3">Wallet Address</h5>
-            <textarea class="w-100" [(ngModel)]="key.address" #inputTarget rows="2"></textarea> 
+            <textarea class="w-100" [(ngModel)]="key.address" #inputTarget rows="3"></textarea> 
           </div>
           <div class="card-footer text-muted bg-white">
             <span class="float-left">Copy Address</span>
@@ -32,9 +32,9 @@
 
       <div class="col-7 mx-auto">
         <div class="px-3 text-white mt-1" @stagger>
-          <h2 class="card-text mb-3">
+          <h2 class="card-text mb-4">
             Recent Transactions
-            <a class="btn btn-sm btn-success float-right mt-1" routerLink="/transactions" role="button">All Transactions</a>
+            <a class="btn btn-sm btn-success float-right mt-2" routerLink="/transactions" role="button">Show All</a>
           </h2>
           <div class="list-group" *ngFor="let key of transactions" id="items">
             <a href="#" class="list-group-item list-group-item-action flex-column" [class.sent]="key.type == 'Sent'" [class.received]="key.type == 'Received'">
