@@ -23,6 +23,8 @@ export interface walletdata {
 })
 export class TransfersComponent implements OnInit {
 
+  paymentType: any;
+
   public walletdata: walletdata[] = [
     {
       address: 'etnkGmQZG1c1g8nXSe9qR6foYDdZxySnNS8odiHtLuB8WqhGQHEcsv17rUUyiW8wnagTKkcw29gQyNPSHnprf8Nz7sYNs2Mf2g',

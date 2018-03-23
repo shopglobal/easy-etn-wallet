@@ -5,61 +5,83 @@
     <div class="row mx-auto">
       <div class="col-12 p-4">
 
-        <div class="transfers">
-          <div class="row m-0 p-0">
+        <div class="d-flex justify-content-center">
+
 
             <!-- Wallet -->
-            <div class="col-4 mx-auto mb-3">
+            <div class="col-4 mb-3">
               <div class="card">
-                <div class="card-body text-center p-4">
-                  <h2 class="card-title mb-2">Available Balance</h2>
-                  <h3 class="card-title text-success mb-4">42.41 ETN</h3>
-                  <h4 class="card-title mb-3">Spend</h4>
-                  <input type="text" class="form-control" id="spend" placeholder="00.00">
+                <div class="card-body text-white p-4">
+                  <h5 class="card-title mb-3">Send to</h5>
+                  <div class="custom-control custom-radio custom-control-inline">
+                    <input class="custom-control-input" type="radio" id="contact" [(ngModel)]="paymentType" name="paymentType" value="contact"/>
+                    <label class="custom-control-label" for="contact">Saved Contact</label>
+                  </div>
+                  <div class="custom-control custom-radio custom-control-inline">
+                    <input class="custom-control-input" type="radio" id="address" [(ngModel)]="paymentType" name="paymentType" value="address">
+                    <label class="custom-control-label" for="address">New Address</label>
+                  </div>
+                  <h5 class="card-title mt-4">Amount</h5>
+                  <div class="input-group mb-2">
+                    <input type="text" class="form-control" placeholder="00.00" required>
+                    <div class="input-group-append">
+                      <span class="input-group-text">ETN</span>
+                    </div>
+                  </div>
                 </div>
-                <div class="card-footer bg-white">
-                  <button type="button" class="btn btn-success float-right">Next</button>
+                <div class="card-footer bg-light">
+                  <div class="d-flex justify-content-between">
+                    <div class="my-auto">Available Balance:</div>
+                    <div class="my-auto"><span class="text-success"><strong>43.21</strong> ETN</span></div>
+                  </div>
                 </div>
               </div>
             </div>
 
             <!-- Manaul Address -->
-            <div class="col-4 mx-auto mb-3">
+            <div class="col-5 mb-3" *ngIf="paymentType === 'address'">
               <div class="card">
-                <div class="card-body p-4">
+                <div class="card-body text-white p-4">
                   <h5 class="card-title mb-3">Recipient Address</h5>
                   <textarea class="form-control mb-4" id="address" rows="3" placeholder="etnkGmQZG1c1g8nXSe9qR6foYDdZxySnNS8odiHtLuB8WqhGQHEcsv17rUUyiW8wnagTKkcw29gQyNPSHnprf8Nz7sYNs2Mf2g" required></textarea>
-                  <h5 class="card-subtitle mb-3">Payment ID <small class="text-muted">(optional)</small></h5>
-                  <input type="text" class="form-control" id="payid" placeholder="f6e418dd00062204">                 
-                </div>
-                <div class="card-footer bg-white">
-                  <button type="button" class="btn btn-success float-right">Next</button>
+                  <h5 class="card-subtitle mt-4 mb-3">Payment ID <small class="text-muted">(optional)</small></h5>
+                  <input type="text" class="form-control mb-4" id="payid" placeholder="f6e418dd00062204">
+                  <div class="custom-control custom-checkbox mb-4">
+                    <input type="checkbox" class="custom-control-input" id="customCheck1">
+                    <label class="custom-control-label" for="customCheck1">Save Contact?</label>
+                  </div>
+                  <div class="text-center">
+                    <button type="button" class="btn btn-success"><i class="fas fa-paper-plane mr-2"></i>Confirm Transfer</button>
+                  </div>
                 </div>
               </div>
             </div>
 
             <!-- Contacts Address -->
-            <div class="col-4 mx-auto mb-3">
+            <div class="col-5 mb-3" *ngIf="paymentType === 'contact'">
               <div class="card">
-                <div class="card-body p-4">
-                  <h5 class="card-title mb-3">Contacts</h5>
-                  <ng-select class="mb-3"
+                <div class="card-body text-white p-4">
+                  <h5 class="card-title mb-3">Contact</h5>
+                  <ng-select class="mb-4"
                     [items]="contacts"
                     bindLabel="name"
                     bindValue="id"
                     placeholder="Select Contact"
                     [(ngModel)]="contactsId">
                   </ng-select>
-                  <p>Selected Contact ID: {{contactsId}}</p>
-                </div>
-                <div class="card-footer bg-white">
-                  <button type="button" class="btn btn-success float-right">Next</button>
+                  <h5 class="card-title mb-3">Recipient Address</h5>
+                  <textarea class="form-control mb-4" id="address" rows="3" placeholder="etnkGmQZG1c1g8nXSe9qR6foYDdZxySnNS8odiHtLuB8WqhGQHEcsv17rUUyiW8wnagTKkcw29gQyNPSHnprf8Nz7sYNs2Mf2g" required></textarea>
+                  <h5 class="card-subtitle mt-4 mb-3">Payment ID <small class="text-muted">(optional)</small></h5>
+                  <input type="text" class="form-control mb-4" id="payid" placeholder="f6e418dd00062204">
+                  <div class="text-center">
+                    <button type="button" class="btn btn-success"><i class="fas fa-paper-plane mr-2"></i>Confirm Transfer</button>
+                  </div>
                 </div>
               </div>
             </div>
 
           </div>
-        </div>
+
 
       </div>
     </div>

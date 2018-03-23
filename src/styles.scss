@@ -7,7 +7,7 @@
 // Color system
 //
 
-$white:  #fff;
+$white:    #fff;
 $gray-100: #f8f9fa;
 $gray-200: #e9ecef;
 $gray-300: #dee2e6;
@@ -17,7 +17,7 @@ $gray-600: #868e96;
 $gray-700: #495057;
 $gray-800: #343a40;
 $gray-900: #212529;
-$black:  #000;
+$black:    #000;
 
 $blue:    #0073dd;
 $indigo:  #6610f2;
@@ -26,19 +26,19 @@ $pink:    #e83e8c;
 $red:     #dc3545;
 $orange:  #fd7e14;
 $yellow:  #ffc107;
-$green:   #18bc9c;
-$teal:    #20c997;
+$green:   #16aa58;
+$teal:    #20bd73;
 $cyan:    #17a2b8;
 
 $theme-colors: (
-  primary: #3f5871, // Denmin
-  secondary: #ddd, // French Blue
+  primary: $blue, // Denmin
+  secondary: $teal, // French Blue
   success: $green,
   info: $cyan,
   warning: $yellow,
   danger: $red,
-  light: #f7f7f7, // White Wash
-  dark: #f1f3f4, // Gunmental
+  light: $gray-200, // White Wash
+  dark: $gray-700, // Gunmental
 );
 
 // 3rd party libraries
@@ -61,6 +61,7 @@ html, body {
   background: url(assets/default.gif) repeat 0 0;
   background-color: rgba(14, 41, 66, 0.8);
   animation: 30s linear 0s normal none infinite animate;
+  color: $gray-700;
   &::before {
     content: "";
     position: absolute;
@@ -68,7 +69,7 @@ html, body {
     right: 0;
     bottom: 0;
     left: 0;
-    background: linear-gradient(to bottom, rgba(19, 32, 44, 0.8), rgba(14, 41, 66, 0.4));
+    background: linear-gradient(to bottom, rgba(19, 32, 44, 0.7), rgba(14, 41, 66, 0.3));
   }
 }
 

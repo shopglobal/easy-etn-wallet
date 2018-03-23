@@ -39,10 +39,10 @@ export interface transactions {
 })
 export class HomeComponent implements OnInit {
 
-  url = makeUrl('http', 'localhost', '8080', 'json_rpc');
-  wallet = Wallet(this.url);
-  balance: any;
-  address: any;
+  // url = makeUrl('http', 'localhost', '8080', 'json_rpc');
+  // wallet = Wallet(this.url);
+  // balance: any;
+  // address: any;
 
   isCopied: boolean = false;
 
@@ -95,18 +95,18 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
 
-    // Get wallet address
-    this.address = this.wallet.getaddress()
-    .map((res) => res.address)
-    .subscribe(console.log);
+    // // Get wallet address
+    // this.address = this.wallet.getaddress()
+    // .map((res) => res.address)
+    // .subscribe(console.log);
 
-    // Get wallet balance
-    this.balance = this.wallet.getbalance()
-    .map((res) => new Atomic(res.balance).toXmr().toString())
-    .subscribe(console.log);
+    // // Get wallet balance
+    // this.balance = this.wallet.getbalance()
+    // .map((res) => new Atomic(res.balance).toXmr().toString())
+    // .subscribe(console.log);
 
-    console.log(this.address.res);
-    console.log(this.balance.res);
+    // console.log(this.address.res);
+    // console.log(this.balance.res);
 
   }
 

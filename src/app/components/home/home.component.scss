@@ -5,23 +5,20 @@
 
   &:hover {
     box-shadow: 0 10px 16px rgba(0, 0, 0, 0.25), 0 5px 5px rgba(0, 0, 0, 0.22);
-    transform: scale(1.03);
+    transform: scale(1.01);
   }
 
   .card-body {
     .card-title {
       font-size: 1.9rem;
-      color: #ccc;
     }
 
     .card-subtitle {
-      font-size: 3.6rem;
-      color: #fff;
+      font-size: 3.4rem;
     }
 
     .card-text {
-      font-size: 1.4rem;
-      color: #ccc;
+      font-size: 1.3rem;
     }
 
   }
@@ -35,18 +32,29 @@ textarea {
   border: 2px dashed #ccc;
 }
 textarea::placeholder {
-  color: #ccc;  
+  color: rgba(204, 204, 204, 0.3);  
 }
 
 .list-group-item {
   background: rgba(255, 255, 255, 0.95);
-  margin-bottom: 21px;
+  margin-bottom: 16.5px;
 }
 
 .list-group-item.sent {
-  border-left: 8px solid #0073dd;
+  border-left: 6px solid #0073dd;
 }
 
 .list-group-item.received {
-  border-left: 8px solid #18bc9c;
+  border-left: 6px solid #18bc62;
+}
+
+/* Flash class and keyframe animation */
+.flash{
+	animation: flash linear 0.5s;
+}
+
+@keyframes flash {
+	0% { color: #16aa58; opacity: 1; } 
+	50% { color: #16aa58; opacity: .5; } 
+	100% { color: #16aa58; opacity: 1; }
 }
