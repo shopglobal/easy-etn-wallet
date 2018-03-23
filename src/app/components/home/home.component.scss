@@ -36,15 +36,19 @@ textarea::placeholder {
 
 .list-group-item {
   background: rgba(255, 255, 255, 0.95);
-  margin-bottom: 16.5px;
+  margin-bottom: 19px;
 }
 
 .list-group-item.sent {
-  border-left: 6px solid #0073dd;
+  border-left: 10px solid #0073dd;
 }
 
 .list-group-item.received {
-  border-left: 6px solid #18bc62;
+  border-left: 10px solid #18bc62;
+}
+
+.copy {
+  cursor: pointer;
 }
 
 /* Flash class and keyframe animation */

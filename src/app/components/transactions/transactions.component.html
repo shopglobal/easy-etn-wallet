@@ -5,7 +5,6 @@
     <div class="row mx-auto">
       <div class="col-12 p-4">
         <div class="transactions">
-          <h3 class="text-white mb-3">All Transactions</h3>
           <table class="table table-sm">
             <thead class="thead-light">
               <tr>
@@ -18,11 +17,11 @@
             </thead>
             <tbody>
               <tr *ngFor="let key of transactions">
-                <th [class.text-info]="key.type == 'Sent'" [class.text-success]="key.type == 'Received'">{{key.type}}</th>
+                <th [class.sent]="key.type == 'Sent'" [class.received]="key.type == 'Received'">{{key.type}}</th>
                 <td><span class="font-weight-bold">{{key.amount}}</span> ETN</td>
                 <td class="text-muted"><a href="https://blockexplorer.electroneum.com/search?value={{key.txhash}}" target="_blank">{{key.txhash}}</a></td>
                 <td>{{key.type}} {{key.date | amTimeAgo:true}} ago</td>
-                <td [class.text-danger]="key.status == 'Failed'" [class.text-warning]="key.status == 'Pending'" [class.text-success]="key.status == 'Completed'">{{key.status}}</td>
+                <td ><span class="badge px-2 py-1" [class.badge-danger]="key.status == 'Failed'" [class.badge-warning]="key.status == 'Pending'" [class.badge-success]="key.status == 'Completed'"><span class="text-uppercase">{{key.status}}</span></span></td>
               </tr>
             </tbody>
           </table>

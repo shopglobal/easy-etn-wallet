@@ -19,5 +19,13 @@
   td, th {
     padding: 10px;
   }
+
+  th.sent {
+    border-left: 15px solid #0073dd;
+  }
+  
+  th.received {
+    border-left: 15px solid #18bc62;
+  }
   
 }
