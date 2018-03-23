@@ -1,12 +1,15 @@
-<div id="electron-titlebar" class="drag"></div>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand mr-5" href="#">
+
+  <a class="navbar-brand mr-5" href="/home">
     <img src="assets/logo-color.png" class="d-inline-block align-top" alt="">
   </a>
+
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
+
   <div class="collapse navbar-collapse" id="navbarNav">
+
     <ul class="navbar-nav mr-auto">
       <li class="nav-item mx-2">
         <a class="nav-link" routerLink="/home" routerLinkActive="active"><i class="fas fa-home mr-2"></i>Overview</a>
@@ -18,23 +21,26 @@
         <a class="nav-link" routerLink="/transfers" routerLinkActive="active"><i class="fas fa-paper-plane mr-2"></i>Transfers</a>
       </li>
       <li class="nav-item mx-2">
-        <a class="nav-link" routerLink="/payments" routerLinkActive="active"><i class="fas fa-calculator mr-2"></i>Payments</a>
-      </li>
-      <li class="nav-item mx-2">
         <a class="nav-link" routerLink="/contacts" routerLinkActive="active"><i class="fas fa-address-book mr-2"></i>Contacts</a>
       </li>
-      <li class="nav-item mx-2">
-        <a class="nav-link" routerLink="/mining" routerLinkActive="active"><i class="fas fa-gem mr-2"></i>Mining</a>
-      </li>
-      <li class="nav-item mx-2">
-        <a class="nav-link" routerLink="/markets" routerLinkActive="active"><i class="fas fa-chart-line mr-2"></i>Markets</a>
-      </li>
     </ul>
-    <span class="navbar-text mx-2">
-      GUI Wallet
+
+    <div class="btn-group mr-3">
+      <button type="button" class="btn btn-secondary"><i class="fas fa-th mr-3"></i>More</button>
+      <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
+        <button class="btn btn-success dropdown-toggle-split" ngbDropdownToggle></button>
+        <div class="dropdown-menu" ngbDropdownMenu>
+          <a class="dropdown-item" routerLink="/payments" routerLinkActive="active"><i class="fas fa-calculator mr-2"></i>Automatic Payments</a>
+          <a class="dropdown-item" routerLink="/mining" routerLinkActive="active"><i class="fas fa-gem mr-2"></i>CPU Mining</a>
+          <a class="dropdown-item" routerLink="/markets" routerLinkActive="active"><i class="fas fa-chart-line mr-2"></i>Crypto Markets</a>
+        </div>
+      </div>
+    </div>
+
+    <span class="navbar-text settings">
+      <a class="nav-link text-primary" routerLink="/settings" routerLinkActive="active"><i class="fas fa-cog"></i></a>
     </span>
-    <span class="navbar-text">
-      <a class="nav-link" routerLink="/settings" routerLinkActive="active"><i class="fas fa-cog"></i></a>
-    </span>
+
   </div>
+
 </nav>
