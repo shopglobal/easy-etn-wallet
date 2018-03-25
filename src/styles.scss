@@ -89,6 +89,26 @@ html, body {
   margin-bottom: auto;
 }
 
+.dataTables_length, 
+.dataTables_filter,
+.dataTables_info,
+.dataTables_processing,
+.dataTables_paginate {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  align-items: center;
+  color: #fff !important;
+}
+
+.dataTables_wrapper {
+  .dataTables_paginate .paginate_button {
+    padding: 0.1em 0.5em !important;
+  }
+  input, button, select, optgroup, .paginate_button {
+    height: 30px;
+  }
+}
+
 @keyframes animate {
   from { background-position: 0 0; }
   to { background-position: 500px 0; }

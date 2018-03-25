@@ -19,6 +19,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MomentModule } from 'angular2-moment';
 import { ClipboardModule } from 'ngx-clipboard';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { DataTablesModule } from 'angular-datatables';
 
 // App Services & Directives
 import { ElectronService } from './providers/electron.service';
@@ -67,6 +68,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MomentModule,
     ClipboardModule,
     NgSelectModule,
+    DataTablesModule,
     NgbModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
