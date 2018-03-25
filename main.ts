@@ -26,7 +26,8 @@ function createWindow() {
     resizable: true,
     backgroundColor: '#0e2942',
     webPreferences: {
-      webSecurity : false
+      webSecurity : true, // need workaround to cors policy to allow json rcp (proxy?)
+      // contextIsolation: true // Doesn't allow jquery to run (need workaround)
     }
   });
 
@@ -42,7 +43,14 @@ function createWindow() {
     }));
   }
 
+  // Run with devtools enabled
   win.webContents.openDevTools();
+
+  // Open all links in external browser
+  win.webContents.on('new-window', function(e, url) {
+    e.preventDefault();
+    require('electron').shell.openExternal(url);
+  });
 
   // Emitted when the window is closed.
   win.on('closed', () => {
