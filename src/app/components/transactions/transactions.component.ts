@@ -16,6 +16,8 @@ export interface transactions {
 })
 export class TransactionsComponent implements OnInit {
 
+  dtOptions: DataTables.Settings = {};
+
   public transactions: transactions[] =
     [
       {
@@ -63,6 +65,9 @@ export class TransactionsComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    this.dtOptions = {
+      pageLength: 10
+    };
   }
 
 }
