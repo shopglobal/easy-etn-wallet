@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { trigger, style, animate, transition } from '@angular/animations';
 
 export interface transactions {
   id: number;
@@ -12,7 +13,17 @@ export interface transactions {
 @Component({
   selector: 'app-transactions',
   templateUrl: './transactions.component.html',
-  styleUrls: ['./transactions.component.scss']
+  styleUrls: ['./transactions.component.scss'],
+  animations: [
+    trigger(
+      'enterAnimation', [
+        transition(':enter', [
+          style({opacity:0}),
+          animate(500, style({opacity:1}))
+        ])
+      ]
+    )
+  ]
 })
 export class TransactionsComponent implements OnInit {
 

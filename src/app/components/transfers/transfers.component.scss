@@ -5,14 +5,14 @@ textarea {
   border: 2px dashed #ccc;
 }
 textarea::placeholder {
-  color: rgba(204, 204, 204, 0.3);  
+  color: rgba(204, 204, 204, 0.5);  
 }
 input {
   color: #fff;
   background: transparent;
 }
 input::placeholder {
-  color: rgba(204, 204, 204, 0.3);
+  color: rgba(204, 204, 204, 0.5);
 }
 
 .card {

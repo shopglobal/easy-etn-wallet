@@ -9,7 +9,7 @@
 
 
             <!-- Wallet -->
-            <div class="col-4 mb-3">
+            <div class="col-4 mb-3" @enterAnimation>
               <div class="card">
                 <div class="card-body text-white p-4">
                   <h5 class="card-title mb-3">Send to</h5>
@@ -39,7 +39,7 @@
             </div>
 
             <!-- Manaul Address -->
-            <div class="col-5 mb-3" *ngIf="paymentType === 'address'">
+            <div class="col-5 mb-3" @enterAnimation *ngIf="paymentType === 'address'">
               <div class="card">
                 <div class="card-body text-white p-4">
                   <h5 class="card-title mb-3">Recipient Address</h5>
@@ -52,13 +52,13 @@
                   </div>
                 </div>
                 <div class="card-footer bg-light text-right">
-                  <button type="button" class="btn btn-success"><i class="fas fa-paper-plane mr-2"></i>Confirm Transfer</button>
+                  <button type="button" class="btn btn-success"><i class="fas fa-paper-plane mr-2"></i>Confirm?</button>
                 </div>
               </div>
             </div>
 
             <!-- Contacts Address -->
-            <div class="col-5 mb-3" *ngIf="paymentType === 'contact'">
+            <div class="col-5 mb-3" @enterAnimation *ngIf="paymentType === 'contact'">
               <div class="card">
                 <div class="card-body text-white p-4">
                   <h5 class="card-title mb-3">Contact</h5>
@@ -75,7 +75,7 @@
                   <input type="text" class="form-control" id="payid" placeholder="f6e418dd00062204">
                 </div>
                 <div class="card-footer bg-light text-right">
-                  <button type="button" class="btn btn-success"><i class="fas fa-paper-plane mr-2"></i>Confirm Transfer</button>
+                  <button type="button" class="btn btn-success"><i class="fas fa-paper-plane mr-2"></i>Confirm?</button>
                 </div>
               </div>
             </div>

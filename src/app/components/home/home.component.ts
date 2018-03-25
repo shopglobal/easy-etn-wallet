@@ -34,7 +34,15 @@ export interface transactions {
           animate(1000, style('*'))
         ])
       ])
-    ])
+    ]),
+    trigger(
+      'enterAnimation', [
+        transition(':enter', [
+          style({opacity:0}),
+          animate(500, style({opacity:1}))
+        ])
+      ]
+    )
   ]
 })
 export class HomeComponent implements OnInit {

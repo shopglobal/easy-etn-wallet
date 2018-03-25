@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { trigger, style, animate, transition } from '@angular/animations';
 
 export interface contacts {
   id: number;
@@ -19,7 +20,17 @@ export interface walletdata {
 @Component({
   selector: 'app-transfers',
   templateUrl: './transfers.component.html',
-  styleUrls: ['./transfers.component.scss']
+  styleUrls: ['./transfers.component.scss'],
+  animations: [
+    trigger(
+      'enterAnimation', [
+        transition(':enter', [
+          style({opacity:0}),
+          animate(500, style({opacity:1}))
+        ])
+      ]
+    )
+  ]
 })
 export class TransfersComponent implements OnInit {
 
