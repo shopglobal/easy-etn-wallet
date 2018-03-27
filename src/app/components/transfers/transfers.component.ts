@@ -35,6 +35,7 @@ export interface walletdata {
 export class TransfersComponent implements OnInit {
 
   paymentType: any;
+  contactsId: any;
 
   public walletdata: walletdata[] = [
     {
@@ -62,8 +63,6 @@ export class TransfersComponent implements OnInit {
       created: '2018-03-10 14:23:45'
     }
   ];
-
-  contactsId: any;
 
   constructor() { }
 

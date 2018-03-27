@@ -117,9 +117,36 @@ select option {
   color: #212529;
 }
 
-.ng-select .ng-control  {
+.ng-select .ng-control, .ng-value, .form-control {
   color: #fff !important;
   background: transparent !important;
+}
+
+.ng-select.ng-multiple .ng-control .ng-value-container .ng-value {
+  border-top: 1px solid #fff;
+  border-bottom: 1px solid #fff;
+  border-left: 1px solid #0073dd;
+  border-right: 1px solid #fff;
+}
+
+.ng-select.ng-multiple .ng-control .ng-value-container .ng-value .ng-value-label {
+  padding: 2px 8px 2px 6px;
+}
+
+.ng-select.ng-multiple .ng-control .ng-value-container .ng-value .ng-value-icon.left {
+  border-right: 1px solid #fff;
+  background: #0073dd;
+  color: #fff;
+}
+
+.ngb-tp-meridian .btn-outline-primary {
+  border: 1px solid #fff;
+  color: #eee;
+}
+
+.ngb-tp-meridian .btn-outline-primary:hover {
+  background: #fff;
+  color: #000;
 }
 
 @keyframes animate {

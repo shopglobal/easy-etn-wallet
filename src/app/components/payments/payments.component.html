@@ -1,9 +1,87 @@
 <div class="container-fluid">
-  <div class="content text-white">
+  <div class="content p-4 text-white">
 
     <!-- Begin Page Content -->
     <div class="row mx-auto">
-      <h1>Payments</h1>
+
+      <div class="col-4" @enterAnimation>
+
+        <div class="card mb-4">
+          <div class="card-body text-white p-4">
+            <h5 class="card-title mb-3">Payees</h5>
+            <ng-select class="mb-4"
+              [items]="contacts"
+              [multiple]="true"
+              [closeOnSelect]="false"
+              [hideSelected]="true"
+              bindLabel="name"
+              bindValue="id"
+              placeholder="Select Contacts"
+              (change)="onChange($event)"
+              [(ngModel)]="selectedContacts">
+            </ng-select>
+            <h5 class="card-title mb-3">Schedule</h5>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input class="custom-control-input" type="radio" id="singlePayment" [(ngModel)]="scheduleType" name="scheduleType" value="singlePayment"/>
+              <label class="custom-control-label" for="singlePayment">Single Payment</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline mb-4">
+              <input class="custom-control-input" type="radio" id="recurringPayment" [(ngModel)]="scheduleType" name="scheduleType" value="recurringPayment"/>
+              <label class="custom-control-label" for="recurringPayment">Recurring Payment</label>
+            </div>
+            <div id="frequency" *ngIf="scheduleType === 'recurringPayment'">
+              <h5 class="card-title mb-3">Frequency</h5>
+              <div class="custom-control custom-radio custom-control-inline">
+                <input class="custom-control-input" type="radio" id="dailyPayment" [(ngModel)]="scheduleFrequency" name="scheduleFrequency" value="dailyPayment"/>
+                <label class="custom-control-label" for="dailyPayment">Daily</label>
+              </div>
+              <div class="custom-control custom-radio custom-control-inline mb-4">
+                <input class="custom-control-input" type="radio" id="weeklyPayment" [(ngModel)]="scheduleFrequency" name="scheduleFrequency" value="weeklyPayment"/>
+                <label class="custom-control-label" for="weeklyPayment">Weekly</label>
+              </div>
+              <div class="custom-control custom-radio custom-control-inline mb-4">
+                <input class="custom-control-input" type="radio" id="monthlyPayment" [(ngModel)]="scheduleFrequency" name="scheduleFrequency" value="monthlyPayment"/>
+                <label class="custom-control-label" for="monthlyPayment">Monthly</label>
+              </div>
+            </div>
+            <h5 class="card-title mb-3">Start Date</h5>
+            <div class="form-group mb-4">
+              <div class="input-group">
+                <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="scheduleStartDate" ngbDatepicker #d="ngbDatepicker">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-light" (click)="d.toggle()" type="button" style="cursor: pointer;">
+                    <i class="fas fa-calendar"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <h5 class="card-title mb-3">Start Time</h5>
+            <ngb-timepicker [(ngModel)]="scheduleStartTime" [spinners]="spinners" [meridian]="meridian"></ngb-timepicker>
+          </div>
+          <div class="card-footer bg-light text-right">
+            <button type="button" class="btn btn-sm btn-success"><i class="fas fa-save mr-2"></i>Save Schedule</button>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-8">
+        <h2 class="card-text mb-4">Payees</h2>
+        <div class="row">
+          <div class="col-6" *ngFor="let contact of selectedContacts" @enterAnimation>
+            <div class="card mb-4">
+              <div class="card-body text-white p-4">
+                <small>{{contact.id}}</small>
+                <small>{{contact.name}}</small>
+                <small>{{contact.address}}</small>
+                <small>{{contact.payid}}</small>
+                <small>{{contact.created}}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
 
   </div>
