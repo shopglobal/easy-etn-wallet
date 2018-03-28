@@ -6,46 +6,68 @@
 
       <div class="col-4" @enterAnimation>
 
-        <div class="card mb-4">
-          <div class="card-body text-white p-4">
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title mb-3">Payment</h5>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input class="custom-control-input" type="radio" id="fixedPayment" [(ngModel)]="paymentType" name="paymentType" value="fixedPayment"/>
+              <label class="custom-control-label" for="fixedPayment">Fixed</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input class="custom-control-input" type="radio" id="percentagePayment" [(ngModel)]="paymentType" name="paymentType" value="percentagePayment"/>
+              <label class="custom-control-label" for="percentagePayment">Percentage</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="card mb-3">
+          <div class="card-body">
             <h5 class="card-title mb-3">Payees</h5>
-            <ng-select class="mb-4"
+            <ng-select placeholder="Select Contacts" bindLabel="name" bindValue="id"
               [items]="contacts"
               [multiple]="true"
               [closeOnSelect]="false"
               [hideSelected]="true"
-              bindLabel="name"
-              bindValue="id"
-              placeholder="Select Contacts"
-              (change)="onChange($event)"
-              [(ngModel)]="selectedContacts">
+              (change)="onChange($event)">
+              <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+                  <div class="ng-value" *ngFor="let item of (items ? items.slice(0,1): [])">
+                      <span class="ng-value-label"><i class="fas fa-user-circle text-secondary mr-1"></i>{{item.name}}</span>
+                      <span class="ng-value-icon right" (click)="clear(item); $event.stopPropagation()" aria-hidden="true">×</span>
+                  </div>
+                  <div class="ng-value" *ngIf="items.length > 1" >
+                      <span class="ng-value-label">+{{items.length - 1}} more...</span>
+                  </div>
+              </ng-template>
             </ng-select>
+          </div>
+        </div>
+
+        <div class="card mb-3">
+          <div class="card-body text-white p-4">
             <h5 class="card-title mb-3">Schedule</h5>
-            <div class="custom-control custom-radio custom-control-inline">
-              <input class="custom-control-input" type="radio" id="singlePayment" [(ngModel)]="scheduleType" name="scheduleType" value="singlePayment"/>
-              <label class="custom-control-label" for="singlePayment">Single Payment</label>
-            </div>
-            <div class="custom-control custom-radio custom-control-inline mb-4">
-              <input class="custom-control-input" type="radio" id="recurringPayment" [(ngModel)]="scheduleType" name="scheduleType" value="recurringPayment"/>
-              <label class="custom-control-label" for="recurringPayment">Recurring Payment</label>
-            </div>
-            <div id="frequency" *ngIf="scheduleType === 'recurringPayment'">
-              <h5 class="card-title mb-3">Frequency</h5>
-              <div class="custom-control custom-radio custom-control-inline">
-                <input class="custom-control-input" type="radio" id="dailyPayment" [(ngModel)]="scheduleFrequency" name="scheduleFrequency" value="dailyPayment"/>
-                <label class="custom-control-label" for="dailyPayment">Daily</label>
-              </div>
-              <div class="custom-control custom-radio custom-control-inline mb-4">
-                <input class="custom-control-input" type="radio" id="weeklyPayment" [(ngModel)]="scheduleFrequency" name="scheduleFrequency" value="weeklyPayment"/>
-                <label class="custom-control-label" for="weeklyPayment">Weekly</label>
-              </div>
-              <div class="custom-control custom-radio custom-control-inline mb-4">
-                <input class="custom-control-input" type="radio" id="monthlyPayment" [(ngModel)]="scheduleFrequency" name="scheduleFrequency" value="monthlyPayment"/>
-                <label class="custom-control-label" for="monthlyPayment">Monthly</label>
-              </div>
-            </div>
+            <ng-select placeholder="Select Schedule" [searchable]="false" [(ngModel)]="scheduleType">
+              <ng-option value="singlePayment">Single Payment</ng-option>
+              <ng-option value="recurringPayment">Recurring Payment</ng-option>
+            </ng-select>
+          </div>
+        </div>
+
+        <div class="card mb-3" id="frequency" *ngIf="scheduleType === 'recurringPayment'">
+          <div class="card-body text-white p-4">
+            <h5 class="card-title mb-3">Frequency</h5>
+            <ng-select placeholder="Select Frequency" [searchable]="false" [(ngModel)]="scheduleFrequency">
+              <ng-option value="dailyPayment">Daily</ng-option>
+              <ng-option value="weeklyPayment">Weekly</ng-option>
+              <ng-option value="monthlyPayment">Monthly</ng-option>
+              <ng-option value="yearlyPayment">Yearly</ng-option>
+            </ng-select>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body text-white p-4">
             <h5 class="card-title mb-3">Start Date</h5>
-            <div class="form-group mb-4">
+            <div class="form-group">
               <div class="input-group">
                 <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="scheduleStartDate" ngbDatepicker #d="ngbDatepicker">
                 <div class="input-group-append">
@@ -55,30 +77,43 @@
                 </div>
               </div>
             </div>
-            <h5 class="card-title mb-3">Start Time</h5>
-            <ngb-timepicker [(ngModel)]="scheduleStartTime" [spinners]="spinners" [meridian]="meridian"></ngb-timepicker>
-          </div>
-          <div class="card-footer bg-light text-right">
-            <button type="button" class="btn btn-sm btn-success"><i class="fas fa-save mr-2"></i>Save Schedule</button>
+            <!-- <h5 class="card-title mb-3">Start Time</h5>
+            <ngb-timepicker [(ngModel)]="scheduleStartTime" [spinners]="spinners" [meridian]="meridian"></ngb-timepicker> -->
           </div>
         </div>
 
       </div>
 
       <div class="col-8">
-        <h2 class="card-text mb-4">Payees</h2>
         <div class="row">
-          <div class="col-6" *ngFor="let contact of selectedContacts" @enterAnimation>
-            <div class="card mb-4">
-              <div class="card-body text-white p-4">
-                <small>{{contact.id}}</small>
-                <small>{{contact.name}}</small>
-                <small>{{contact.address}}</small>
-                <small>{{contact.payid}}</small>
-                <small>{{contact.created}}</small>
+
+          <div class="col-4" *ngFor="let key of selectedContacts" @enterAnimation>
+            <div class="card mb-3">
+              <div class="card-body">
+                <h5 class="card-subtitle mb-1">{{key.name}}</h5>
+                <p class="text-muted small">{{key.address}}</p>
+                <div class="mt-3" *ngIf="paymentType === 'fixedPayment'">
+                  <label for="amount">Amout?</label>
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="0.00">
+                    <div class="input-group-append">
+                      <span class="input-group-text" id="amount">ETN</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="mt-3" *ngIf="paymentType === 'percentagePayment'">
+                  <label for="percentage">Percentage?</label>
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="0.0">
+                    <div class="input-group-append">
+                      <span class="input-group-text" id="percentage">%</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
+
         </div>
       </div>
 

@@ -1,3 +1,9 @@
+.payments {
+  height: 82vh;
+  overflow-y: auto;
+  //margin-right: 15px;
+}
+
 textarea {
   padding: 15px;
   color: #fff;
@@ -26,12 +32,12 @@ input::placeholder {
 
   .card-body {
     .card-title {
-      font-size: 1.4rem;
-      color: #ccc;
+      font-size: 1.5rem;
+      color: #fff;
     }
 
     .card-subtitle {
-      font-size: 0.8rem;
+      font-size: 1rem;
     }
 
     .card-text {
