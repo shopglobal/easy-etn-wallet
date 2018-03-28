@@ -4,16 +4,16 @@
     <!-- Begin Page Content -->
     <div class="row mx-auto">
 
-      <div class="col-4 mx-auto" *ngFor="let key of walletdata" @enterAnimation>
+      <div class="col-4 mx-auto" @enterAnimation>
         <div class="card text-center mb-5">
           <div class="card-body p-4">
             <h5 class="card-title text-white mb-3">Wallet Balance</h5>
-            <h6 class="card-subtitle text-success mb-2">{{key.balance}} ETN</h6>
-            <p class="card-text text-muted">Available: {{key.available}} ETN</p>
+            <h6 class="card-subtitle text-success mb-2">{{balance}} ETN</h6>
+            <p class="card-text text-muted">Available: {{balance}} ETN</p>
           </div>
           <div class="card-footer bg-light">
             <div class="d-flex justify-content-between">
-              <span>Last updated {{key.updated | amTimeAgo:true}} ago</span>
+              <span>Last updated x ago</span>
               <span class="text-primary"><a href="#"><i class="fas fa-sync-alt"></i></a></span>
             </div>
           </div>
@@ -21,7 +21,7 @@
         <div class="card text-center">
           <div class="card-body p-4">
             <h5 class="card-title text-white mb-3">Wallet Address</h5>
-            <textarea [class.flash]="isCopied" class="w-100" [(ngModel)]="key.address" #inputTarget rows="3" placeholder="etnkGmQZG1c1g8nXSe9qR6foYDdZxySnNS8odiHtLuB8WqhGQHEcsv17rUUyiW8wnagTKkcw29gQyNPSHnprf8Nz7sYNs2Mf2g"></textarea> 
+            <textarea [class.flash]="isCopied" class="w-100" [(ngModel)]="address" #inputTarget rows="3" placeholder="etnkGmQZG1c1g8nXSe9qR6foYDdZxySnNS8odiHtLuB8WqhGQHEcsv17rUUyiW8wnagTKkcw29gQyNPSHnprf8Nz7sYNs2Mf2g"></textarea> 
           </div>
           <div class="card-footer bg-light">
             <div class="copy" [ngxClipboard]="inputTarget" (cbOnSuccess)="isCopied = true">

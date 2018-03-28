@@ -26,7 +26,7 @@ function createWindow() {
     resizable: true,
     backgroundColor: '#0e2942',
     webPreferences: {
-      webSecurity : true, // need workaround to cors policy to allow json rcp (proxy?)
+      webSecurity : false // need workaround to cors policy to allow json rcp (proxy?)
       // contextIsolation: true // Doesn't allow jquery to run (need workaround)
     }
   });
