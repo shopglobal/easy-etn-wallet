@@ -28,13 +28,15 @@ export interface contacts {
 export class PaymentsComponent implements OnInit {
 
   selectedContacts: contacts[] = [];
-  paymentType: any;
-  scheduleType: any;
+  paymentType: any = "percentagePayment";
+  scheduleType: any = "recurringPayment";
   scheduleFrequency: any;
   scheduleStartDate: any;
+  scheduleEndDate: any;
   scheduleStartTime: any = { hour: null, minute: null };
   meridian = true;
   spinners = false;
+  now = new Date();
 
   public contacts: contacts[] = [
     {
@@ -101,6 +103,10 @@ export class PaymentsComponent implements OnInit {
     this.selectedContacts = [];
     this.selectedContacts = ($event);
     //console.log(this.selectedContacts);
+  }
+
+  selectToday() {
+    this.scheduleStartDate = {year: this.now.getFullYear(), month: this.now.getMonth() + 1, day: this.now.getDate()};
   }
 
   ngOnInit() {
