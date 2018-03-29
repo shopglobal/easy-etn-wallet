@@ -1,14 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { trigger, transition, query, style, stagger, animate } from '@angular/animations';
 import { makeUrl, Wallet, Atomic, Xmr, generatePaymentId } from 'rx-monero-wallet';
-
-export interface walletdata {
-  address: string;
-  payid: string;
-  balance: string;
-  available: string;
-  updated: string;
-}
+import { Observable } from 'rxjs';
 
 export interface transactions {
   id: number;
@@ -49,20 +42,11 @@ export class HomeComponent implements OnInit {
 
   url = makeUrl('http', 'localhost', '8080', 'json_rpc');
   wallet = Wallet(this.url);
-  balance: any;
+  offline: boolean = false;
+  balance: any = '0.00';
+  balance_unlocked: any = '0.00';
   address: any;
-
   isCopied: boolean = false;
-
-  public walletdata: walletdata[] = [
-    {
-      address: 'etnkGmQZG1c1g8nXSe9qR6foYDdZxySnNS8odiHtLuB8WqhGQHEcsv17rUUyiW8wnagTKkcw29gQyNPSHnprf8Nz7sYNs2Mf2g',
-      payid: 'f6e418dd00062204',
-      balance: '43.41',
-      available: '43.41',
-      updated: '2018-03-20 14:23:45',
-    }
-  ];
 
   public transactions: transactions[] = [
     {
@@ -105,20 +89,75 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
 
+    // Get Wallet Address
     this.wallet.getaddress()
-    .map((res) => res.address)
-    .subscribe(
-      value => this.address = value
+    .map (
+      (response) => response.address
+    )
+    .subscribe (
+      {
+        next: (response) => {
+          this.address;
+        },
+        error: (error) => {
+          this.address = null;
+          this.offline = true;
+          console.log('Error while fetching wallet');
+        }
+      }
     );
 
+    // Get Wallet Balance
     this.wallet.getbalance()
-    .map((res) => new Atomic(res.balance).toXmr().toString())
-    .subscribe(
-      value => this.balance = value
+    .map(
+      (response) => new Atomic(response.balance).toXmr().toString()
     )
+    .subscribe(
+      {
+        next: (response) => {
+          this.balance;
+        },
+        error: (error) => {
+          this.balance = 0;
+          this.offline = true;
+          console.log('Error while fetching balance');
+        }
+      }
+    );
 
-    console.log(this.address);
-    console.log(this.balance);
+    // // Get Wallet Unlocked Balance
+    // this.wallet.getbalance()
+    // .map(
+    //   (response) => new Atomic(response.unlocked_balance).toXmr().toString()
+    // )
+    // .subscribe(
+    //   {
+    //     next: (res) => {
+    //       value => this.balance_unlocked = value
+    //     },
+    //     error: (error) => {
+    //       value => this.balance = 'Problem querying balance' + value
+    //     }
+    //   }
+    // )
+
+    // Get the current transfers to this wallet
+    // const autoRefresher = (refreshInterval: number) =>
+    // Observable.timer(0, refreshInterval)
+
+    // const streamtransfers = () => autoRefresher(1000)
+    //   .flatMap(() => this.wallet.get_transfers({ pool: true }))
+    //   .map((res) => res.pool)
+    //   .filter((pool) => pool != undefined)
+    //   .subscribe(console.log,
+    //             console.error,
+    //             () => console.log('finished'))
+
+    // streamtransfers();
+
+    // console.log(this.address);
+    // console.log(this.balance);
+    // console.log(this.balance_unlocked);
     
   }
 
