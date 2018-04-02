@@ -13,8 +13,10 @@
           </div>
           <div class="card-footer bg-light">
             <div class="d-flex justify-content-between">
-              <span>Last updated x ago</span>
-              <span class="text-primary"><a href="#"><i class="fas fa-sync-alt"></i></a></span>
+              <span [class.text-success]="(!isOffline) || (!isLoading)" [class.text-danger]="(isLoading) || (isOffline)">
+                <i class="fas fa-plug mr-2"></i>Status
+              </span>
+              <span class="text-primary" [class.text-success]="isLoading"><a (click)="getWalletBalance()"><i class="fas fa-sync-alt" [class.fa-spin]="isLoading"></i></a></span>
             </div>
           </div>
         </div>

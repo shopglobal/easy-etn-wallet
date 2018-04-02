@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { trigger, transition, query, style, stagger, animate } from '@angular/animations';
 import { makeUrl, Wallet, Atomic, Xmr, generatePaymentId } from 'rx-monero-wallet';
 import { Observable } from 'rxjs';
+import { BPClient } from 'blocking-proxy';
 
 export interface transactions {
   id: number;
@@ -42,11 +43,12 @@ export class HomeComponent implements OnInit {
 
   url = makeUrl('http', 'localhost', '8080', 'json_rpc');
   wallet = Wallet(this.url);
-  offline: boolean = false;
-  balance: any = '0.00';
-  balance_unlocked: any = '0.00';
+  balance: any = 0.00;
+  balance_unlocked: any = 0.00;
   address: any;
   isCopied: boolean = false;
+  isLoading: boolean = false;
+  isOffline: boolean = false;
 
   public transactions: transactions[] = [
     {
@@ -84,81 +86,55 @@ export class HomeComponent implements OnInit {
   ];
 
   constructor() { 
-
   }
 
-  ngOnInit() {
-
-    // Get Wallet Address
-    this.wallet.getaddress()
-    .map (
-      (response) => response.address
-    )
-    .subscribe (
-      {
-        next: (response) => {
-          this.address;
-        },
-        error: (error) => {
-          this.address = null;
-          this.offline = true;
-          console.log('Error while fetching wallet');
-        }
-      }
-    );
-
+  getWalletBalance() {
     // Get Wallet Balance
+    this.isLoading = true;
+    this.isOffline = true;
     this.wallet.getbalance()
     .map(
-      (response) => new Atomic(response.balance).toXmr().toString()
+      (response) => {
+        this.balance = new Atomic(response.balance).toXmr().toString();
+        this.balance_unlocked = new Atomic(response.unlocked_balance).toXmr().toString();
+      }
     )
     .subscribe(
       {
         next: (response) => {
-          this.balance;
+          new Atomic(this.balance).toXmr().toString();
+          new Atomic(this.balance_unlocked).toXmr().toString();
+          this.isOffline = false;
+          this.isLoading = false;
+          console.log(this.balance, this.balance_unlocked);
         },
         error: (error) => {
-          this.balance = 0;
-          this.offline = true;
-          console.log('Error while fetching balance');
+          this.balance = null;
+          this.balance_unlocked = null;
+          this.isOffline = true;
+          this.isLoading = false;
+          console.log('Error while fetching balance')
         }
       }
-    );
+    )
+  }
 
-    // // Get Wallet Unlocked Balance
-    // this.wallet.getbalance()
-    // .map(
-    //   (response) => new Atomic(response.unlocked_balance).toXmr().toString()
-    // )
-    // .subscribe(
-    //   {
-    //     next: (res) => {
-    //       value => this.balance_unlocked = value
-    //     },
-    //     error: (error) => {
-    //       value => this.balance = 'Problem querying balance' + value
-    //     }
-    //   }
-    // )
-
-    // Get the current transfers to this wallet
-    // const autoRefresher = (refreshInterval: number) =>
-    // Observable.timer(0, refreshInterval)
-
-    // const streamtransfers = () => autoRefresher(1000)
-    //   .flatMap(() => this.wallet.get_transfers({ pool: true }))
-    //   .map((res) => res.pool)
-    //   .filter((pool) => pool != undefined)
-    //   .subscribe(console.log,
-    //             console.error,
-    //             () => console.log('finished'))
-
-    // streamtransfers();
-
-    // console.log(this.address);
-    // console.log(this.balance);
-    // console.log(this.balance_unlocked);
+  ngOnInit() {
+    this.getWalletBalance();
     
+    // Get the current transfers to this wallet
+    const autoRefresher = (refreshInterval: number) =>
+    Observable.timer(0, refreshInterval)
+
+    const streamtransfers = () => autoRefresher(1000)
+      .flatMap(() => this.wallet.get_transfers({ pool: true }))
+      .map((res) => res.pool)
+      .filter((pool) => pool != undefined)
+      .subscribe(console.log,
+                console.error,
+                () => console.log('finished'))
+
+    streamtransfers();
   }
 
 }
