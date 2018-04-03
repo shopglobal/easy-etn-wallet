@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "@angular/forms": "^5.2.9",
-    "@ng-bootstrap/ng-bootstrap": "^1.0.2",
+    "@ng-bootstrap/ng-bootstrap": "^1.1.0",
     "@ng-select/ng-select": "^0.30.1",
     "@ngx-formly/bootstrap": "^2.0.0-rc.50",
     "@ngx-formly/core": "^2.0.0-rc.50",
@@ -67,7 +67,7 @@
     "@ngx-translate/core": "9.1.1",
     "@ngx-translate/http-loader": "2.0.1",
     "@types/core-js": "0.9.36",
-    "@types/datatables.net": "^1.10.8",
+    "@types/datatables.net": "^1.10.9",
     "@types/jasmine": "2.8.6",
     "@types/jasminewd2": "2.0.3",
     "@types/jquery": "^3.3.1",
