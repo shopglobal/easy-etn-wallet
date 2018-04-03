@@ -14,7 +14,7 @@
           <div class="card-footer bg-light">
             <div class="d-flex justify-content-between">
               <span [class.text-success]="(!isOffline) || (!isLoading)" [class.text-danger]="(isLoading) || (isOffline)">
-                <i class="fas fa-plug mr-2"></i>Status <span *ngIf="isOffline">Offline</span><span *ngIf="!isOffline">Online</span>
+                <i class="fas fa-plug mr-2"></i><span *ngIf="isOffline">Offline</span><span *ngIf="!isOffline">Online</span>
               </span>
               <span class="pointer text-primary" [class.text-success]="isLoading">
                 <a (click)="getWalletBalance()"><i class="fas fa-sync-alt mr-2" [class.fa-spin]="isLoading"></i>Refresh</a>
@@ -84,7 +84,7 @@
   <div class="modal-body">
     <div class="d-flex justify-content-center">
       <qrcode *ngIf="address" [qrdata]="address" [allowEmptyString]="true" [usesvg]="false" [colorlight]="'#fff'" [colordark]="'#444'" [size]="256" [level]="'M'"></qrcode>
-      <h3 *ngIf="!address">Wallet Offline</h3>
+      <h1 class="text-muted" *ngIf="!address">Wallet Offline</h1>
     </div>
   </div>
   <div class="modal-footer">

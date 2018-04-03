@@ -1,11 +1,33 @@
-<div class="container-fluid">
-  <div class="content text-white">
+<div class="container-fluid vh-center">
+  <div class="content">
 
     <!-- Begin Page Content -->
     <div class="row mx-auto">
-      <h1>Settings</h1>
+      <div class="col-12 p-4">
+        <div class="d-flex justify-content-center">
+
+          <!-- Form -->
+          <div class="col-6 mb-3" @enterAnimation>
+            <div class="card">
+              <div class="card-body text-white p-3">
+                <h5 class="card-title mb-4">Settings</h5>
+                <form [formGroup]="form" (ngSubmit)="submit(model)">
+                  <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
+                </form>
+              </div>
+              <div class="card-footer bg-light">
+                <div class="d-flex justify-content-end">
+                  <div class="my-auto">
+                    <a role="button" (click)="submit(model)" class="btn btn-sm btn-success">Save</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
     </div>
 
   </div>
 </div>
-  

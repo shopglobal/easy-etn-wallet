@@ -22,6 +22,22 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { DataTablesModule } from 'angular-datatables';
 import { QRCodeModule } from 'angularx-qrcode';
 
+// ngx Forms
+import {ReactiveFormsModule} from '@angular/forms';
+import {FormlyModule} from '@ngx-formly/core';
+import {FormlyBootstrapModule} from '@ngx-formly/bootstrap'; 
+
+// App Data Storage
+import { NgxWarehouseModule, WarehouseConfig, DRIVER_TYPE } from 'ngx-warehouse';
+
+const config: WarehouseConfig = {
+  driver: DRIVER_TYPE.DEFAULT,
+  name: 'Easy ETN Wallet',
+  version: 1.0,
+  storeName: 'key_value_pairs', // Should be alphanumeric, with underscores.
+  description: 'Unoffical Electroneum Desktop Wallet'
+};
+
 // App Services & Directives
 import { ElectronService } from './providers/electron.service';
 import { WebviewDirective } from './directives/webview.directive';
@@ -71,6 +87,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     NgSelectModule,
     DataTablesModule,
     QRCodeModule,
+    ReactiveFormsModule,
+    FormlyModule.forRoot(),
+    FormlyBootstrapModule,
+    NgxWarehouseModule.configureWarehouse(config),
     NgbModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
