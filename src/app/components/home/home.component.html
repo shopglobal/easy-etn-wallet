@@ -6,7 +6,7 @@
 
       <div class="col-4 mx-auto" @enterAnimation>
         <div class="card text-center mb-5">
-          <div class="card-body p-4">
+          <div class="card-body p-4" [class.flash]="isLoading">
             <h5 class="card-title text-white mb-3">Wallet Balance</h5>
             <h6 class="card-subtitle text-success mb-2">{{balance}} ETN</h6>
             <p class="card-text text-muted">Unlocked: {{balance_unlocked}} ETN</p>
@@ -14,25 +14,32 @@
           <div class="card-footer bg-light">
             <div class="d-flex justify-content-between">
               <span [class.text-success]="(!isOffline) || (!isLoading)" [class.text-danger]="(isLoading) || (isOffline)">
-                <i class="fas fa-plug mr-2"></i>Status
+                <i class="fas fa-plug mr-2"></i>Status <span *ngIf="isOffline">Offline</span><span *ngIf="!isOffline">Online</span>
               </span>
-              <span class="text-primary" [class.text-success]="isLoading"><a (click)="getWalletBalance()"><i class="fas fa-sync-alt" [class.fa-spin]="isLoading"></i></a></span>
+              <span class="pointer text-primary" [class.text-success]="isLoading">
+                <a (click)="getWalletBalance()"><i class="fas fa-sync-alt mr-2" [class.fa-spin]="isLoading"></i>Refresh</a>
+              </span>
             </div>
           </div>
         </div>
         <div class="card text-center">
-          <div class="card-body p-4">
+          <div class="card-body p-4" [class.flash]="isCopied">
             <h5 class="card-title text-white mb-3">Wallet Address</h5>
-            <textarea [class.flash]="isCopied" class="w-100" [(ngModel)]="address" #inputTarget rows="3" placeholder="etnkGmQZG1c1g8nXSe9qR6foYDdZxySnNS8odiHtLuB8WqhGQHEcsv17rUUyiW8wnagTKkcw29gQyNPSHnprf8Nz7sYNs2Mf2g"></textarea> 
+            <textarea class="w-100" [(ngModel)]="address" #inputTarget rows="3" placeholder="etnkGmQZG1c1g8nXSe9qR6foYDdZxySnNS8odiHtLuB8WqhGQHEcsv17rUUyiW8wnagTKkcw29gQyNPSHnprf8Nz7sYNs2Mf2g"></textarea> 
           </div>
           <div class="card-footer bg-light">
-            <div class="copy" [ngxClipboard]="inputTarget" (cbOnSuccess)="isCopied = true">
-              <span *ngIf="!isCopied" class="text-primary">
-                <i class="fas fa-copy mr-2"></i>Copy Address
+            <div class="d-flex justify-content-between">
+              <span class="pointer text-primary" (click)="openVerticallyCentered(content)">
+                <i class="fas fa-qrcode mr-2"></i>QR Code
               </span>
-              <span *ngIf="isCopied" class="text-success">
-                <i class="fas fa-check mr-2"></i>Copied to clipboard
-              </span>
+              <div class="pointer" [ngxClipboard]="inputTarget" (cbOnSuccess)="isCopied = true">
+                <span class="text-primary" *ngIf="!isCopied">
+                  <i class="fas fa-copy mr-2"></i>Copy
+                </span>
+                <span class="text-success" *ngIf="isCopied">
+                    <i class="fas fa-check mr-2"></i>Copied
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -66,3 +73,21 @@
 
   </div>
 </div>
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Wallet QR Code</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="d-flex justify-content-center">
+      <qrcode *ngIf="address" [qrdata]="address" [allowEmptyString]="true" [usesvg]="false" [colorlight]="'#fff'" [colordark]="'#444'" [size]="256" [level]="'M'"></qrcode>
+      <h3 *ngIf="!address">Wallet Offline</h3>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="c('Close click')">Close</button>
+  </div>
+</ng-template>

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { trigger, transition, query, style, stagger, animate } from '@angular/animations';
 import { makeUrl, Wallet, Atomic, Xmr, generatePaymentId } from 'rx-monero-wallet';
 import { Observable } from 'rxjs';
-import { BPClient } from 'blocking-proxy';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 export interface transactions {
   id: number;
@@ -85,7 +85,12 @@ export class HomeComponent implements OnInit {
     }
   ];
 
-  constructor() { 
+  constructor(private modalService: NgbModal) { 
+  }
+
+  // Modal Window
+  openVerticallyCentered(content) {
+    this.modalService.open(content, { centered: true });
   }
 
   getWalletBalance() {
@@ -113,7 +118,7 @@ export class HomeComponent implements OnInit {
           this.balance_unlocked = null;
           this.isOffline = true;
           this.isLoading = false;
-          console.log('Error while fetching balance')
+          console.log('Error while fetching balance');
         }
       }
     )
@@ -122,19 +127,19 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.getWalletBalance();
     
-    // Get the current transfers to this wallet
-    const autoRefresher = (refreshInterval: number) =>
-    Observable.timer(0, refreshInterval)
+    // // Get the current transfers to this wallet
+    // const autoRefresher = (refreshInterval: number) =>
+    // Observable.timer(0, refreshInterval)
 
-    const streamtransfers = () => autoRefresher(1000)
-      .flatMap(() => this.wallet.get_transfers({ pool: true }))
-      .map((res) => res.pool)
-      .filter((pool) => pool != undefined)
-      .subscribe(console.log,
-                console.error,
-                () => console.log('finished'))
+    // const streamtransfers = () => autoRefresher(1000)
+    //   .flatMap(() => this.wallet.get_transfers({ pool: true }))
+    //   .map((res) => res.pool)
+    //   .filter((pool) => pool != undefined)
+    //   .subscribe(console.log,
+    //             console.error,
+    //             () => console.log('finished'))
 
-    streamtransfers();
+    // streamtransfers();
   }
 
 }

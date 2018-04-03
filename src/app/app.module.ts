@@ -20,6 +20,7 @@ import { MomentModule } from 'angular2-moment';
 import { ClipboardModule } from 'ngx-clipboard';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { DataTablesModule } from 'angular-datatables';
+import { QRCodeModule } from 'angularx-qrcode';
 
 // App Services & Directives
 import { ElectronService } from './providers/electron.service';
@@ -69,6 +70,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ClipboardModule,
     NgSelectModule,
     DataTablesModule,
+    QRCodeModule,
     NgbModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
