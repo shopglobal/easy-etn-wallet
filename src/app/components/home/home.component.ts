@@ -107,8 +107,8 @@ export class HomeComponent implements OnInit {
     .subscribe(
       {
         next: (response) => {
-          new Atomic(this.balance).toXmr().toString();
-          new Atomic(this.balance_unlocked).toXmr().toString();
+          this.balance;
+          this.balance_unlocked;
           this.isOffline = false;
           this.isLoading = false;
           console.log(this.balance, this.balance_unlocked);
@@ -125,7 +125,11 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getWalletBalance();
+    //this.getWalletBalance();
+
+    this.wallet.getbalance()
+    .map((res) => new Atomic(res.balance).toXmr().toString())
+    .subscribe(console.log)
     
     // // Get the current transfers to this wallet
     // const autoRefresher = (refreshInterval: number) =>
