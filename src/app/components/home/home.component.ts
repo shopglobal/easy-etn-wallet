@@ -43,8 +43,8 @@ export class HomeComponent implements OnInit {
 
   url = makeUrl('http', 'localhost', '8080', 'json_rpc');
   wallet = Wallet(this.url);
-  balance: any = 0.00;
-  balance_unlocked: any = 0.00;
+  balance: any;
+  balance_unlocked: any;
   address: any;
   isCopied: boolean = false;
   isLoading: boolean = false;
@@ -100,8 +100,8 @@ export class HomeComponent implements OnInit {
     this.wallet.getbalance()
     .map(
       (response) => {
-        this.balance = new Atomic(response.balance).toXmr().toString();
-        this.balance_unlocked = new Atomic(response.unlocked_balance).toXmr().toString();
+        this.balance = (response.balance / 100);
+        this.balance_unlocked = (response.unlocked_balance / 100);
       }
     )
     .subscribe(
@@ -124,12 +124,35 @@ export class HomeComponent implements OnInit {
     )
   }
 
-  ngOnInit() {
-    //this.getWalletBalance();
+  getWalletAddress() {
+    this.wallet.getaddress()
+    .map(
+      (response) => {
+        this.address = response.address;
+        }
+    )
+    .subscribe(
+      {
+        next: (response) => {
+          this.address;
+          this.isOffline = false;
+          this.isLoading = false;
+          console.log(this.address);
+        },
+        error: (error) => {
+          this.address = null;
+          this.isOffline = true;
+          this.isLoading = false;
+          console.log('Error while fetching wallet address');
+        }
+      }
+    )
+  }
 
-    this.wallet.getbalance()
-    .map((res) => new Atomic(res.balance).toXmr().toString())
-    .subscribe(console.log)
+  ngOnInit() {
+  
+    this.getWalletBalance();
+    this.getWalletAddress();
     
     // // Get the current transfers to this wallet
     // const autoRefresher = (refreshInterval: number) =>

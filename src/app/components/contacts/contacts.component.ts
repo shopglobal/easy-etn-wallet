@@ -48,19 +48,8 @@ export class ContactsComponent implements OnInit {
           type: 'input',
           templateOptions: {
             type: 'text',
-            label: 'Dispay Name',
+            label: 'Display Name',
             placeholder: 'John Citizen',
-            required: true,
-          }
-        },
-        {
-          className: 'col-6',
-          key: 'address',
-          type: 'input',
-          templateOptions: {
-            type: 'text',
-            label: 'Wallet Address',
-            placeholder: 'etnkGmQZG1c1g8nXSe9qR6foYDdZxySnNS8odiHtLuB8WqhGQHEcsv17rUUyiW8wnagTKkcw29gQyNPSHnprf8Nz7sYNs2Mf2g',
             required: true,
           }
         },
@@ -70,8 +59,19 @@ export class ContactsComponent implements OnInit {
           type: 'input',
           templateOptions: {
             type: 'text',
-            label: 'Payment ID',
+            label: 'Payment ID (Optional)',
             placeholder: '034346653344545',
+            required: false,
+          }
+        },
+        {
+          className: 'col-12',
+          key: 'address',
+          type: 'input',
+          templateOptions: {
+            type: 'text',
+            label: 'Wallet Address',
+            placeholder: 'etnkGmQZG1c1g8nXSe9qR6foYDdZxySnNS8odiHtLuB8WqhGQHEcsv17rUUyiW8wnagTKkcw29gQyNPSHnprf8Nz7sYNs2Mf2g',
             required: true,
           }
         }
