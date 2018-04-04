@@ -79,7 +79,7 @@ export class SettingsComponent implements OnInit {
   ];
 
   submit(model) {
-    console.log(model);
+    // console.log(model);
     this.warehouse.set('settings', model).subscribe(
       (item) => {
         // do something with newly saved item
@@ -87,14 +87,25 @@ export class SettingsComponent implements OnInit {
       (error) => {
         // handle the error
       }
-    );
+    )
   }
 
   ngOnInit() {
     this.warehouse.get('settings').subscribe(
-      data => console.log(data),
-      error => console.log(error)
-    );
+      (data) => {
+        if (data) {
+          this.model = data
+        }
+        else if (!data) {
+          this.model = {}
+        }
+        console.log(this.model)
+      },
+      (error) => {
+        this.model = {},
+        console.log(error, this.model)
+      }
+    )
   }
 
 }

@@ -1,13 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { trigger, transition, query, style, stagger, animate } from '@angular/animations';
-
-export interface contacts {
-  id: number;
-  name: string;
-  address: string;
-  payid: string;
-  created: string;
-}
+import { FormGroup } from '@angular/forms';
+import { Warehouse } from 'ngx-warehouse';
+import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-contacts',
@@ -16,39 +12,107 @@ export interface contacts {
   animations: [
     trigger('stagger', [
       transition('* => *', [
-        query('#cards', style({ opacity: 0, transform: 'translateX(-40px)' })),
+        query('#cards', style({ opacity: 0, transform: 'translateX(-40px)' }), {optional: true}),
         query('#cards', stagger('300ms', [
           animate('600ms 1.2s ease-out', style({ opacity: 1, transform: 'translateX(0)' })),
-        ])),
+        ]), {optional: true}),
         query('#cards', [
           animate(1000, style('*'))
-        ])
+        ], {optional: true})
       ])
     ])
   ]
 })
 export class ContactsComponent implements OnInit {
 
-  public contacts: contacts[] = [
+  constructor(
+    public warehouse: Warehouse,
+    private modalService: NgbModal
+  ) {}
+
+  contacts: any[];
+
+  // Form Config
+  form = new FormGroup({});
+  model: any = {
+    created: Date.now()
+  };
+  options: FormlyFormOptions = {};
+  fields: FormlyFieldConfig[] = [
     {
-      id: 1,
-      name: 'John Doe',
-      address: 'etn47f7cff7a5e671884629c93b368cb18f58a993f4b19c2a53a8',
-      payid: '034346653344545',
-      created: '2018-03-20 14:23:45'
-    },
-    {
-      id: 2,
-      name: 'Jane Citizen',
-      address: 'etn47f7cff7a5e671884629c93b368cb18f58a993f4b19c2a53a9',
-      payid: '034346653344545',
-      created: '2018-03-10 14:23:45'
+      fieldGroupClassName: 'row',
+      fieldGroup: [
+        {
+          className: 'col-6',
+          key: 'name',
+          type: 'input',
+          templateOptions: {
+            type: 'text',
+            label: 'Dispay Name',
+            placeholder: 'John Citizen',
+            required: true,
+          }
+        },
+        {
+          className: 'col-6',
+          key: 'address',
+          type: 'input',
+          templateOptions: {
+            type: 'text',
+            label: 'Wallet Address',
+            placeholder: 'etnkGmQZG1c1g8nXSe9qR6foYDdZxySnNS8odiHtLuB8WqhGQHEcsv17rUUyiW8wnagTKkcw29gQyNPSHnprf8Nz7sYNs2Mf2g',
+            required: true,
+          }
+        },
+        {
+          className: 'col-6',
+          key: 'payid',
+          type: 'input',
+          templateOptions: {
+            type: 'text',
+            label: 'Payment ID',
+            placeholder: '034346653344545',
+            required: true,
+          }
+        }
+      ]
     }
   ];
 
-  constructor() { }
+  // Modal Window
+  openVerticallyCentered(content) {
+    this.modalService.open(content, { centered: true });
+  }
+
+  submit(model) {
+    // console.log(model);
+    model = this.contacts.concat(model);
+    this.warehouse.set('contacts', model).subscribe(
+      (item) => {
+        // do something with newly saved item
+      },
+      (error) => {
+        // handle the error
+      }
+    )
+  }
 
   ngOnInit() {
+    this.warehouse.get('contacts').subscribe(
+      (data) => {
+        if (data) {
+          this.contacts = data
+        }
+        else if (!data) {
+          this.contacts = []
+        }
+        console.log(this.contacts)
+      },
+      (error) => {
+        this.contacts = [],
+        console.log(error, this.contacts)
+      }
+    )
   }
 
 }

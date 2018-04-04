@@ -10,7 +10,7 @@
           <div class="col-6 mb-3" @enterAnimation>
             <div class="card">
               <div class="card-body text-white p-3">
-                <h5 class="card-title mb-4">Settings</h5>
+                <h5 class="card-title mb-3">Settings</h5>
                 <form [formGroup]="form" (ngSubmit)="submit(model)">
                   <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
                 </form>
@@ -18,7 +18,7 @@
               <div class="card-footer bg-light">
                 <div class="d-flex justify-content-end">
                   <div class="my-auto">
-                    <a role="button" (click)="submit(model)" class="btn btn-sm btn-success">Save</a>
+                    <a role="button" (click)="submit(model)" class="btn btn-sm btn-success">Save Settings</a>
                   </div>
                 </div>
               </div>

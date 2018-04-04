@@ -84,7 +84,7 @@
   <div class="modal-body">
     <div class="d-flex justify-content-center">
       <qrcode *ngIf="address" [qrdata]="address" [allowEmptyString]="true" [usesvg]="false" [colorlight]="'#fff'" [colordark]="'#444'" [size]="256" [level]="'M'"></qrcode>
-      <h1 class="text-muted" *ngIf="!address">Wallet Offline</h1>
+      <h1 class="text-muted my-4" *ngIf="!address">Wallet Offline</h1>
     </div>
   </div>
   <div class="modal-footer">
