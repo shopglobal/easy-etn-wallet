@@ -1,7 +1,16 @@
-import { Component } from '@angular/core';
-import { ElectronService } from './providers/electron.service';
+import { Component, OnInit } from '@angular/core';
+import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
+import { Observable } from 'rxjs/Observable';
+
+import { ElectronService } from './providers/electron.service';
 import { AppConfig } from './app.config';
+
+import { CONF_DEV } from '../environments/enviroment';
+import { Logger } from './core/logger.service';
+
+const log = new Logger('App');
 
 @Component({
   selector: 'app-root',
@@ -9,10 +18,15 @@ import { AppConfig } from './app.config';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor(public electronService: ElectronService,
-    private translate: TranslateService) {
+  constructor(
+    public electronService: ElectronService,
+    private translateService: TranslateService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private titleService: Title,
+  ) {
 
-    translate.setDefaultLang('en');
+    translateService.setDefaultLang('en');
     console.log('AppConfig', AppConfig);
 
     if (electronService.isElectron()) {
@@ -23,4 +37,16 @@ export class AppComponent {
       console.log('Mode web');
     }
   }
+
+  ngOnInit() {
+    console.log('App Base Page');
+    // Setup logger
+    if (CONF_DEV.production) {
+      Logger.enableProductionMode();
+    }
+
+    log.debug('init');
+
+  }
+
 }

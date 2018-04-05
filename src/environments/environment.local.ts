@@ -1,4 +1,10 @@
 export const CONF_LOCAL = {
   production: false,
-  environment: 'LOCAL'
+  environment: 'LOCAL',
+  serverUrl: '/api',
+  defaultLanguage: 'en-US',
+  supportedLanguages: [
+    'en-US',
+    'fr-FR'
+  ]
 };

@@ -1,0 +1,52 @@
+<div class="container-fluid vh-center">
+  <div class="content">
+
+    <!-- Begin Page Content -->
+    <div class="row mx-auto">
+      <div class="col-12">
+
+        <div class="d-flex justify-content-center">
+
+          <div class="card text-muted col-md-4 mx-auto">
+            <div class="card-body">
+              <div class="card-title text-center mb-4">
+                <img src="assets/logo-color.png" class="" alt="Wallet App" />
+              </div>
+              <form (ngSubmit)="login()" [formGroup]="loginForm" novalidate>
+                <div class="alert alert-danger" [hidden]="!error || isLoading" translate>
+                  Username or password incorrect.
+                </div>
+                <div class="form-group">
+                  <label class="d-block">
+                    <input type="text" class="form-control form-control-lg" formControlName="username" [placeholder]="'Username' | translate"/>
+                    <span hidden translate>Username</span>
+                    <small [hidden]="loginForm.controls.username.valid || loginForm.controls.username.untouched" class="text-danger" translate>
+                      Username is required
+                    </small>
+                  </label>
+                  <label class="d-block">
+                    <input type="password" class="form-control form-control-lg" formControlName="password" [placeholder]="'Password' | translate" required/>
+                    <span hidden translate>Password</span>
+                    <small [hidden]="loginForm.controls.password.valid || loginForm.controls.password.untouched" class="text-danger" translate>
+                      Password is required
+                    </small>
+                  </label>
+                  <div class="custom-control custom-checkbox mt-3">
+                    <input type="checkbox" class="custom-control-input" id="remember" formControlName="remember" />
+                    <label class="custom-control-label" for="remember" translate>Remember me</label>
+                  </div>
+                </div>
+                <button class="btn btn-lg btn-success w-100" type="submit" [disabled]="loginForm.invalid || isLoading">
+                  <i class="fa fa-cog fa-spin" [hidden]="!isLoading"></i>
+                  <span translate>Login</span>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>

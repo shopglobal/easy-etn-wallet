@@ -3,102 +3,59 @@ import 'zone.js/dist/zone-mix';
 import 'reflect-metadata';
 import '../polyfills';
 
-// Angular 
+// Angular Core
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpModule } from '@angular/http';
 
-// NG Translate
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-
-// 3rd Party 
+// 3rd Party
+import { TranslateModule } from '@ngx-translate/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { MomentModule } from 'angular2-moment';
-import { ClipboardModule } from 'ngx-clipboard';
-import { NgSelectModule } from '@ng-select/ng-select';
-import { DataTablesModule } from 'angular-datatables';
-import { QRCodeModule } from 'angularx-qrcode';
-
-// ngx Forms
-import {ReactiveFormsModule} from '@angular/forms';
-import {FormlyModule} from '@ngx-formly/core';
-import {FormlyBootstrapModule} from '@ngx-formly/bootstrap'; 
-
-// App Data Storage
-import { NgxWarehouseModule, WarehouseConfig, DRIVER_TYPE } from 'ngx-warehouse';
-
-const config: WarehouseConfig = {
-  driver: DRIVER_TYPE.DEFAULT,
-  name: 'Easy ETN Wallet',
-  version: 1.0,
-  storeName: 'key_value_pairs', // Should be alphanumeric, with underscores.
-  description: 'Unoffical Electroneum Desktop Wallet'
-};
 
 // App Services & Directives
 import { ElectronService } from './providers/electron.service';
 import { WebviewDirective } from './directives/webview.directive';
 
-// App Routing
-import { AppRoutingModule } from './app-routing.module';
-
-// App Components
+// App Components 
 import { AppComponent } from './app.component';
-import { NavbarComponent } from './components/navbar/navbar.component';
-import { HomeComponent } from './components/home/home.component';
-import { TransactionsComponent } from './components/transactions/transactions.component';
-import { TransfersComponent } from './components/transfers/transfers.component';
-import { PaymentsComponent } from './components/payments/payments.component';
-import { ContactsComponent } from './components/contacts/contacts.component';
-import { MiningComponent } from './components/mining/mining.component';
-import { MarketsComponent } from './components/markets/markets.component';
-import { SettingsComponent } from './components/settings/settings.component';
 
-// AoT requires an exported function for factories
-export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
-}
+// App Modules
+import { AppRoutingModule } from './app-routing.module';
+import { CoreModule } from './core/core.module';
+import { SharedModule } from './shared/shared.module';
+import { LoginModule } from './login/login.module';
+import { HomeModule } from './home/home.module';
+import { ContactsModule } from './contacts/contacts.module';
+import { MarketsModule } from './markets/markets.module';
+import { MiningModule } from './mining/mining.module';
+import { PaymentsModule } from './payments/payments.module';
+import { TransactionsModule } from './transactions/transactions.module';
+import { TransfersModule } from './transfers/transfers.module';
+import { SettingsModule } from './settings/settings.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavbarComponent,
-    HomeComponent,
-    TransactionsComponent,
-    TransfersComponent,
-    PaymentsComponent,
-    ContactsComponent,
-    MiningComponent,
-    MarketsComponent,
-    SettingsComponent,
-    WebviewDirective
-  ],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule,
     FormsModule,
-    HttpClientModule,
-    AppRoutingModule,
-    MomentModule,
-    ClipboardModule,
-    NgSelectModule,
-    DataTablesModule,
-    QRCodeModule,
-    ReactiveFormsModule,
-    FormlyModule.forRoot(),
-    FormlyBootstrapModule,
-    NgxWarehouseModule.configureWarehouse(config),
+    HttpModule,
+    TranslateModule.forRoot(),
     NgbModule.forRoot(),
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: (HttpLoaderFactory),
-        deps: [HttpClient]
-      }
-    })
+    CoreModule,
+    SharedModule,
+    LoginModule,
+    HomeModule,
+    ContactsModule,
+    MiningModule,
+    PaymentsModule,
+    TransactionsModule,
+    TransfersModule,
+    SettingsModule,
+    AppRoutingModule
+  ],
+  declarations: [
+    AppComponent,
+    WebviewDirective
   ],
   providers: [ElectronService],
   bootstrap: [AppComponent]
