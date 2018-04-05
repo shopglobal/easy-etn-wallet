@@ -1,1 +1,1 @@
-.\electroneum-wallet-rpc.exe --wallet-file TestWallet.etn --password Password1 --disable-rpc-login --rpc-bind-port 8080 --daemon-address daemon.electroneumpools.ga:26968
+.\electroneum-wallet-rpc.exe --wallet-file TestWallet.etn --password Password1 --disable-rpc-login --rpc-bind-port 8080 --daemon-address 66.175.216.72:26968
