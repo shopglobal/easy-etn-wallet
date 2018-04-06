@@ -5,26 +5,30 @@
     <div class="row mx-auto">
       <div class="col-12 p-4">
         <div class="transactions" @enterAnimation>
-          <table datatable [dtOptions]="dtOptions" class="table table-sm">
-            <thead class="thead-light">
-              <tr>
-                <th scope="col">Type</th>
-                <th scope="col">Amount</th>
-                <th scope="col">TxHash</th>
-                <th scope="col">Date</th>
-                <th scope="col">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let key of transactions">
-                <th [class.sent]="key.type == 'Sent'" [class.received]="key.type == 'Received'">{{key.type}}</th>
-                <td><span class="font-weight-bold">{{key.amount}}</span> ETN</td>
-                <td class="text-muted"><a href="https://blockexplorer.electroneum.com/search?value={{key.txhash}}" target="_blank">{{key.txhash}}</a></td>
-                <td>{{key.type}} {{key.date | amTimeAgo:true}} ago</td>
-                <td ><span class="badge px-2 py-1" [class.badge-danger]="key.status == 'Failed'" [class.badge-warning]="key.status == 'Pending'" [class.badge-success]="key.status == 'Completed'"><span class="text-uppercase">{{key.status}}</span></span></td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="card px-3 py-0">
+            <div class="card-body">
+              <table datatable [dtOptions]="dtOptions" class="table table-sm">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">Type</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">TxHash</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let key of transactions">
+                    <th [class.sent]="key.type == 'Sent'" [class.received]="key.type == 'Received'">{{key.type}}</th>
+                    <td><span class="font-weight-bold">{{key.amount}}</span> ETN</td>
+                    <td class="text-muted"><a href="https://blockexplorer.electroneum.com/search?value={{key.txhash}}" target="_blank">{{key.txhash}}</a></td>
+                    <td>{{key.type}} {{key.date | amTimeAgo:true}} ago</td>
+                    <td ><span class="badge px-2 py-1" [class.badge-danger]="key.status == 'Failed'" [class.badge-warning]="key.status == 'Pending'" [class.badge-success]="key.status == 'Completed'"><span class="text-uppercase">{{key.status}}</span></span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
     </div>

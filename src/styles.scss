@@ -99,8 +99,8 @@ select option {
   .dataTables_info,
   .dataTables_processing,
   .dataTables_paginate {
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
     align-items: center;
     color: #fff !important;
   }
@@ -111,10 +111,8 @@ select option {
     }
     input, button, select, optgroup, .paginate_button {
       height: 30px;
-      background: transparent;
-      color: #fff;
       padding: 5px;
-      border: 1px solid #fff;
+      border-radius: 2.5px;
     }
   }
 }
