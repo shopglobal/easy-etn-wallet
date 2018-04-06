@@ -25,6 +25,8 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 })
 export class ContactsComponent implements OnInit {
 
+  closeResult: string;
+
   constructor(
     public warehouse: Warehouse,
     private modalService: NgbModal
@@ -81,7 +83,7 @@ export class ContactsComponent implements OnInit {
 
   // Modal Window
   openVerticallyCentered(content) {
-    this.modalService.open(content, { centered: true });
+    this.modalService.open(content, { size: 'lg', centered: true });
   }
 
   submit(model) {

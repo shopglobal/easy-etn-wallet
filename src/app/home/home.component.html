@@ -102,7 +102,7 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="modal-body">
+  <div class="modal-body bg-light">
     <div class="d-flex justify-content-center">
       <qrcode *ngIf="address" [qrdata]="address" [allowEmptyString]="true" [usesvg]="false" [colorlight]="'#fff'" [colordark]="'#444'" [size]="256" [level]="'M'"></qrcode>
       <h1 class="text-muted my-4" *ngIf="!address">Wallet Offline</h1>
