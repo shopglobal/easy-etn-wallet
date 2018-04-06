@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { NgbModule, NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
 import { AuthenticationService } from '../../authentication/authentication.service';
+import { makeUrl, Wallet } from 'rx-monero-wallet';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -9,7 +11,16 @@ import { AuthenticationService } from '../../authentication/authentication.servi
   styleUrls: ['./header.component.scss'],
   providers: [NgbDropdownConfig] // add NgbDropdownConfig to the component providers
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
+
+  // Wallet Connect
+  url = makeUrl('http', 'localhost', '8080', 'json_rpc');
+  wallet = Wallet(this.url);
+  interval = 15000; // 15 seconds
+
+  // States
+  alive: boolean = true;
+  isOffline: boolean = true;
 
   constructor(
     public router: Router,
@@ -27,8 +38,37 @@ export class HeaderComponent implements OnInit {
     .subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
   }
 
+  getWalletAddress() {
+    this.wallet.getaddress()
+    .map((res) => res.address)
+    .subscribe(
+      {
+        next: (response) => {
+          this.isOffline = false;
+        },
+        error: (error) => {
+          this.isOffline = true;
+        }
+      }
+    )
+  }
+
   ngOnInit() {
+    // Subscribe to routes
     this.route.params.subscribe( params => { const key = <string>params['key']; } );
+
+    // Check wallet status
+    Observable.timer(0, this.interval)
+    .takeWhile(() => this.alive)
+    .subscribe(() => {
+      this.getWalletAddress();
+      }
+    );
+
+  }
+
+  ngOnDestroy(){
+    this.alive = false; // switches your Observable off
   }
 
 }

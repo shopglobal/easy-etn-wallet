@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { trigger, transition, query, style, stagger, animate } from '@angular/animations';
 import { makeUrl, Wallet, Atomic, Xmr, generatePaymentId } from 'rx-monero-wallet';
-import { Observable } from 'rxjs';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { Observable } from 'rxjs';
 
 export interface transactions {
   id: number;
@@ -39,16 +39,21 @@ export interface transactions {
     )
   ]
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
 
+  // Wallet Connect
   url = makeUrl('http', 'localhost', '8080', 'json_rpc');
   wallet = Wallet(this.url);
-  balance: any;
-  balance_unlocked: any;
-  address: any;
+  interval = 15000; // 15 seconds
+  balance: any = 0.00;
+  balance_unlocked: any = 0.00;
+  address: any = 0.00;
+
+  // States
+  alive: boolean = true;
   isCopied: boolean = false;
   isLoading: boolean = false;
-  isOffline: boolean = false;
+  isOffline: boolean = true;
 
   public transactions: transactions[] = [
     {
@@ -114,8 +119,8 @@ export class HomeComponent implements OnInit {
           console.log(this.balance, this.balance_unlocked);
         },
         error: (error) => {
-          this.balance = null;
-          this.balance_unlocked = null;
+          this.balance = 0.00;
+          this.balance_unlocked = 0.00;
           this.isOffline = true;
           this.isLoading = false;
           console.log('Error while fetching balance');
@@ -150,23 +155,17 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-  
-    this.getWalletBalance();
-    this.getWalletAddress();
-    
-    // // Get the current transfers to this wallet
-    // const autoRefresher = (refreshInterval: number) =>
-    // Observable.timer(0, refreshInterval)
+    Observable.timer(0, this.interval)
+    .takeWhile(() => this.alive)
+    .subscribe(() => {
+      this.getWalletBalance();
+      this.getWalletAddress();
+      }
+    )
+  }
 
-    // const streamtransfers = () => autoRefresher(1000)
-    //   .flatMap(() => this.wallet.get_transfers({ pool: true }))
-    //   .map((res) => res.pool)
-    //   .filter((pool) => pool != undefined)
-    //   .subscribe(console.log,
-    //             console.error,
-    //             () => console.log('finished'))
-
-    // streamtransfers();
+  ngOnDestroy(){
+    this.alive = false; // switches your Observable off
   }
 
 }

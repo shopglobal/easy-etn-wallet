@@ -4,19 +4,31 @@
   left: 0;
   height: 80px;
   width: 100%;
-  font-size: 21px;
+  font-size: 22px;
   z-index: 1;
 
   .navbar-brand img {
-    height: 85px;
+    height: 60px;
   }
 
   .nav-link.active {
-    color: #0073dd;
+    color: #22BDE1;
   }
 
-  .settings {
-    font-size: 32px;
+  .dropdown-item {
+    cursor: pointer;
+    color: #555;
   }
 
+  .status {
+    font-size: 30px;
+    animation: flash linear 4s infinite;
+  }
+
+}
+
+@keyframes flash {
+  0% { opacity: 1; }
+  50% { opacity: .1; }
+	100% { opacity: 1; }
 }

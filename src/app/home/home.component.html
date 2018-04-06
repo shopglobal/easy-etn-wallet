@@ -5,40 +5,61 @@
     <div class="row mx-auto">
 
       <div class="col-4 mx-auto" @enterAnimation>
-        <div class="card text-center mb-5">
-          <div class="card-body p-4" [class.flash]="isLoading">
-            <h5 class="card-title text-white mb-3">Wallet Balance</h5>
-            <h6 class="card-subtitle text-success mb-2">{{balance}} ETN</h6>
-            <p class="card-text text-muted">Unlocked: {{balance_unlocked}} ETN</p>
+        <div class="card mb-4">
+          <div class="card-body p-3" [class.flash]="isLoading">
+            <h5 class="card-title text-white mb-4">Balance</h5>
+            <div class="d-flex justify-content-center">
+              <div *ngIf="!isOffline">
+                <h6 class="card-subtitle text-success mb-2">{{balance | async}} ETN</h6>
+                <p class="card-text text-muted">Unlocked: {{balance_unlocked | async}} ETN</p>
+              </div>
+              <div *ngIf="isOffline">
+                <h1 class="text-muted flash my-4">Wallet Offline</h1>
+              </div>
+            </div>
           </div>
           <div class="card-footer bg-light">
             <div class="d-flex justify-content-between">
-              <span [class.text-success]="(!isOffline) || (!isLoading)" [class.text-danger]="(isLoading) || (isOffline)">
-                <i class="fas fa-plug mr-2"></i><span *ngIf="isOffline">Offline</span><span *ngIf="!isOffline">Online</span>
+              <span class="pointer" [class.text-muted]="!isLoading" [class.text-success]="isLoading">
+                <a (click)="getWalletBalance()">
+                  <i class="fas fa-sync-alt mr-2" [class.fa-spin]="isLoading"></i>
+                  <span *ngIf="!isLoading">Refresh</span>
+                  <span *ngIf="isLoading">Refreshing</span>
+                </a>
               </span>
-              <span class="pointer text-primary" [class.text-success]="isLoading">
-                <a (click)="getWalletBalance()"><i class="fas fa-sync-alt mr-2" [class.fa-spin]="isLoading"></i>Refresh</a>
-              </span>
+              <a class="pointer text-muted" routerLink="/transfers" routerLinkActive="active">
+                <i class="fas fa-paper-plane mr-2"></i>Send Coins
+              </a>
             </div>
           </div>
         </div>
-        <div class="card text-center">
-          <div class="card-body p-4" [class.flash]="isCopied">
-            <h5 class="card-title text-white mb-3">Wallet Address</h5>
-            <textarea class="w-100" [(ngModel)]="address" #inputTarget rows="3" placeholder="etnkGmQZG1c1g8nXSe9qR6foYDdZxySnNS8odiHtLuB8WqhGQHEcsv17rUUyiW8wnagTKkcw29gQyNPSHnprf8Nz7sYNs2Mf2g"></textarea> 
+        <div class="card">
+          <div class="card-body p-3" [class.flash]="(isCopied || isLoading)">
+            <h5 class="card-title text-white mb-4">Address</h5>
+            <div class="d-flex justify-content-center">
+              <div *ngIf="!isOffline">
+                <textarea [(ngModel)]="address" #inputTarget rows="3" placeholder="etnkGmQZG1c1g8nXSe9qR6foYDdZxySnNS8odiHtLuB8WqhGQHEcsv17rUUyiW8wnagTKkcw29gQyNPSHnprf8Nz7sYNs2Mf2g"></textarea> 
+              </div>
+              <div *ngIf="isOffline">
+                <h1 class="text-muted flash my-4">Wallet Offline</h1>
+              </div>
+            </div>
           </div>
           <div class="card-footer bg-light">
             <div class="d-flex justify-content-between">
-              <span class="pointer text-primary" (click)="openVerticallyCentered(content)">
-                <i class="fas fa-qrcode mr-2"></i>QR Code
-              </span>
-              <div class="pointer" [ngxClipboard]="inputTarget" (cbOnSuccess)="isCopied = true">
-                <span class="text-primary" *ngIf="!isCopied">
-                  <i class="fas fa-copy mr-2"></i>Copy
+              <div class="pointer text-muted" [ngxClipboard]="inputTarget" (cbOnSuccess)="isCopied = true">
+                <span *ngIf="!isCopied">
+                  <i class="fas fa-copy mr-2"></i>
+                  <span>Copy</span>
                 </span>
                 <span class="text-success" *ngIf="isCopied">
-                    <i class="fas fa-check mr-2"></i>Copied
+                  <i class="fas fa-check mr-2"></i>
+                  <span>Copied</span>
                 </span>
+              </div>
+              <div class="pointer text-muted" (click)="openVerticallyCentered(content)">
+                <i class="fas fa-qrcode mr-2"></i>
+                <span>QR Code</span>
               </div>
             </div>
           </div>

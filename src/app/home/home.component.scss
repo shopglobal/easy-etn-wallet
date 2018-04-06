@@ -8,8 +8,10 @@
   }
 
   .card-body {
+    min-height: 215px;
+
     .card-title {
-      font-size: 1.9rem;
+      font-size: 1.5rem;
     }
 
     .card-subtitle {
@@ -25,6 +27,7 @@
 }
 
 textarea {
+  width: 100%;
   padding: 15px;
   color: #fff;
   background: transparent;
@@ -36,11 +39,11 @@ textarea::placeholder {
 
 .list-group-item {
   background: rgba(255, 255, 255, 0.95);
-  margin-bottom: 19px;
+  margin-bottom: 18px;
 }
 
 .list-group-item.sent {
-  border-left: 10px solid #0073dd;
+  border-left: 10px solid #17a2b8;
 }
 
 .list-group-item.received {
@@ -49,15 +52,20 @@ textarea::placeholder {
 
 .pointer {
   cursor: pointer;
+  
+  &:hover {
+    color: #23bee0 !important;
+    text-decoration: underline;
+  }
 }
 
 /* Flash class and keyframe animation */
 .flash{
-	animation: flash linear 0.5s;
+	animation: flash linear 2s infinite;
 }
 
 @keyframes flash {
-	0% { color: #16aa58; opacity: 1; } 
-	50% { color: #16aa58; opacity: .5; } 
-	100% { color: #16aa58; opacity: 1; }
+  0% { opacity: 1; }
+  50% { opacity: .5; }
+	100% { opacity: 1; }
 }

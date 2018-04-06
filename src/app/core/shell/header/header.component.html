@@ -23,24 +23,24 @@
       <li class="nav-item mx-2">
         <a class="nav-link" routerLink="/transfers" routerLinkActive="active"><i class="fas fa-paper-plane mr-2"></i>Transfers</a>
       </li>
+      <li class="nav-item mx-2 dropdown" ngbDropdown>
+        <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ngbDropdownToggle>
+          <i class="fas fa-star mr-2"></i>More
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown" ngbDropdownMenu>
+          <a class="dropdown-item" routerLink="/payments" routerLinkActive="active"><i class="fas fa-clock mr-2"></i>Schedule</a>
+          <a class="dropdown-item" routerLink="/markets" routerLinkActive="active"><i class="fas fa-chart-line mr-2"></i>Market / Price</a>
+          <a class="dropdown-item" routerLink="/mining" routerLinkActive="active"><i class="fas fa-gem mr-2"></i>CPU Mining</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" routerLink="/settings" routerLinkActive="active"><i class="fas fa-cog mr-2"></i>Settings</a>
+          <a class="dropdown-item" (click)="logout()"><i class="fas fa-power-off mr-2"></i>Logout</a>
+        </div>
+      </li>
     </ul>
 
-    <div class="btn-group mr-3">
-      <button type="button" class="btn btn-secondary">More</button>
-      <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
-        <button class="btn btn-secondary dropdown-toggle-split" ngbDropdownToggle></button>
-        <div class="dropdown-menu" ngbDropdownMenu>
-          <a class="dropdown-item" routerLink="/payments" routerLinkActive="active"><i class="fas fa-clock mr-2"></i>Schedule Payments</a>
-          <a class="dropdown-item" routerLink="/mining" routerLinkActive="active"><i class="fas fa-gem mr-2"></i>CPU Mining</a>
-          <a class="dropdown-item" routerLink="/markets" routerLinkActive="active"><i class="fas fa-chart-line mr-2"></i>Crypto Markets</a>
-          <a class="dropdown-item" (click)="logout()"><i class="fas fa-user mr-2"></i>Logout</a>
-        </div>
-      </div>
+    <div class="status mx-2" [class.text-success]="!isLoading" [class.text-danger]="isOffline">
+      <i class="fas fa-plug mr-2"></i>
     </div>
-
-    <span class="navbar-text settings">
-      <a class="nav-link text-dark" routerLink="/settings" routerLinkActive="active"><i class="fas fa-cog"></i></a>
-    </span>
 
   </div>
 
