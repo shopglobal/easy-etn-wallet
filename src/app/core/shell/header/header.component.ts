@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./header.component.scss'],
   providers: [NgbDropdownConfig] // add NgbDropdownConfig to the component providers
 })
+
 export class HeaderComponent implements OnInit, OnDestroy {
 
   // Wallet Connect
@@ -45,12 +46,28 @@ export class HeaderComponent implements OnInit, OnDestroy {
       {
         next: (response) => {
           this.isOffline = false;
+          this.onlineAudio();
         },
         error: (error) => {
           this.isOffline = true;
+          this.offlineAudio();
         }
       }
     )
+  }
+
+  offlineAudio() {
+    let audio = new Audio();
+    audio.src = "./assets/offline.wav";
+    audio.load();
+    audio.play();
+  }
+
+  onlineAudio() {
+    let audio = new Audio();
+    audio.src = "./assets/online.wav";
+    audio.load();
+    audio.play();
   }
 
   ngOnInit() {
@@ -64,7 +81,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.getWalletAddress();
       }
     );
-
   }
 
   ngOnDestroy(){
