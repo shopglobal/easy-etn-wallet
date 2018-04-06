@@ -44,10 +44,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   // Wallet Connect
   url = makeUrl('http', 'localhost', '8080', 'json_rpc');
   wallet = Wallet(this.url);
-  interval = 15000; // 15 seconds
+  interval = 30000; // 30 seconds
   balance: any = 0.00;
   balance_unlocked: any = 0.00;
-  address: any = 0.00;
+  address: string;
 
   // States
   alive: boolean = true;
@@ -101,7 +101,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   getWalletBalance() {
     // Get Wallet Balance
     this.isLoading = true;
-    this.isOffline = true;
     this.wallet.getbalance()
     .map(
       (response) => {
@@ -130,6 +129,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   getWalletAddress() {
+    // Get Wallet Address
+    this.isLoading = true;
     this.wallet.getaddress()
     .map(
       (response) => {
@@ -152,6 +153,24 @@ export class HomeComponent implements OnInit, OnDestroy {
         }
       }
     )
+  }
+
+  copyAddress(address: string){
+    let textarea = document.createElement('textarea');
+    textarea.value = address;
+    document.body.appendChild(textarea);
+    textarea.focus();
+    textarea.select();
+    try {
+      var successful = document.execCommand('copy');
+      var msg = successful ? 'successful' : 'unsuccessful';
+      this.isCopied = true;
+      console.log('Copying address command was ' + msg);
+    } catch (err) {
+      this.isCopied = false;
+      console.log('Oops, unable to copy address');
+    }
+    document.body.removeChild(textarea);
   }
 
   ngOnInit() {

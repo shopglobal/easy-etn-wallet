@@ -9,7 +9,6 @@ import { FormsModule } from '@angular/forms';
 // 3rd Party 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MomentModule } from 'angular2-moment';
-import { ClipboardModule } from 'ngx-clipboard';
 import { QRCodeModule } from 'angularx-qrcode';
 
 import { HomeRoutingModule } from './home-routing.module';
@@ -25,7 +24,6 @@ import { HomeComponent } from './home.component';
     HomeRoutingModule,
     NgbModule,
     MomentModule,
-    ClipboardModule,
     QRCodeModule
   ],
   declarations: [

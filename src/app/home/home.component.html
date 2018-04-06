@@ -9,12 +9,12 @@
           <div class="card-body p-3" [class.flash]="isLoading">
             <h5 class="card-title text-white mb-4">Balance</h5>
             <div class="d-flex justify-content-center">
-              <div *ngIf="!isOffline">
-                <h6 class="card-subtitle text-success mb-2">{{balance | async}} ETN</h6>
-                <p class="card-text text-muted">Unlocked: {{balance_unlocked | async}} ETN</p>
+              <div class="text-center" *ngIf="!isOffline">
+                  <p class="card-text text-muted mb-2">Unlocked: {{balance_unlocked}} ETN</p>
+                <h6 class="card-subtitle text-success mb-2">{{balance}} ETN</h6>
               </div>
               <div *ngIf="isOffline">
-                <h1 class="text-muted flash my-4">Wallet Offline</h1>
+                <h1 class="text-muted warning pt-2 my-4">Wallet Offline</h1>
               </div>
             </div>
           </div>
@@ -34,24 +34,24 @@
           </div>
         </div>
         <div class="card">
-          <div class="card-body p-3" [class.flash]="(isCopied || isLoading)">
+          <div class="card-body p-3" [class.flash]="isCopied" [class.warning]="isLoading">
             <h5 class="card-title text-white mb-4">Address</h5>
             <div class="d-flex justify-content-center">
               <div *ngIf="!isOffline">
-                <textarea [(ngModel)]="address" #inputTarget rows="3" placeholder="etnkGmQZG1c1g8nXSe9qR6foYDdZxySnNS8odiHtLuB8WqhGQHEcsv17rUUyiW8wnagTKkcw29gQyNPSHnprf8Nz7sYNs2Mf2g"></textarea> 
+                <textarea id="#address" [(ngModel)]="address" rows="3" placeholder="etnkGmQZG1c1g8nXSe9qR6foYDdZxySnNS8odiHtLuB8WqhGQHEcsv17rUUyiW8wnagTKkcw29gQyNPSHnprf8Nz7sYNs2Mf2g"></textarea> 
               </div>
               <div *ngIf="isOffline">
-                <h1 class="text-muted flash my-4">Wallet Offline</h1>
+                <h1 class="text-muted warning pt-2 my-4">Wallet Offline</h1>
               </div>
             </div>
           </div>
           <div class="card-footer bg-light">
             <div class="d-flex justify-content-between">
-              <div class="pointer text-muted" [ngxClipboard]="inputTarget" (cbOnSuccess)="isCopied = true">
-                <span *ngIf="!isCopied">
+              <div class="pointer text-muted">
+                <div *ngIf="!isCopied" (click)="copyAddress(address)">
                   <i class="fas fa-copy mr-2"></i>
                   <span>Copy</span>
-                </span>
+                </div>
                 <span class="text-success" *ngIf="isCopied">
                   <i class="fas fa-check mr-2"></i>
                   <span>Copied</span>

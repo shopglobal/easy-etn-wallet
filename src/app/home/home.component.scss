@@ -19,7 +19,7 @@
     }
 
     .card-text {
-      font-size: 1.3rem;
+      font-size: 1.5rem;
     }
 
   }
@@ -27,7 +27,7 @@
 }
 
 textarea {
-  width: 100%;
+  min-width: 390px;
   padding: 15px;
   color: #fff;
   background: transparent;
@@ -60,12 +60,16 @@ textarea::placeholder {
 }
 
 /* Flash class and keyframe animation */
-.flash{
+.warning {
 	animation: flash linear 2s infinite;
+}
+
+.flash {
+	animation: flash linear 2s;
 }
 
 @keyframes flash {
   0% { opacity: 1; }
-  50% { opacity: .5; }
+  50% { opacity: .1; }
 	100% { opacity: 1; }
 }
