@@ -50,7 +50,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   address: string;
 
   // States
-  alive: boolean = true;
+  isAlive: boolean = true;
   isCopied: boolean = false;
   isLoading: boolean = false;
   isOffline: boolean = true;
@@ -175,7 +175,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     Observable.timer(0, this.interval)
-    .takeWhile(() => this.alive)
+    .takeWhile(() => this.isAlive)
     .subscribe(() => {
       this.getWalletBalance();
       this.getWalletAddress();
@@ -184,7 +184,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(){
-    this.alive = false; // switches your Observable off
+    this.isAlive = false; // switches your Observable off
   }
 
 }

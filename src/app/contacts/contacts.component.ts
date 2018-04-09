@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { trigger, transition, query, style, stagger, animate } from '@angular/animations';
 import { FormGroup } from '@angular/forms';
-import { Warehouse } from 'ngx-warehouse';
 import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { Warehouse } from 'ngx-warehouse';
+import { makeUrl, Wallet } from 'rx-monero-wallet';
 
 @Component({
   selector: 'app-contacts',
@@ -25,6 +26,10 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 })
 export class ContactsComponent implements OnInit {
 
+  // Wallet Connect
+  url = makeUrl('http', 'localhost', '8080', 'json_rpc');
+  wallet = Wallet(this.url);
+  interval = 30000; // 30 seconds
   closeResult: string;
 
   constructor(
@@ -86,35 +91,24 @@ export class ContactsComponent implements OnInit {
     this.modalService.open(content, { size: 'lg', centered: true });
   }
 
+  // On Submit
   submit(model) {
-    // console.log(model);
-    model = this.contacts.concat(model);
-    this.warehouse.set('contacts', model).subscribe(
-      (item) => {
-        // do something with newly saved item
-      },
-      (error) => {
-        // handle the error
-      }
-    )
+    this.wallet.add_address_book(this.model)
+    .map((res) => res)
+    .subscribe(console.log);
+  }
+
+  // Get Contacts
+  GetAddressBookContacts() {
+    this.wallet.get_address_book({
+      entries: [0,1]
+    })
+    .map((res) => res)
+    .subscribe(console.log)
   }
 
   ngOnInit() {
-    this.warehouse.get('contacts').subscribe(
-      (data) => {
-        if (data) {
-          this.contacts = data
-        }
-        else if (!data) {
-          this.contacts = []
-        }
-        console.log(this.contacts)
-      },
-      (error) => {
-        this.contacts = [],
-        console.log(error, this.contacts)
-      }
-    )
+    this.GetAddressBookContacts();
   }
 
 }

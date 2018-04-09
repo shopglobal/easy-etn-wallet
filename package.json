@@ -48,7 +48,7 @@
     "electron-titlebar": "0.0.3",
     "jquery": "^3.3.1",
     "ngx-warehouse": "^1.0.2",
-    "rx-monero-wallet": "^1.0.15"
+    "rx-monero-wallet": "git://github.com/dl3br/rx-monero-wallet.git#164b06304f46336ed31e5f3dac9da18d5816a2dd"
   },
   "devDependencies": {
     "@angular/animations": "^5.2.9",

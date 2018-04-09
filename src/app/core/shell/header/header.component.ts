@@ -20,7 +20,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   interval = 15000; // 15 seconds
 
   // States
-  alive: boolean = true;
+  isAlive: boolean = true;
   isOffline: boolean = true;
 
   constructor(
@@ -46,24 +46,24 @@ export class HeaderComponent implements OnInit, OnDestroy {
       {
         next: (response) => {
           this.isOffline = false;
-          this.onlineAudio();
+          //this.playOnlineAudio();
         },
         error: (error) => {
           this.isOffline = true;
-          this.offlineAudio();
+          //this.playOfflineAudio();
         }
       }
     )
   }
 
-  offlineAudio() {
+  playOfflineAudio() {
     let audio = new Audio();
     audio.src = "./assets/offline.wav";
     audio.load();
     audio.play();
   }
 
-  onlineAudio() {
+  playOnlineAudio() {
     let audio = new Audio();
     audio.src = "./assets/online.wav";
     audio.load();
@@ -76,7 +76,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     // Check wallet status
     Observable.timer(0, this.interval)
-    .takeWhile(() => this.alive)
+    .takeWhile(() => this.isAlive)
     .subscribe(() => {
       this.getWalletAddress();
       }
@@ -84,7 +84,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(){
-    this.alive = false; // switches your Observable off
+    this.isAlive = false; // switches your Observable off
   }
 
 }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { trigger, style, animate, transition } from '@angular/animations';
 import { Warehouse } from 'ngx-warehouse';
-import { FormlyFieldConfig } from '@ngx-formly/core';
+import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
 
 @Component({
   selector: 'app-settings',
@@ -27,6 +27,9 @@ export class SettingsComponent implements OnInit {
   form = new FormGroup({});
   model = {};
   fields: FormlyFieldConfig[] = [
+    {
+      template: '<h5 class="card-title mb-3">Your Details</h5>',
+    },
     {
       fieldGroupClassName: 'row',
       fieldGroup: [
@@ -54,6 +57,25 @@ export class SettingsComponent implements OnInit {
         },
         {
           className: 'col-6',
+          key: 'email',
+          type: 'input',
+          templateOptions: {
+            label: 'Email',
+            type: 'email',
+            placeholder: 'you@youremail.com',
+            required: true,
+          }
+        }
+      ]
+    },
+    {
+      template: '<hr class="bg-light my-3" /><h5 class="card-title mb-3">Wallet Information</h5>',
+    },
+    {
+      fieldGroupClassName: 'row',
+      fieldGroup: [
+        {
+          className: 'col-6',
           key: 'wallet',
           type: 'input',
           templateOptions: {
@@ -72,6 +94,36 @@ export class SettingsComponent implements OnInit {
             label: 'Wallet Password',
             placeholder: 'Password1',
             required: true,
+          }
+        },
+      ]
+    },
+    {
+      template: '<hr class="bg-light my-3" /><h5 class="card-title mb-3">App Configuration</h5>',
+    },
+    {
+      fieldGroupClassName: 'row',
+      fieldGroup: [
+        {
+          className: 'col-6',
+          key: 'refresh',
+          type: 'input',
+          templateOptions: {
+            type: 'number',
+            placeholder: '30',
+            addonRight: {
+              text: 'Seconds',
+            },
+            label: 'Refresh Interval',
+            required: true,
+          }
+        },
+        {
+          className: 'col-6 my-auto mx-auto',
+          key: 'sounds',
+          type: 'checkbox',
+          templateOptions: {
+            label: 'Enable Sounds?',
           }
         }
       ]
