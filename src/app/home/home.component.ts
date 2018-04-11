@@ -42,9 +42,9 @@ export interface transactions {
 export class HomeComponent implements OnInit, OnDestroy {
 
   // Wallet Connect
-  url = makeUrl('http', '66.175.216.72', '8080', 'json_rpc');
+  url = makeUrl('http', '66.175.216.72', '80', 'json_rpc');
   wallet = Wallet(this.url);
-  interval = 30000; // 30 seconds
+  interval = 120000; // 30 seconds
   balance: any = 0.00;
   balance_unlocked: any = 0.00;
   address: string;

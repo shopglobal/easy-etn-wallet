@@ -10,17 +10,18 @@
 
         <div class="contacts" @stagger>
           <div class="row m-0 p-0">
-            <div *ngFor="let key of contacts" id="cards" class="col-5 col-xl-4 mb-3">
-              <div class="card">
+            <div *ngFor="let key of contacts" class="col-5 col-xl-4 mb-3">
+              <div id="cards" class="card">
                 <div class="card-body">
-                  <h5 class="card-title mb-1"><i class="fas fa-user-circle text-secondary mr-2"></i>{{key.name}}</h5>
+                  <h5 class="card-title mb-1"><i class="fas fa-user-circle text-secondary mr-2"></i>{{key.description}}</h5>
                   <hr class="bg-secondary mb-4" />
                   <h6 class="card-subtitle mb-2">Address</h6>
                   <p class="card-text">{{key.address}}</p>
+                  <p class="card-text text-muted">{{key.payment_id}}</p>
                 </div>
                 <div class="card-footer bg-light">
-                  <span class="float-left">Created {{key.created | amTimeAgo:true}} ago</span>
-                  <span class="float-right"><a href="#"><i class="fas fa-trash text-primary"></i></a></span>
+                  <span class="float-left">ID {{key.index}}</span>
+                  <span class="float-right"><a (click)="DeleteAddressBookContact(key.index)"><i class="fas fa-trash text-primary"></i></a></span>
                   <span class="float-right mr-3"><a href="#"><i class="fas fa-edit text-primary"></i></a></span>
                 </div>
               </div>

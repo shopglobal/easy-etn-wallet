@@ -5,6 +5,8 @@ import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Warehouse } from 'ngx-warehouse';
 import { makeUrl, Wallet, Atomic, Xmr, generatePaymentId } from '../core/wallet.service';
+import { JsonPipe } from '@angular/common';
+import { toArray } from 'rxjs/operator/toArray';
 
 @Component({
   selector: 'app-contacts',
@@ -27,17 +29,16 @@ import { makeUrl, Wallet, Atomic, Xmr, generatePaymentId } from '../core/wallet.
 export class ContactsComponent implements OnInit {
 
   // Wallet Connect
-  url = makeUrl('http', '66.175.216.72', '8080', 'json_rpc');
+  url = makeUrl('http', '66.175.216.72', '80', 'json_rpc');
   wallet = Wallet(this.url);
-  interval = 30000; // 30 seconds
+  interval = 120000; // 30 seconds
   closeResult: string;
+  contacts;
 
   constructor(
     public warehouse: Warehouse,
     private modalService: NgbModal
   ) {}
-
-  contacts: any[];
 
   // Form Config
   form = new FormGroup({});
@@ -49,7 +50,7 @@ export class ContactsComponent implements OnInit {
       fieldGroup: [
         {
           className: 'col-6',
-          key: 'displayname',
+          key: 'description',
           type: 'input',
           templateOptions: {
             type: 'text',
@@ -60,7 +61,7 @@ export class ContactsComponent implements OnInit {
         },
         {
           className: 'col-6',
-          key: 'paymentid',
+          key: 'payment_id',
           type: 'input',
           templateOptions: {
             type: 'text',
@@ -86,13 +87,16 @@ export class ContactsComponent implements OnInit {
 
   // Modal Window
   openVerticallyCentered(content) {
-    this.modalService.open(content, { size: 'lg', centered: true });
+    this.modalService.open(content, { size: 'sm', centered: true });
   }
 
   // On Submit
   submit(model) {
     this.wallet.add_address_book(this.model)
-    .map((res) => res)
+    .map((response) => {
+      console.log(response)
+      console.log('Contact created')
+    })
     .subscribe(console.log);
   }
 
@@ -101,7 +105,24 @@ export class ContactsComponent implements OnInit {
     this.wallet.get_address_book({
       entries: [0]
     })
-    .map((res) => res)
+    .map(
+      (response) => {
+        this.contacts = response.entries;
+        console.log(this.contacts);
+        }
+    )
+    .subscribe(console.log)
+  }
+
+  // Delete Contact
+  DeleteAddressBookContact(id) {
+    this.wallet.delete_address_book({
+      index: id
+    })
+    .map((response) => {
+      console.log(response)
+      console.log('Contact deleted')
+    })
     .subscribe(console.log)
   }
 

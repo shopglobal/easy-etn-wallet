@@ -3,6 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { trigger, style, animate, transition } from '@angular/animations';
 import { Warehouse } from 'ngx-warehouse';
 import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
+import { makeUrl, Wallet, Atomic, Xmr, generatePaymentId } from '../core/wallet.service';
 
 @Component({
   selector: 'app-settings',
@@ -20,6 +21,18 @@ import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
   ]
 })
 export class SettingsComponent implements OnInit {
+
+  // Wallet Connect
+  url = makeUrl('http', '66.175.216.72', '80', 'json_rpc');
+  wallet = Wallet(this.url);
+  filename: string = 'mywallet.etn';
+  password: string  = 'password1';
+  language: string  = 'English';
+  mysettings = {
+    filename: this.filename,
+    password: this.password,
+    language: this.language
+  }
 
   constructor(public warehouse: Warehouse) { }
 
@@ -140,6 +153,20 @@ export class SettingsComponent implements OnInit {
         // handle the error
       }
     )
+  }
+
+  createNewWallet() {
+    console.log('create wallet triggered')
+    this.wallet.create_wallet(this.mysettings)
+    .map((res) => res, console.log())
+    .subscribe(console.log);
+  }
+
+  openNewWallet() {
+    console.log('open wallet triggered')
+    this.wallet.open_wallet(this.mysettings)
+    .map((res) => res, console.log())
+    .subscribe(console.log);
   }
 
   ngOnInit() {
