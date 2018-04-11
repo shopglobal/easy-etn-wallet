@@ -4,7 +4,7 @@ import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Warehouse } from 'ngx-warehouse';
-import { makeUrl, Wallet } from 'rx-monero-wallet';
+import { makeUrl, Wallet, Atomic, Xmr, generatePaymentId } from '../core/wallet';
 
 @Component({
   selector: 'app-contacts',
@@ -101,7 +101,7 @@ export class ContactsComponent implements OnInit {
   // Get Contacts
   GetAddressBookContacts() {
     this.wallet.get_address_book({
-      entries: [0,1]
+      entries: [0]
     })
     .map((res) => res)
     .subscribe(console.log)

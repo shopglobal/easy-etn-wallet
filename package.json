@@ -47,8 +47,7 @@
     "electron-settings": "^3.1.4",
     "electron-titlebar": "0.0.3",
     "jquery": "^3.3.1",
-    "ngx-warehouse": "^1.0.2",
-    "rx-monero-wallet": "https://github.com/dl3br/rx-monero-wallet/tarball/master"
+    "ngx-warehouse": "^1.0.2"
   },
   "devDependencies": {
     "@angular/animations": "^5.2.9",
