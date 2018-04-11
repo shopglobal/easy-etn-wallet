@@ -27,7 +27,7 @@ import { makeUrl, Wallet, Atomic, Xmr, generatePaymentId } from '../core/wallet.
 export class ContactsComponent implements OnInit {
 
   // Wallet Connect
-  url = makeUrl('http', 'localhost', '8080', 'json_rpc');
+  url = makeUrl('http', '66.175.216.72', '8080', 'json_rpc');
   wallet = Wallet(this.url);
   interval = 30000; // 30 seconds
   closeResult: string;
@@ -41,9 +41,7 @@ export class ContactsComponent implements OnInit {
 
   // Form Config
   form = new FormGroup({});
-  model: any = {
-    created: Date.now()
-  };
+  model: any = {};
   options: FormlyFormOptions = {};
   fields: FormlyFieldConfig[] = [
     {
@@ -51,7 +49,7 @@ export class ContactsComponent implements OnInit {
       fieldGroup: [
         {
           className: 'col-6',
-          key: 'name',
+          key: 'displayname',
           type: 'input',
           templateOptions: {
             type: 'text',
@@ -62,7 +60,7 @@ export class ContactsComponent implements OnInit {
         },
         {
           className: 'col-6',
-          key: 'payid',
+          key: 'paymentid',
           type: 'input',
           templateOptions: {
             type: 'text',

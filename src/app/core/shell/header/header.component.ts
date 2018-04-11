@@ -15,7 +15,7 @@ import { Observable } from 'rxjs';
 export class HeaderComponent implements OnInit, OnDestroy {
 
   // Wallet Connect
-  url = makeUrl('http', 'localhost', '8080', 'json_rpc');
+  url = makeUrl('http', '66.175.216.72', '8080', 'json_rpc');
   wallet = Wallet(this.url);
   interval = 15000; // 15 seconds
 
