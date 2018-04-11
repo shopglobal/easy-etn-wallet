@@ -1,4 +1,4 @@
-import { request, makeUrl } from './request'
+import { request, makeUrl } from './request.service'
 import { Observable } from 'rxjs/Observable'
 import * as Big  from 'big.js';
 import * as Random from 'random-js'

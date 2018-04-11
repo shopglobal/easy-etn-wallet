@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { NgbModule, NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
 import { AuthenticationService } from '../../authentication/authentication.service';
-import { makeUrl, Wallet, Atomic, Xmr, generatePaymentId } from '../../wallet';
+import { makeUrl, Wallet, Atomic, Xmr, generatePaymentId } from '../../wallet.service';
 import { Observable } from 'rxjs';
 
 @Component({

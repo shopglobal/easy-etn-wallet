@@ -4,7 +4,7 @@ import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Warehouse } from 'ngx-warehouse';
-import { makeUrl, Wallet, Atomic, Xmr, generatePaymentId } from '../core/wallet';
+import { makeUrl, Wallet, Atomic, Xmr, generatePaymentId } from '../core/wallet.service';
 
 @Component({
   selector: 'app-contacts',
