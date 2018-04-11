@@ -4,15 +4,6 @@ import { makeUrl, Wallet, Atomic, Xmr, generatePaymentId } from '../core/wallet.
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 
-export interface transactions {
-  id: number;
-  date: string;
-  type: string;
-  status: string;
-  amount: string;
-  txhash: string;
-}
-
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -20,13 +11,13 @@ export interface transactions {
   animations: [
     trigger('stagger', [
       transition('* => *', [
-        query('#items', style({ opacity: 0, transform: 'translateX(-40px)' })),
+        query('#items', style({ opacity: 0, transform: 'translateX(-40px)' }), {optional: true}),
         query('#items', stagger('300ms', [
           animate('600ms 1.2s ease-out', style({ opacity: 1, transform: 'translateX(0)' })),
-        ])),
+        ]), {optional: true}),
         query('#items', [
           animate(1000, style('*'))
-        ])
+        ], {optional: true})
       ])
     ]),
     trigger(
@@ -48,47 +39,18 @@ export class HomeComponent implements OnInit, OnDestroy {
   balance: any = 0.00;
   balance_unlocked: any = 0.00;
   address: string;
+  transactionsAll: any;
+  transactionsIn: any;
+  transactionsOut: any;
+  transactionsPending: any;
+  transactionsFailed: any;
+  transactionsPool: any;
 
   // States
   isAlive: boolean = true;
   isCopied: boolean = false;
   isLoading: boolean = false;
   isOffline: boolean = true;
-
-  public transactions: transactions[] = [
-    {
-      id: 1,
-      date: '2018-03-19 14:23:45',
-      type: 'Received',
-      status: 'Completed',
-      amount: '40.45',
-      txhash: '6fbddbdb1cbe5b95ecd3b9517649493b8f9523d2c0d17af17b1c00e37f542786'
-    },
-    {
-      id: 2,
-      date: '2018-03-18 14:23:45',
-      type: 'Received',
-      status: 'Failed',
-      amount: '40.45',
-      txhash: '8c82611ba33c00b8f86f2f84b30e68a669af0f5adbd5040a0bf44f870b3864c5'
-    },
-    {
-      id: 3,
-      date: '2018-03-10 14:23:45',
-      type: 'Sent',
-      status: 'Completed',
-      amount: '60.34',
-      txhash: '0e3e14d92ac6005de587144e8905c7188eab4e65b6114be08e3d326c6fb4d20d'
-    },
-    {
-      id: 4,
-      date: '2018-02-11 14:23:45',
-      type: 'Received',
-      status: 'Pending',
-      amount: '11.76',
-      txhash: '62bdfcf96e7b2e95f29c977227dc049a4e7a78f760c4bccb3e72455d9940eb64'
-    }
-  ];
 
   constructor(private modalService: NgbModal) { 
   }
@@ -141,15 +103,59 @@ export class HomeComponent implements OnInit, OnDestroy {
       {
         next: (response) => {
           this.address;
-          this.isOffline = false;
           this.isLoading = false;
           console.log(this.address);
         },
         error: (error) => {
           this.address = null;
-          this.isOffline = true;
           this.isLoading = false;
           console.log('Error while fetching wallet address');
+        }
+      }
+    )
+  }
+
+  getWalletTransactions() {
+    // Get Wallet Address
+    this.isLoading = true;
+    this.wallet.get_transfers(
+      {
+        "in": true,
+        "out": true,
+        "failed": true,
+        "pending": true,
+        "pool":true
+      }
+    )
+    .map(
+      (response) => 
+        {
+          this.transactionsIn = response.in;
+          this.transactionsOut = response.out;
+          this.transactionsPending = response.pending;
+          this.transactionsFailed = response.failed;
+          this.transactionsPool = response.pool;
+          // join all transactions into one
+          this.transactionsAll = this.transactionsIn.
+          concat(
+            this.transactionsOut,
+            this.transactionsPending,
+            this.transactionsFailed,
+            this.transactionsPool
+          )
+        }
+    )
+    .subscribe(
+      {
+        next: (response) => {
+          this.transactionsAll;
+          this.isLoading = false;
+          console.log(this.transactionsAll);
+        },
+        error: (error) => {
+          this.transactionsAll = null;
+          this.isLoading = false;
+          console.log('Error while fetching wallet transactions');
         }
       }
     )
@@ -179,6 +185,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     .subscribe(() => {
       this.getWalletBalance();
       this.getWalletAddress();
+      this.getWalletTransactions();
       }
     )
   }
