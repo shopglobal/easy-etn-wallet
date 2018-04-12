@@ -72,15 +72,18 @@
             Recent Transactions
             <a class="btn btn-sm btn-success float-right mt-2" routerLink="/transactions" role="button">Show All</a>
           </h2>
-          <div class="list-group" *ngFor="let key of transactionsAll" id="items">
-            <a href="#" class="list-group-item list-group-item-action flex-column" [class.sent]="key.type == 'Sent'" [class.received]="key.type == 'Received'">
+          <div class="list-group" *ngFor="let key of transactionsIn" id="items">
+            <a href="#" class="list-group-item list-group-item-action flex-column" [class.sent]="key.type == 'out'" [class.received]="key.type == 'in'">
               <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">{{key.type}}</h5>
-                <h5 class="text-success">{{key.amount}} ETN</h5>
+                <h5 class="mb-1">
+                  <span *ngIf="key.type == 'in'">Received</span>
+                  <span *ngIf="key.type == 'out'">Sent</span>
+                </h5>
+                <h5 class="text-success">{{key.amount / 100}} ETN</h5>
               </div>
               <small class="text-muted">TxHash: <a href="https://blockexplorer.electroneum.com/search?value={{key.txid}}" target="_blank">{{key.txid}}</a></small>
               <div class="d-flex w-100 justify-content-between mt-1">
-                <span>{{key.timestamp | amTimeAgo:true}} ago</span>
+                <span>Added {{(key.timestamp | amFromUnix) | amTimeAgo:true}} ago</span>
                 <div>
                   <span class="badge px-2 py-1" [class.badge-danger]="key.status == 'Failed'" [class.badge-warning]="key.status == 'Pending'" [class.badge-success]="key.status == 'Completed'"><span class="text-uppercase">{{key.status}}</span></span>
                 </div>

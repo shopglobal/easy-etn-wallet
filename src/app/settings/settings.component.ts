@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { trigger, style, animate, transition } from '@angular/animations';
 import { Warehouse } from 'ngx-warehouse';
 import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
-import { makeUrl, Wallet, Atomic, Xmr, generatePaymentId } from '../core/wallet.service';
+import { makeUrl, Wallet, Atomic, Xmr, generatePaymentId } from 'rx-monero-wallet';
 
 @Component({
   selector: 'app-settings',

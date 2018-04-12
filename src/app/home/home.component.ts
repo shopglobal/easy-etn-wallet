@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { trigger, transition, query, style, stagger, animate } from '@angular/animations';
-import { makeUrl, Wallet, Atomic, Xmr, generatePaymentId } from '../core/wallet.service';
+import { makeUrl, Wallet, Atomic, Xmr, generatePaymentId } from 'rx-monero-wallet';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 
@@ -130,30 +130,39 @@ export class HomeComponent implements OnInit, OnDestroy {
     .map(
       (response) => 
         {
-          this.transactionsIn = response.in;
+
+         if (response.in !== undefined) {
+            this.transactionsIn = response.in;
+         }
+
+         if (response.out !== undefined) {
           this.transactionsOut = response.out;
-          this.transactionsPending = response.pending;
-          this.transactionsFailed = response.failed;
-          this.transactionsPool = response.pool;
-          // join all transactions into one
-          this.transactionsAll = this.transactionsIn.
-          concat(
-            this.transactionsOut,
-            this.transactionsPending,
-            this.transactionsFailed,
-            this.transactionsPool
-          )
+         }
+
+          // this.transactionsOut = response.out;
+          // this.transactionsPending = response.pending;
+          // this.transactionsFailed = response.failed;
+          // this.transactionsPool = response.pool;
+          // // join all transactions into one
+          // this.transactionsAll = this.transactionsIn.
+          // concat(
+          //   this.transactionsOut,
+          //   this.transactionsPending,
+          //   this.transactionsFailed,
+          //   this.transactionsPool
+          // )
         }
     )
     .subscribe(
       {
         next: (response) => {
-          this.transactionsAll;
+          this.transactionsIn;
+          this.transactionsOut;
           this.isLoading = false;
-          console.log(this.transactionsAll);
+          console.log(this.transactionsIn);
         },
         error: (error) => {
-          this.transactionsAll = null;
+          this.transactionsIn = undefined;
           this.isLoading = false;
           console.log('Error while fetching wallet transactions');
         }
