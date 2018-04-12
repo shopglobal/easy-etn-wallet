@@ -87,7 +87,10 @@ export class ContactsComponent implements OnInit {
 
   // Modal Window
   openVerticallyCentered(content) {
-    this.modalService.open(content, { size: 'sm', centered: true });
+    this.modalService.open(content, { 
+      // size: 'lg',
+      centered: true 
+    });
   }
 
   // On Submit
