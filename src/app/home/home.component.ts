@@ -36,15 +36,15 @@ export class HomeComponent implements OnInit, OnDestroy {
   url = makeUrl('http', '66.175.216.72', '80', 'json_rpc');
   wallet = Wallet(this.url);
   interval = 120000; // 30 seconds
-  balance: any = 0.00;
-  balance_unlocked: any = 0.00;
+  balance: string;
+  balance_unlocked: string;
   address: string;
-  transactionsAll: any;
-  transactionsIn: any;
-  transactionsOut: any;
-  transactionsPending: any;
-  transactionsFailed: any;
-  transactionsPool: any;
+  transactions: Array<any> = [];
+  transactionsIn: Array<any> = [];
+  transactionsOut: Array<any> = [];
+  transactionsPending: Array<any> = [];
+  transactionsFailed: Array<any> = [];
+  transactionsPool: Array<any> = [];
 
   // States
   isAlive: boolean = true;
@@ -66,8 +66,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.wallet.getbalance()
     .map(
       (response) => {
-        this.balance = (response.balance / 100);
-        this.balance_unlocked = (response.unlocked_balance / 100);
+        this.balance = (response.balance / 100).toFixed(2);
+        this.balance_unlocked = (response.unlocked_balance / 100).toFixed(2);
       }
     )
     .subscribe(
@@ -75,14 +75,12 @@ export class HomeComponent implements OnInit, OnDestroy {
         next: (response) => {
           this.balance;
           this.balance_unlocked;
-          this.isOffline = false;
           this.isLoading = false;
           console.log(this.balance, this.balance_unlocked);
         },
         error: (error) => {
-          this.balance = 0.00;
-          this.balance_unlocked = 0.00;
-          this.isOffline = true;
+          this.balance;
+          this.balance_unlocked;
           this.isLoading = false;
           console.log('Error while fetching balance');
         }
@@ -103,11 +101,13 @@ export class HomeComponent implements OnInit, OnDestroy {
       {
         next: (response) => {
           this.address;
+          this.isOffline = false;
           this.isLoading = false;
           console.log(this.address);
         },
         error: (error) => {
           this.address = null;
+          this.isOffline = true;
           this.isLoading = false;
           console.log('Error while fetching wallet address');
         }
@@ -130,40 +130,58 @@ export class HomeComponent implements OnInit, OnDestroy {
     .map(
       (response) => 
         {
-
-         if (response.in !== undefined) {
+          // Add new property for each type of transaction
+          if (response.in !== undefined) {
             this.transactionsIn = response.in;
-         }
-
-         if (response.out !== undefined) {
-          this.transactionsOut = response.out;
-         }
-
-          // this.transactionsOut = response.out;
-          // this.transactionsPending = response.pending;
-          // this.transactionsFailed = response.failed;
-          // this.transactionsPool = response.pool;
-          // // join all transactions into one
-          // this.transactionsAll = this.transactionsIn.
-          // concat(
-          //   this.transactionsOut,
-          //   this.transactionsPending,
-          //   this.transactionsFailed,
-          //   this.transactionsPool
-          // )
+            this.transactionsIn.forEach(function(obj) { obj.status = "Completed"; });
+          }
+          if (response.out !== undefined) {
+            this.transactionsOut = response.out;
+            this.transactionsOut.forEach(function(obj) { obj.status = "Completed"; });
+          }
+          if (response.pending !== undefined) {
+            this.transactionsPending = response.pending;
+            this.transactionsPending.forEach(function(obj) { obj.status = "Pending"; });
+          }
+          if (response.failed !== undefined) {
+            this.transactionsFailed = response.failed;
+            this.transactionsFailed.forEach(function(obj) { obj.status = "Failed"; });
+          }
+          if (response.pool !== undefined) {
+            this.transactionsPool = response.pool;
+            this.transactionsPool.forEach(function(obj) { obj.status = "Pool"; });
+          }
         }
     )
     .subscribe(
       {
         next: (response) => {
-          this.transactionsIn;
-          this.transactionsOut;
+
+          //this.transactions = [];
+
+          // Merge transactions if they exsit
+          if (this.transactionsIn !== undefined) {
+            Array.prototype.push.apply(this.transactions, this.transactionsIn);
+          }
+          if (this.transactionsOut !== undefined) {
+            Array.prototype.push.apply(this.transactions, this.transactionsOut);
+          }
+          if (this.transactionsPending !== undefined) {
+            Array.prototype.push.apply(this.transactions, this.transactionsPending);
+          }
+          if (this.transactionsFailed !== undefined) {
+            Array.prototype.push.apply(this.transactions, this.transactionsFailed);
+          }
+          if (this.transactionsPool !== undefined) {
+            Array.prototype.push.apply(this.transactions, this.transactionsPool);
+          }
           this.isLoading = false;
-          console.log(this.transactionsIn);
+          console.log(this.transactions);
         },
         error: (error) => {
-          this.transactionsIn = undefined;
+          this.transactions;
           this.isLoading = false;
+          console.log(this.transactions);
           console.log('Error while fetching wallet transactions');
         }
       }

@@ -10,8 +10,8 @@
             <h5 class="card-title text-white mb-4">Balance</h5>
             <div class="d-flex justify-content-center">
               <div class="text-center" *ngIf="!isOffline">
-                  <p class="card-text text-muted mb-2">Unlocked: {{balance_unlocked}} ETN</p>
-                <h6 class="card-subtitle text-success mb-2">{{balance}} ETN</h6>
+                <h6 class="card-subtitle text-success my-2">{{balance}} ETN</h6>
+                <p class="card-text text-muted">Available: {{balance_unlocked}}</p>
               </div>
               <div *ngIf="isOffline">
                 <h1 class="text-muted warning pt-2 my-4">Wallet Offline</h1>
@@ -38,7 +38,7 @@
             <h5 class="card-title text-white mb-4">Address</h5>
             <div class="d-flex justify-content-center">
               <div *ngIf="!isOffline">
-                <textarea id="#address" [(ngModel)]="address" rows="3" placeholder="etnkGmQZG1c1g8nXSe9qR6foYDdZxySnNS8odiHtLuB8WqhGQHEcsv17rUUyiW8wnagTKkcw29gQyNPSHnprf8Nz7sYNs2Mf2g"></textarea> 
+                <textarea [(ngModel)]="address" rows="3" placeholder="etnkGmQZG1c1g8nXSe9qR6foYDdZxySnNS8odiHtLuB8WqhGQHEcsv17rUUyiW8wnagTKkcw29gQyNPSHnprf8Nz7sYNs2Mf2g"></textarea> 
               </div>
               <div *ngIf="isOffline">
                 <h1 class="text-muted warning pt-2 my-4">Wallet Offline</h1>
@@ -79,7 +79,7 @@
                   <span *ngIf="key.type == 'in'">Received</span>
                   <span *ngIf="key.type == 'out'">Sent</span>
                 </h5>
-                <h5 class="text-success">{{key.amount / 100}} ETN</h5>
+                <h5 class="text-success">{{(key.amount / 100).toFixed(2)}} ETN</h5>
               </div>
               <small class="text-muted">TxHash: <a href="https://blockexplorer.electroneum.com/search?value={{key.txid}}" target="_blank">{{key.txid}}</a></small>
               <div class="d-flex w-100 justify-content-between mt-1">
