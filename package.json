@@ -61,7 +61,7 @@
     "@angular/platform-browser": "5.2.9",
     "@angular/platform-browser-dynamic": "5.2.9",
     "@angular/router": "5.2.9",
-    "@ngx-translate/core": "10.0.1",
+    "@ngx-translate/core": "^9.0.0",
     "@ngx-translate/http-loader": "3.0.1",
     "@types/core-js": "0.9.36",
     "@types/datatables.net": "^1.10.9",
