@@ -12,6 +12,8 @@
                   <tr>
                     <th scope="col">Type</th>
                     <th scope="col">Amount</th>
+                    <th scope="col">Fee</th>
+                    <th scope="col">Height</th>
                     <th scope="col">TxHash</th>
                     <th scope="col">Date</th>
                     <th scope="col">Status</th>
@@ -19,11 +21,16 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let key of transactions">
-                    <th [class.sent]="key.type == 'Sent'" [class.received]="key.type == 'Received'">{{key.type}}</th>
-                    <td><span class="font-weight-bold">{{key.amount}}</span> ETN</td>
-                    <td class="text-muted"><a href="https://blockexplorer.electroneum.com/search?value={{key.txhash}}" target="_blank">{{key.txhash}}</a></td>
-                    <td>{{key.type}} {{key.date | amTimeAgo:true}} ago</td>
-                    <td ><span class="badge px-2 py-1" [class.badge-danger]="key.status == 'Failed'" [class.badge-warning]="key.status == 'Pending'" [class.badge-success]="key.status == 'Completed'"><span class="text-uppercase">{{key.status}}</span></span></td>
+                    <th [class.sent]="key.type == 'out'" [class.received]="key.type == 'in'">
+                      <span *ngIf="key.type == 'in'">Received</span>
+                      <span *ngIf="key.type == 'out'">Sent</span>
+                    </th>
+                    <td><span class="font-weight-bold">{{(key.amount / 100).toFixed(2)}}</span></td>
+                    <td class="text-info">{{(key.fee / 100).toFixed(2)}}</td>
+                    <td class="text-muted">{{key.height}}</td>
+                    <td class="text-muted"><a href="https://blockexplorer.electroneum.com/search?value={{key.txid}}" target="_blank">{{key.txid}}</a></td>
+                    <td>Added {{(key.timestamp | amFromUnix) | amTimeAgo:true}} ago</td>
+                    <td ><span class="badge px-2 py-1" [class.badge-info]="key.status == 'Pool'" [class.badge-danger]="key.status == 'Failed'" [class.badge-warning]="key.status == 'Pending'" [class.badge-success]="key.status == 'Completed'"><span class="text-uppercase">{{key.status}}</span></span></td>
                   </tr>
                 </tbody>
               </table>

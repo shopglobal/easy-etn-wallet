@@ -1,14 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { trigger, style, animate, transition } from '@angular/animations';
-
-export interface transactions {
-  id: number;
-  date: string;
-  type: string;
-  status: string;
-  amount: string;
-  txhash: string;
-}
+import { makeUrl, Wallet, Atomic, Xmr, generatePaymentId } from 'rx-monero-wallet';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-transactions',
@@ -27,58 +20,110 @@ export interface transactions {
 })
 export class TransactionsComponent implements OnInit {
 
-  dtOptions: DataTables.Settings = {};
+  // Wallet Connect
+  url = makeUrl('http', '66.175.216.72', '80', 'json_rpc');
+  wallet = Wallet(this.url);
+  interval = 120000; // 30 seconds
 
-  public transactions: transactions[] =
-    [
-      {
-        id: 1,
-        date: '2018-03-20 14:23:45',
-        type: 'Received',
-        status: 'Completed',
-        amount: '10.07',
-        txhash: '60f1ee7c483469b4e92b8868c9b1205935b1b77ac59fb666148c7520365ba207'
-      },
-      {
-        id: 2,
-        date: '2018-03-19 14:23:45',
-        type: 'Received',
-        status: 'Completed',
-        amount: '40.45',
-        txhash: '6fbddbdb1cbe5b95ecd3b9517649493b8f9523d2c0d17af17b1c00e37f542786'
-      },
-      {
-        id: 3,
-        date: '2018-03-18 14:23:45',
-        type: 'Received',
-        status: 'Failed',
-        amount: '40.45',
-        txhash: '8c82611ba33c00b8f86f2f84b30e68a669af0f5adbd5040a0bf44f870b3864c5'
-      },
-      {
-        id: 4,
-        date: '2018-03-10 14:23:45',
-        type: 'Sent',
-        status: 'Completed',
-        amount: '60.34',
-        txhash: '0e3e14d92ac6005de587144e8905c7188eab4e65b6114be08e3d326c6fb4d20d'
-      },
-      {
-        id: 5,
-        date: '2018-02-11 14:23:45',
-        type: 'Received',
-        status: 'Pending',
-        amount: '11.76',
-        txhash: '62bdfcf96e7b2e95f29c977227dc049a4e7a78f760c4bccb3e72455d9940eb64'
-      }
-    ]
+  // Table Settings
+  dtOptions: any = {};
+
+  // Transaction defaults
+  transactions: Array<any> = [];
+  transactionsIn: Array<any> = [];
+  transactionsOut: Array<any> = [];
+  transactionsPending: Array<any> = [];
+  transactionsFailed: Array<any> = [];
+  transactionsPool: Array<any> = [];
+
+  // States
+  isAlive: boolean = true;
+  isLoading: boolean = false;
+  isOffline: boolean = true;
 
   constructor() { }
 
+  getWalletTransactions() {
+    // Get Wallet Address
+    this.isLoading = true;
+    this.wallet.get_transfers(
+      {
+        "in": true,
+        "out": true,
+        "failed": true,
+        "pending": true,
+        "pool":true
+      }
+    )
+    .map((response) => 
+      {
+        // Add new property for each type of transaction
+        if (response.in !== undefined) {
+          this.transactionsIn = response.in;
+          this.transactionsIn.forEach(function(obj) { obj.status = "Completed"; });
+        }
+        if (response.out !== undefined) {
+          this.transactionsOut = response.out;
+          this.transactionsOut.forEach(function(obj) { obj.status = "Completed"; });
+        }
+        if (response.pending !== undefined) {
+          this.transactionsPending = response.pending;
+          this.transactionsPending.forEach(function(obj) { obj.status = "Pending"; });
+        }
+        if (response.failed !== undefined) {
+          this.transactionsFailed = response.failed;
+          this.transactionsFailed.forEach(function(obj) { obj.status = "Failed"; });
+        }
+        if (response.pool !== undefined) {
+          this.transactionsPool = response.pool;
+          this.transactionsPool.forEach(function(obj) { obj.status = "Pool"; });
+        }
+      }
+    )
+    .subscribe(
+      {
+        next: (response) => {
+          // Merge transactions if they exsit
+          if (this.transactionsIn !== undefined) {
+            Array.prototype.push.apply(this.transactions, this.transactionsIn);
+          }
+          if (this.transactionsOut !== undefined) {
+            Array.prototype.push.apply(this.transactions, this.transactionsOut);
+          }
+          if (this.transactionsPending !== undefined) {
+            Array.prototype.push.apply(this.transactions, this.transactionsPending);
+          }
+          if (this.transactionsFailed !== undefined) {
+            Array.prototype.push.apply(this.transactions, this.transactionsFailed);
+          }
+          if (this.transactionsPool !== undefined) {
+            Array.prototype.push.apply(this.transactions, this.transactionsPool);
+          }
+          this.isLoading = false;
+          console.log(this.transactions);
+        },
+        error: (error) => {
+          this.transactions;
+          this.isLoading = false;
+          console.log(this.transactions);
+          console.log('Error while fetching wallet transactions');
+        }
+      }
+    )
+  }
+
   ngOnInit() {
     this.dtOptions = {
-      pageLength: 10
+      // Use this attribute to enable the responsive extension
+      responsive: true
     };
+    Observable.timer(0, this.interval)
+    .takeWhile(() => this.isAlive)
+    .subscribe(() => {this.getWalletTransactions()})
+  }
+
+  ngOnDestroy(){
+    this.isAlive = false; // switches your Observable off
   }
 
 }

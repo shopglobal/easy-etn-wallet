@@ -156,9 +156,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     .subscribe(
       {
         next: (response) => {
-
-          //this.transactions = [];
-
           // Merge transactions if they exsit
           if (this.transactionsIn !== undefined) {
             Array.prototype.push.apply(this.transactions, this.transactionsIn);

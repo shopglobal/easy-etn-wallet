@@ -82,10 +82,11 @@
                 <h5 class="text-success">{{(key.amount / 100).toFixed(2)}} ETN</h5>
               </div>
               <small class="text-muted">TxHash: <a href="https://blockexplorer.electroneum.com/search?value={{key.txid}}" target="_blank">{{key.txid}}</a></small>
+              <small class="text-muted" *ngIf="key.note">Note: {{key.note}}</small>
               <div class="d-flex w-100 justify-content-between mt-1">
                 <span>Added {{(key.timestamp | amFromUnix) | amTimeAgo:true}} ago</span>
                 <div>
-                  <span class="badge px-2 py-1" [class.badge-danger]="key.status == 'Failed'" [class.badge-warning]="key.status == 'Pending'" [class.badge-success]="key.status == 'Completed'"><span class="text-uppercase">{{key.status}}</span></span>
+                  <span class="badge px-2 py-1" [class.badge-info]="key.status == 'Pool'" [class.badge-danger]="key.status == 'Failed'" [class.badge-warning]="key.status == 'Pending'" [class.badge-success]="key.status == 'Completed'"><span class="text-uppercase">{{key.status}}</span></span>
                 </div>
               </div>
             </a>

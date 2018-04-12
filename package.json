@@ -43,6 +43,8 @@
     "angularx-qrcode": "^1.1.0",
     "datatables.net": "^1.10.16",
     "datatables.net-dt": "^1.10.16",
+    "datatables.net-responsive": "^2.2.1",
+    "datatables.net-responsive-dt": "^2.2.1",
     "electron-settings": "^3.1.4",
     "electron-titlebar": "0.0.3",
     "ngx-warehouse": "^1.0.2",
