@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { trigger, style, animate, transition } from '@angular/animations';
 import { makeUrl, Wallet, Atomic, Xmr, generatePaymentId } from 'rx-monero-wallet';
 import { Observable } from 'rxjs';
@@ -20,32 +20,84 @@ import { Observable } from 'rxjs';
 })
 export class TransactionsComponent implements OnInit {
 
+  @ViewChild('myTransactions') table: any;
+
   // Wallet Connect
   url = makeUrl('http', '66.175.216.72', '80', 'json_rpc');
   wallet = Wallet(this.url);
   interval = 120000; // 30 seconds
 
-  // Table Settings
-  dtOptions: any = {};
-
   // Transaction defaults
-  transactions: Array<any> = [];
+  transactions: any[] = [];
+  temp = [];
   transactionsIn: Array<any> = [];
   transactionsOut: Array<any> = [];
   transactionsPending: Array<any> = [];
   transactionsFailed: Array<any> = [];
   transactionsPool: Array<any> = [];
+  columns = [
+    { prop: 'type', name: 'Type' },
+    { prop: 'amount', name: 'Amount' },
+    { prop: 'fee', name: 'Fee' },
+    { prop: 'height', name: 'Block Height' },
+    { prop: 'timestamp', name: 'Transaction Date' },
+    { prop: 'status', name: 'Status' },
+    { prop: 'txid', name: 'Transaction ID' },
+    { prop: 'note', name: 'Transaction Note' },
+    { prop: 'unlock_time', name: 'Unlocked In' },
+    { prop: 'payment_id', name: 'Payment ID' }
+  ];
+  expanded: any = {};
+  timeout: any;
 
   // States
   isAlive: boolean = true;
   isLoading: boolean = false;
   isOffline: boolean = true;
 
-  constructor() { }
+  constructor() {}
+
+  updateFilter(event) {
+    const val = event.target.value.toLowerCase();
+
+    // filter our data
+    const temp = this.temp.filter(function(d) {
+      return d.name.toLowerCase().indexOf(val) !== -1 || !val;
+    });
+
+    // update the rows
+    this.transactions = temp;
+    // Whenever the filter changes, always go back to the first page
+    this.table.offset = 0;
+  }
+
+  getRowClass(row) {
+    return {
+      'received': row.type === 'in',
+      'sent': row.type === 'out'
+    };
+  }
+
+  onPage(event) {
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(() => {
+      console.log('paged!', event);
+    }, 100);
+  }
+
+  toggleExpandRow(row) {
+    console.log('Toggled Expand Row!', row);
+    this.table.rowDetail.toggleExpandRow(row);
+  }
+
+  onDetailToggle(event) {
+    console.log('Detail Toggled', event);
+  }
 
   getWalletTransactions() {
     // Get Wallet Address
     this.isLoading = true;
+    this.transactions = [];
     this.wallet.get_transfers(
       {
         "in": true,
@@ -99,6 +151,7 @@ export class TransactionsComponent implements OnInit {
           if (this.transactionsPool !== undefined) {
             Array.prototype.push.apply(this.transactions, this.transactionsPool);
           }
+          this.transactions = JSON.parse(JSON.stringify(this.transactions));
           this.isLoading = false;
           console.log(this.transactions);
         },
@@ -113,10 +166,6 @@ export class TransactionsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.dtOptions = {
-      // Use this attribute to enable the responsive extension
-      responsive: true
-    };
     Observable.timer(0, this.interval)
     .takeWhile(() => this.isAlive)
     .subscribe(() => {this.getWalletTransactions()})

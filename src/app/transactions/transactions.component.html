@@ -2,40 +2,107 @@
   <div class="content">
 
     <!-- Begin Page Content -->
-    <div class="row mx-auto">
-      <div class="col-12 p-4">
+    <div class="row mx-auto text-white">
+      <div class="col-12 p-5">
         <div class="transactions" @enterAnimation>
-          <div class="card px-3 py-0">
-            <div class="card-body">
-              <table datatable [dtOptions]="dtOptions" class="table table-sm">
-                <thead class="thead-light">
-                  <tr>
-                    <th scope="col">Type</th>
-                    <th scope="col">Amount</th>
-                    <th scope="col">Fee</th>
-                    <th scope="col">Height</th>
-                    <th scope="col">TxHash</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let key of transactions">
-                    <th [class.sent]="key.type == 'out'" [class.received]="key.type == 'in'">
-                      <span *ngIf="key.type == 'in'">Received</span>
-                      <span *ngIf="key.type == 'out'">Sent</span>
-                    </th>
-                    <td><span class="font-weight-bold">{{(key.amount / 100).toFixed(2)}}</span></td>
-                    <td class="text-info">{{(key.fee / 100).toFixed(2)}}</td>
-                    <td class="text-muted">{{key.height}}</td>
-                    <td class="text-muted"><a href="https://blockexplorer.electroneum.com/search?value={{key.txid}}" target="_blank">{{key.txid}}</a></td>
-                    <td>Added {{(key.timestamp | amFromUnix) | amTimeAgo:true}} ago</td>
-                    <td ><span class="badge px-2 py-1" [class.badge-info]="key.status == 'Pool'" [class.badge-danger]="key.status == 'Failed'" [class.badge-warning]="key.status == 'Pending'" [class.badge-success]="key.status == 'Completed'"><span class="text-uppercase">{{key.status}}</span></span></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
+
+          <input
+            type="text"
+            style="padding:8px;margin-bottom:10px;width:20%;"
+            placeholder="Filter..."
+            (keyup)="updateFilter($event)"
+          />
+
+          <ngx-datatable class="material expandable"
+            style="min-height: 550px;"
+            #myTransactions
+            [rows]="transactions" 
+            [columns]="columns" 
+            [columnMode]="'force'"
+            [headerHeight]="50"
+            [footerHeight]="50"
+            [rowHeight]="50"
+            [scrollbarV]="true"
+            [rowClass]="getRowClass"
+            (page)="onPage($event)">
+
+            <!-- Row Detail Template -->
+            <ngx-datatable-row-detail [rowHeight]="98" #myDetailRow (toggle)="onDetailToggle($event)">
+              <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
+                <div class="row-details text-muted px-3">
+                  <dl class="row">
+                    <dt class="col-sm-2">Payment ID:</dt>
+                    <dd class="col-sm-10">{{row.payment_id}}</dd>
+                    <dt class="col-sm-2">Transaction ID:</dt>
+                    <dd class="col-sm-10"><a href="https://blockexplorer.electroneum.com/search?value={{row.txid}}" target="_blank">{{row.txid}}</a></dd>
+                    <dt class="col-sm-2">Transaction Notes:</dt>
+                    <dd class="col-sm-10" *ngIf="row.note">{{row.note}}</dd>
+                    <dd class="col-sm-10" *ngIf="!row.note">Nothing enetered for this transaction.</dd>
+                    <dt class="col-sm-2">Unlocked In:</dt>
+                    <dd class="col-sm-10">{{row.unlock_time}}</dd>
+                  </dl>
+                </div>
+              </ng-template>
+            </ngx-datatable-row-detail>
+
+            <!-- Column Templates -->
+            <ngx-datatable-column
+              [width]="40"
+              [resizeable]="false"
+              [sortable]="false"
+              [draggable]="false"
+              [canAutoResize]="false">
+              <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+                <a href="javascript:void(0)"
+                  [class.datatable-icon-right]="!expanded"
+                  [class.datatable-icon-down]="expanded"
+                  title="Expand/Collapse Row"
+                  (click)="toggleExpandRow(row)">
+                </a>
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Type">
+              <ng-template let-value="value" ngx-datatable-cell-template>
+                <span *ngIf="value == 'in'">Received</span>
+                <span *ngIf="value == 'out'">Sent</span>
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Amount">
+              <ng-template let-value="value" ngx-datatable-cell-template>
+                <strong>{{(value / 100).toFixed(2)}}</strong>
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Fee">
+              <ng-template let-value="value" ngx-datatable-cell-template>
+                <strong>{{(value / 100).toFixed(2)}}</strong>
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Height">
+              <ng-template let-value="value" ngx-datatable-cell-template>
+                <span>{{value}}</span>
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Timestamp">
+              <ng-template let-value="value" ngx-datatable-cell-template>
+                <span>Added {{(value | amFromUnix) | amTimeAgo:true}} ago</span>
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Status">
+              <ng-template let-value="value" ngx-datatable-cell-template>
+                <span class="badge px-2 py-1" [class.badge-info]="value == 'Pool'" [class.badge-danger]="value == 'Failed'" [class.badge-warning]="value == 'Pending'" [class.badge-success]="value == 'Completed'">
+                  <span class="text-uppercase">{{value}}</span>
+                </span>
+              </ng-template>
+            </ngx-datatable-column>
+
+          </ngx-datatable>
+
         </div>
       </div>
     </div>

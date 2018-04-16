@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { DataTablesModule } from 'angular-datatables';
 
 import { MomentModule } from 'angular2-moment';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 import { TransactionsRoutingModule } from './transactions-routing.module';
 import { TransactionsComponent } from './transactions.component';
@@ -15,10 +15,10 @@ import { TransactionsComponent } from './transactions.component';
     CommonModule,
     TranslateModule,
     TransactionsRoutingModule,
-    DataTablesModule,
     MomentModule,
     NgSelectModule,
-    NgbModule
+    NgbModule,
+    NgxDatatableModule
   ],
   declarations: [
     TransactionsComponent
