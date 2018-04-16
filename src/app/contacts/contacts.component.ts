@@ -4,7 +4,7 @@ import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Warehouse } from 'ngx-warehouse';
-import { makeUrl, Wallet, Atomic, Xmr, generatePaymentId } from 'rx-monero-wallet';
+import { makeUrl, Wallet } from 'rx-monero-wallet';
 import { JsonPipe } from '@angular/common';
 import { toArray } from 'rxjs/operator/toArray';
 

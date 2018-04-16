@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { trigger, style, animate, transition } from '@angular/animations';
-import { makeUrl, Wallet, Atomic, Xmr, generatePaymentId } from 'rx-monero-wallet';
+import { makeUrl, Wallet } from 'rx-monero-wallet';
 import { Observable } from 'rxjs';
 
 @Component({
