@@ -155,21 +155,28 @@ export class SettingsComponent implements OnInit {
     )
   }
 
-  createNewWallet() {
-    console.log('create wallet triggered')
+  createWallet() {
+    console.log('Create wallet triggered')
     this.wallet.create_wallet(this.mysettings)
     .map((res) => res, console.log())
     .subscribe(console.log);
   }
 
-  openNewWallet() {
-    console.log('open wallet triggered')
+  openWallet() {
+    console.log('Open wallet triggered')
     this.wallet.open_wallet(this.mysettings)
     .map((res) => res, console.log())
     .subscribe(console.log);
   }
 
-  ngOnInit() {
+  closeWallet() {
+    console.log('Close wallet triggered')
+    this.wallet.stop_wallet()
+    .map((res) => res, console.log())
+    .subscribe(console.log);
+  }
+
+  getSettings() {
     this.warehouse.get('settings').subscribe(
       (data) => {
         if (data) {
@@ -185,6 +192,10 @@ export class SettingsComponent implements OnInit {
         console.log(error, this.model)
       }
     )
+  }
+
+  ngOnInit() {
+    this.getSettings();
   }
 
 }

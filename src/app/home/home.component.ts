@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { trigger, transition, query, style, stagger, animate } from '@angular/animations';
 import { makeUrl, Wallet, Atomic, Xmr, generatePaymentId } from 'rx-monero-wallet';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { Warehouse } from 'ngx-warehouse';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -35,7 +36,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   // Wallet Connect
   url = makeUrl('http', '66.175.216.72', '80', 'json_rpc');
   wallet = Wallet(this.url);
-  interval = 120000; // 30 seconds
+  interval; // 30 seconds
   balance: string;
   balance_unlocked: string;
   address: string;
@@ -52,8 +53,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   isLoading: boolean = false;
   isOffline: boolean = true;
 
-  constructor(private modalService: NgbModal) { 
-  }
+  constructor(
+    private modalService: NgbModal,
+    public warehouse: Warehouse
+  ) { }
 
   // Modal Window
   openVerticallyCentered(content) {
@@ -203,7 +206,20 @@ export class HomeComponent implements OnInit, OnDestroy {
     document.body.removeChild(textarea);
   }
 
+  getSettings() {
+    this.warehouse.get('settings').subscribe(
+      data => {
+        let settings = JSON.parse(JSON.stringify(data));
+        this.interval = settings.refresh;
+        //console.log(this.interval);
+        //console.log(data);
+      },
+      error => console.log(error)
+    );
+  }
+
   ngOnInit() {
+    this.getSettings();
     Observable.timer(0, this.interval)
     .takeWhile(() => this.isAlive)
     .subscribe(() => {
@@ -212,6 +228,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.getWalletTransactions();
       }
     )
+    console.log(this.interval);
   }
 
   ngOnDestroy(){
