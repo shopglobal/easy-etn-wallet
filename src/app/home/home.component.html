@@ -91,6 +91,11 @@
               </div>
             </a>
           </div>
+          <div *ngIf="isOffline" class="list-group" id="items">
+            <a href="#" class="list-group-item list-group-item-action flex-column offline">
+              <h4 class="text-muted warning pt-2 my-2">Wallet Offline</h4>
+            </a>
+          </div>
         </div>
       </div>
 

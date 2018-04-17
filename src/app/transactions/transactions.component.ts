@@ -1,12 +1,16 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
 import { trigger, style, animate, transition } from '@angular/animations';
 import { makeUrl, Wallet } from 'rx-monero-wallet';
-import { Observable } from 'rxjs';
+import { Observable, } from 'rxjs';
+import {
+  delay
+} from 'rxjs/operators';
 
 @Component({
   selector: 'app-transactions',
   templateUrl: './transactions.component.html',
   styleUrls: ['./transactions.component.scss'],
+  encapsulation: ViewEncapsulation.None,
   animations: [
     trigger(
       'enterAnimation', [
@@ -35,34 +39,22 @@ export class TransactionsComponent implements OnInit {
   transactionsPending: Array<any> = [];
   transactionsFailed: Array<any> = [];
   transactionsPool: Array<any> = [];
-  columns = [
-    { prop: 'type', name: 'Type' },
-    { prop: 'amount', name: 'Amount' },
-    { prop: 'fee', name: 'Fee' },
-    { prop: 'height', name: 'Block Height' },
-    { prop: 'timestamp', name: 'Transaction Date' },
-    { prop: 'status', name: 'Status' },
-    { prop: 'txid', name: 'Transaction ID' },
-    { prop: 'note', name: 'Transaction Note' },
-    { prop: 'unlock_time', name: 'Unlocked In' },
-    { prop: 'payment_id', name: 'Payment ID' }
-  ];
   expanded: any = {};
   timeout: any;
 
   // States
   isAlive: boolean = true;
   isLoading: boolean = false;
-  isOffline: boolean = true;
 
   constructor() {}
 
   updateFilter(event) {
-    const val = event.target.value.toLowerCase();
-
+    const val = event.target.value.toString().toLowerCase();
     // filter our data
     const temp = this.temp.filter(function(d) {
-      return d.name.toLowerCase().indexOf(val) !== -1 || !val;
+      return d.amount.toString().toLowerCase().indexOf(val) !== -1 || !val ||
+             d.txid.toString().toLowerCase().indexOf(val) !== -1 || !val ||
+             d.payment_id.toString().toLowerCase().indexOf(val) !== -1 || !val
     });
 
     // update the rows
@@ -92,6 +84,10 @@ export class TransactionsComponent implements OnInit {
 
   onDetailToggle(event) {
     console.log('Detail Toggled', event);
+  }
+
+  onRefresh() {
+    this.getWalletTransactions();
   }
 
   getWalletTransactions() {
@@ -135,6 +131,8 @@ export class TransactionsComponent implements OnInit {
     .subscribe(
       {
         next: (response) => {
+          // Rset all transactions
+          this.transactions = [];
           // Merge transactions if they exsit
           if (this.transactionsIn !== undefined) {
             Array.prototype.push.apply(this.transactions, this.transactionsIn);
@@ -152,14 +150,17 @@ export class TransactionsComponent implements OnInit {
             Array.prototype.push.apply(this.transactions, this.transactionsPool);
           }
           this.transactions = JSON.parse(JSON.stringify(this.transactions));
-          this.isLoading = false;
-          console.log(this.transactions);
+          this.transactions = [...this.transactions];
+          this.temp = [...this.transactions];
+          console.log('Loading transactions');
         },
         error: (error) => {
-          this.transactions;
           this.isLoading = false;
-          console.log(this.transactions);
-          console.log('Error while fetching wallet transactions');
+          console.log('Error while fetching transactions' + error);
+        },
+        complete: () => {
+          this.isLoading = false;
+          console.log('Loading transactions complete');
         }
       }
     )

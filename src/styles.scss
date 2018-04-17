@@ -44,12 +44,9 @@ $theme-colors: (
 // 3rd party libraries
 @import "~bootstrap/scss/bootstrap";
 
-// Use Bootstrap defaults for other variables, imported here so we can access all app variables in one place when used
-// in components.
+// Use Bootstrap defaults for other variables, imported here so we can access all app variables in one place when used in components.
 @import "~bootstrap/scss/_functions";
 @import "~bootstrap/scss/_variables";
-
-@import "~@ng-select/ng-select/themes/default.theme.css";
 
 /* You can add global styles to this file, and also import other style files */
 html, body {
@@ -93,25 +90,42 @@ select option {
   color: #212529;
 }
 
-.ngx-datatable.material {
-  background: rgba(255, 255, 255, 0.1) !important;
+.ngx-datatable {
+  background: #fff;
 
   .datatable-header {
-    background: rgba(255, 255, 255, 1);
+    background: #f6f6f6;
+  }
+  .datatable-footer {
+    background: #d6d6d6;
+  }
+  .datatable-body {
+    min-height: 480px;
+    max-height: 480px;
   }
   .datatable-body-row {
-    background: rgba(255, 255, 255, 0.8);
+    background-color: #fff;
+  }
+  // .datatable-row-odd{
+  //   background-color: #f6f6f6;
+  // }
+  .datatable-row-detail {
+    background-color: #ababab;
+  }
+  .empty-row {
+    padding: 1rem !important;
+    font-size: 16px;
+    color: #212529;
   }
   .datatable-body-row.sent {
-    border-left: 8px solid #17a2b8;
+    border-left: 6px solid #17a2b8;
   }
   .datatable-body-row.received {
-    border-left: 8px solid #18bc62;
+    border-left: 6px solid #18bc62;
   }
-}
-
-.datatable-body-row.received {
-  border-left: 8px solid #18bc62;
+  .progress-linear {
+    background: #aad1f9;
+  }
 }
 
 @keyframes animate {

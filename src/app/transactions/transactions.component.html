@@ -3,43 +3,51 @@
 
     <!-- Begin Page Content -->
     <div class="row mx-auto text-white">
-      <div class="col-12 p-5">
+      <div class="col-12 px-5 py-4">
         <div class="transactions" @enterAnimation>
 
-          <input
-            type="text"
-            style="padding:8px;margin-bottom:10px;width:20%;"
-            placeholder="Filter..."
-            (keyup)="updateFilter($event)"
-          />
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <div class="input-group w-25">
+              <input class="form-control" type="text" placeholder="Search (TxHash or Payment ID)" (keyup)="updateFilter($event)" />
+              <div class="input-group-append">
+                <span class="input-group-text">
+                  <i class="fas fa-search"></i>
+                </span>
+              </div>
+            </div>
+            <button (click)="onRefresh()" class="btn btn-success">
+              <i class="fas fa-sync-alt mr-2" [class.fa-spin]="isLoading"></i>
+              Refresh
+            </button>
+          </div>
 
-          <ngx-datatable class="material expandable"
-            style="min-height: 550px;"
-            #myTransactions
+          <ngx-datatable #myTransactions class="material expandable"
             [rows]="transactions" 
-            [columns]="columns" 
             [columnMode]="'force'"
-            [headerHeight]="50"
-            [footerHeight]="50"
+            [headerHeight]="40"
+            [footerHeight]="40"
             [rowHeight]="50"
+            [loadingIndicator]="isLoading"
             [scrollbarV]="true"
+            [virtualization]="true"
             [rowClass]="getRowClass"
             (page)="onPage($event)">
 
             <!-- Row Detail Template -->
-            <ngx-datatable-row-detail [rowHeight]="98" #myDetailRow (toggle)="onDetailToggle($event)">
+            <ngx-datatable-row-detail [rowHeight]="140" #myDetailRow (toggle)="onDetailToggle($event)">
               <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
                 <div class="row-details text-muted px-3">
                   <dl class="row">
-                    <dt class="col-sm-2">Payment ID:</dt>
-                    <dd class="col-sm-10">{{row.payment_id}}</dd>
-                    <dt class="col-sm-2">Transaction ID:</dt>
+                    <dt class="col-sm-2">Created Date:</dt>
+                    <dd class="col-sm-10">{{(row.timestamp | amFromUnix)}}</dd>
+                    <dt class="col-sm-2">Transaction Hash (TxHash):</dt>
                     <dd class="col-sm-10"><a href="https://blockexplorer.electroneum.com/search?value={{row.txid}}" target="_blank">{{row.txid}}</a></dd>
-                    <dt class="col-sm-2">Transaction Notes:</dt>
+                    <dt class="col-sm-2">Transaction Note:</dt>
                     <dd class="col-sm-10" *ngIf="row.note">{{row.note}}</dd>
-                    <dd class="col-sm-10" *ngIf="!row.note">Nothing enetered for this transaction.</dd>
-                    <dt class="col-sm-2">Unlocked In:</dt>
-                    <dd class="col-sm-10">{{row.unlock_time}}</dd>
+                    <dd class="col-sm-10" *ngIf="!row.note">No <strong>Notes</strong> for this transaction.</dd>
+                    <dt class="col-sm-2">Payment ID:</dt>
+                    <dd class="col-sm-10" *ngIf="row.payment_id === '0000000000000000'">No <strong>Payment ID</strong> for this transaction.</dd>
+                    <dd class="col-sm-10" *ngIf="row.payment_id !== '0000000000000000'">{{row.payment_id}}</dd>
                   </dl>
                 </div>
               </ng-template>
@@ -47,57 +55,63 @@
 
             <!-- Column Templates -->
             <ngx-datatable-column
-              [width]="40"
+              [width]="10"
               [resizeable]="false"
               [sortable]="false"
               [draggable]="false"
-              [canAutoResize]="false">
+              [canAutoResize]="true">
               <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
-                <a href="javascript:void(0)"
-                  [class.datatable-icon-right]="!expanded"
-                  [class.datatable-icon-down]="expanded"
-                  title="Expand/Collapse Row"
-                  (click)="toggleExpandRow(row)">
-                </a>
+                <i class="fas text-muted pointer" title="Expand/Collapse Row"
+                [class.fa-angle-double-right]="!expanded"
+                [class.fa-angle-double-down]="expanded"
+                (click)="toggleExpandRow(row)"></i>
               </ng-template>
             </ngx-datatable-column>
 
-            <ngx-datatable-column name="Type">
+            <ngx-datatable-column name="Type" prop="type">
               <ng-template let-value="value" ngx-datatable-cell-template>
-                <span *ngIf="value == 'in'">Received</span>
-                <span *ngIf="value == 'out'">Sent</span>
+                <span *ngIf="value == 'in'"><i class="fas fa-inbox text-muted mr-2"></i>Received</span>
+                <span *ngIf="value == 'out'"><i class="fas fa-paper-plane text-muted mr-2"></i>Sent</span>
               </ng-template>
             </ngx-datatable-column>
 
-            <ngx-datatable-column name="Amount">
+            <ngx-datatable-column name="Amount" prop="amount">
               <ng-template let-value="value" ngx-datatable-cell-template>
-                <strong>{{(value / 100).toFixed(2)}}</strong>
+                <strong class="text-success">{{(value / 100).toFixed(2)}} ETN</strong>
               </ng-template>
             </ngx-datatable-column>
 
-            <ngx-datatable-column name="Fee">
+            <ngx-datatable-column name="Fee" prop="fee">
               <ng-template let-value="value" ngx-datatable-cell-template>
-                <strong>{{(value / 100).toFixed(2)}}</strong>
+                <strong class="text-danger">{{(value / 100).toFixed(2)}} ETN</strong>
               </ng-template>
             </ngx-datatable-column>
 
-            <ngx-datatable-column name="Height">
+            <ngx-datatable-column name="Block Height" prop="height">
               <ng-template let-value="value" ngx-datatable-cell-template>
                 <span>{{value}}</span>
               </ng-template>
             </ngx-datatable-column>
 
-            <ngx-datatable-column name="Timestamp">
+            <ngx-datatable-column name="Tx Status" prop="status">
               <ng-template let-value="value" ngx-datatable-cell-template>
-                <span>Added {{(value | amFromUnix) | amTimeAgo:true}} ago</span>
+                <span *ngIf="value == 'Pending'" class="text-warning"><i class="fas fa-clock mr-2"></i>{{value}}</span>
+                <span *ngIf="value == 'Failed'" class="text-danger"><i class="fas fa-exclamation-triangle mr-2"></i>{{value}}</span>
+                <span *ngIf="value == 'Completed'" class="text-success"><i class="fas fa-check-circle mr-2"></i>{{value}}</span>
+                <span *ngIf="value == 'Pool'" class="text-info"><i class="fas fa-question-circle mr-2"></i>{{value}}</span>
               </ng-template>
             </ngx-datatable-column>
 
-            <ngx-datatable-column name="Status">
+            <ngx-datatable-column name="Unlock Status" prop="unlock_time">
               <ng-template let-value="value" ngx-datatable-cell-template>
-                <span class="badge px-2 py-1" [class.badge-info]="value == 'Pool'" [class.badge-danger]="value == 'Failed'" [class.badge-warning]="value == 'Pending'" [class.badge-success]="value == 'Completed'">
-                  <span class="text-uppercase">{{value}}</span>
-                </span>
+                <span class="text-warning" *ngIf="value !== 0"><i class="fas fa-lock mr-2"></i>Locked</span>
+                <span class="text-success" *ngIf="value == 0"><i class="fas fa-unlock mr-2"></i>Unlocked</span>
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="When" prop="timestamp">
+              <ng-template let-value="value" ngx-datatable-cell-template>
+                <span><i class="fas fa-clock text-muted mr-2"></i>{{(value | amFromUnix) | amTimeAgo:true}} ago</span>
               </ng-template>
             </ngx-datatable-column>
 

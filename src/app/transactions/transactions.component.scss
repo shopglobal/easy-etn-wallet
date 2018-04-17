@@ -1,36 +1,18 @@
-// .transactions {
-//   height: 85vh;
-//   overflow-y: auto;
-//   margin-right: 5px;
-// }
-
-
-// .table {
- 
-//   tbody {
-//     background: transparent;
-//     tr {
-//       background:#fff;
-//     }
-//     tr:hover {
-//       background: rgba($color: #fff, $alpha: 0.9)
-//     }
-//   }
-
-//   td, th {
-//     padding: 14px;
-//   }
-
-//   th.sent {
-//     border-left: 8px solid #17a2b8;
-//   }
+.pointer {
+  cursor: pointer;
   
-//   th.received {
-//     border-left: 8px solid #18bc62;
-//   }
-  
-// }
+  &:hover {
+    color: #23bee0 !important;
+  }
+}
 
 .row-details {
   font-size: 14px;
+}
+
+.search {
+  padding:8px;
+  max-height: 40px;
+  margin-bottom:20px;
+  width:20%;
 }

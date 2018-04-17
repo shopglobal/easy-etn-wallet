@@ -50,6 +50,11 @@ textarea::placeholder {
   border-left: 10px solid #18bc62;
 }
 
+.list-group-item.offline {
+  border-left: 10px solid #dc3545;
+}
+
+
 .pointer {
   cursor: pointer;
   

@@ -35,6 +35,11 @@ export class ContactsComponent implements OnInit {
   closeResult: string;
   contacts;
 
+  // States
+  isAlive: boolean = true;
+  isLoading: boolean = false;
+  isOffline: boolean = true;
+
   constructor(
     public warehouse: Warehouse,
     private modalService: NgbModal
@@ -100,7 +105,11 @@ export class ContactsComponent implements OnInit {
       console.log(response)
       console.log('Contact created')
     })
-    .subscribe(console.log);
+    .subscribe({
+      next: (res) => {this.isLoading = true; this.isOffline = false;},
+      error: (err) => {this.isLoading = false; this.isOffline = true; console.log(err);},
+      complete: () => {this.isLoading = false;},
+    })
   }
 
   // Get Contacts
@@ -114,7 +123,11 @@ export class ContactsComponent implements OnInit {
         console.log(this.contacts);
         }
     )
-    .subscribe(console.log)
+    .subscribe({
+      next: (res) => {this.isLoading = true; this.isOffline = false;},
+      error: (err) => {this.isLoading = false; this.isOffline = true; console.log(err);},
+      complete: () => {this.isLoading = false;},
+    })
   }
 
   // Delete Contact
@@ -126,7 +139,11 @@ export class ContactsComponent implements OnInit {
       console.log(response)
       console.log('Contact deleted')
     })
-    .subscribe(console.log)
+    .subscribe({
+      next: (res) => {this.isLoading = true; this.isOffline = false;},
+      error: (err) => {this.isLoading = false; this.isOffline = true; console.log(err);},
+      complete: () => {this.isLoading = false;},
+    })
   }
 
   ngOnInit() {

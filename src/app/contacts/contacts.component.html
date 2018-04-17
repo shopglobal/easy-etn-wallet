@@ -25,6 +25,11 @@
                   <span class="float-right mr-3"><a href="#"><i class="fas fa-edit text-primary"></i></a></span>
                 </div>
               </div>
+              <div *ngIf="isOffline" id="cards" class="card">
+                <div class="card-body">
+                  <h1 class="text-muted warning pt-2 my-4">Wallet Offline</h1>
+                </div>
+              </div>
             </div>
           </div>
         </div>
