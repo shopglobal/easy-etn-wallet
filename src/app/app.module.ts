@@ -14,8 +14,9 @@ import { TranslateModule } from '@ngx-translate/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 // App Services & Directives
-import { ElectronService } from './providers/electron.service';
-import { WebviewDirective } from './directives/webview.directive';
+import { SettingsService } from './core/settings.service';
+import { ElectronService } from './core/electron.service';
+import { WebviewDirective } from './core/webview.directive';
 
 // App Components 
 import { AppComponent } from './app.component';
@@ -57,7 +58,10 @@ import { SettingsModule } from './settings/settings.module';
     AppComponent,
     WebviewDirective
   ],
-  providers: [ElectronService],
+  providers: [
+    ElectronService,
+    SettingsService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -4,7 +4,7 @@ import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs/Observable';
 
-import { ElectronService } from './providers/electron.service';
+import { ElectronService } from './core/electron.service';
 import { AppConfig } from './app.config';
 
 import { CONF_DEV } from '../environments/enviroment';
