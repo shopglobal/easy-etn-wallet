@@ -219,16 +219,16 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.getSettings();
-    Observable.timer(0, this.interval)
-    .takeWhile(() => this.isAlive)
-    .subscribe(() => {
-      this.getWalletBalance();
-      this.getWalletAddress();
-      this.getWalletTransactions();
-      }
-    )
-    console.log(this.interval);
+    // this.getSettings();
+    // Observable.timer(0, this.interval)
+    // .takeWhile(() => this.isAlive)
+    // .subscribe(() => {
+    //   this.getWalletBalance();
+    //   this.getWalletAddress();
+    //   this.getWalletTransactions();
+    //   }
+    // )
+    // console.log(this.interval);
   }
 
   ngOnDestroy(){

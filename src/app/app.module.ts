@@ -12,6 +12,16 @@ import { HttpModule } from '@angular/http';
 // 3rd Party
 import { TranslateModule } from '@ngx-translate/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+// App Data Storage
+import { NgxWarehouseModule, WarehouseConfig, DRIVER_TYPE } from 'ngx-warehouse';
+
+const config: WarehouseConfig = {
+  driver: DRIVER_TYPE.DEFAULT,
+  name: 'Easy ETN Wallet',
+  version: 1.0,
+  storeName: 'key_value_pairs', // Should be alphanumeric, with underscores.
+  description: 'Unoffical Electroneum Desktop Wallet'
+};
 
 // App Services & Directives
 import { SettingsService } from './core/settings.service';
@@ -52,7 +62,8 @@ import { SettingsModule } from './settings/settings.module';
     TransactionsModule,
     TransfersModule,
     SettingsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgxWarehouseModule.configureWarehouse(config)
   ],
   declarations: [
     AppComponent,

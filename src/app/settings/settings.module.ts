@@ -11,17 +11,6 @@ import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
 
-// App Data Storage
-import { NgxWarehouseModule, WarehouseConfig, DRIVER_TYPE } from 'ngx-warehouse';
-
-const config: WarehouseConfig = {
-  driver: DRIVER_TYPE.DEFAULT,
-  name: 'Easy ETN Wallet',
-  version: 1.0,
-  storeName: 'key_value_pairs', // Should be alphanumeric, with underscores.
-  description: 'Unoffical Electroneum Desktop Wallet'
-};
-
 import { SettingsRoutingModule } from './settings-routing.module';
 import { SettingsComponent } from './settings.component';
 
@@ -35,8 +24,7 @@ import { SettingsComponent } from './settings.component';
     FormlyModule.forRoot(),
     FormlyBootstrapModule,
     NgSelectModule,
-    NgbModule,
-    NgxWarehouseModule.configureWarehouse(config)
+    NgbModule
   ],
   declarations: [
     SettingsComponent
