@@ -41,66 +41,25 @@ export class SettingsComponent implements OnInit {
   model = {};
   fields: FormlyFieldConfig[] = [
     {
-      template: '<h5 class="card-title mb-3">Your Details</h5>',
+      template: '<h5 class="card-title mb-3">Wallet Information</h5>',
     },
     {
       fieldGroupClassName: 'row',
       fieldGroup: [
         {
-          className: 'col-6',
-          key: 'firstname',
+          className: 'col-4',
+          key: 'wallet_name',
           type: 'input',
           templateOptions: {
             type: 'text',
-            label: 'First Name',
-            placeholder: 'John',
+            label: 'Wallet Name',
+            placeholder: 'MyWallet',
             required: true,
           }
         },
         {
-          className: 'col-6',
-          key: 'lastname',
-          type: 'input',
-          templateOptions: {
-            type: 'text',
-            label: 'Last Name',
-            placeholder: 'Citizen',
-            required: true,
-          }
-        },
-        {
-          className: 'col-6',
-          key: 'email',
-          type: 'input',
-          templateOptions: {
-            label: 'Email',
-            type: 'email',
-            placeholder: 'you@youremail.com',
-            required: true,
-          }
-        }
-      ]
-    },
-    {
-      template: '<hr class="bg-light my-3" /><h5 class="card-title mb-3">Wallet Information</h5>',
-    },
-    {
-      fieldGroupClassName: 'row',
-      fieldGroup: [
-        {
-          className: 'col-6',
-          key: 'wallet',
-          type: 'input',
-          templateOptions: {
-            type: 'text',
-            label: 'Wallet Address',
-            placeholder: 'etnkGmQZG1c1g8nXSe9qR6foYDdZxySnNS8odiHtLuB8WqhGQHEcsv17rUUyiW8wnagTKkcw29gQyNPSHnprf8Nz7sYNs2Mf2g',
-            required: true,
-          }
-        },
-        {
-          className: 'col-6',
-          key: 'password',
+          className: 'col-4',
+          key: 'wallet_password',
           type: 'input',
           templateOptions: {
             type: 'password',
@@ -109,6 +68,16 @@ export class SettingsComponent implements OnInit {
             required: true,
           }
         },
+        {
+          key: 'wallet_lang',
+          type: 'select',
+          templateOptions: {
+            label: 'Wallet Language',
+            options: [
+              {label: 'English', value: 'English'}
+            ],
+          },
+        }
       ]
     },
     {
@@ -118,27 +87,34 @@ export class SettingsComponent implements OnInit {
       fieldGroupClassName: 'row',
       fieldGroup: [
         {
-          className: 'col-6',
-          key: 'refresh',
+          className: 'col-4',
+          key: 'app_dislay',
           type: 'input',
           templateOptions: {
-            type: 'number',
-            placeholder: '30',
-            addonRight: {
-              text: 'Seconds',
-            },
-            label: 'Refresh Interval',
+            type: 'text',
+            label: 'Display Name',
+            placeholder: 'User',
             required: true,
           }
         },
         {
-          className: 'col-6 my-auto mx-auto',
-          key: 'sounds',
+          key: 'app_interval',
+          type: 'select',
+          templateOptions: {
+            label: 'Refresh Interval',
+            options: [
+              {label: '30 Seconds', value: '30000'}
+            ],
+          },
+        },
+        {
+          className: 'col-4',
+          key: 'app_sounds',
           type: 'checkbox',
           templateOptions: {
             label: 'Enable Sounds?',
           }
-        }
+        },
       ]
     }
   ];

@@ -13,7 +13,7 @@ import { SettingsService } from '../../settings.service';
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
-  providers: [NgbDropdownConfig] // add NgbDropdownConfig to the component providers
+  providers: [SettingsService, NgbDropdownConfig] 
 })
 
 export class HeaderComponent implements OnInit, OnDestroy {
@@ -31,9 +31,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private authenticationService: AuthenticationService,
     public config: NgbDropdownConfig,
-    private settingsService: SettingsService
+    public settingsService: SettingsService
   ) { 
-
     // customize default values of dropdowns used by this component tree
     config.placement = 'bottom-right';
     config.autoClose = true;
@@ -89,10 +88,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     // // Subscribe to routes
-    // this.route.params.subscribe( params => { const key = <string>params['key']; } );
+    this.route.params.subscribe( params => { const key = <string>params['key']; } );
     // this.getSettings();
     // // Check wallet status
-    // Observable.timer(0, this.interval)
+    // Observable.timer(0, this.settingsService.settings)
     // .takeWhile(() => this.isAlive)
     // .subscribe(() => {
     //   this.getWalletAddress();

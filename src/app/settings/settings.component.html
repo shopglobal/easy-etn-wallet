@@ -7,7 +7,7 @@
         <div class="d-flex justify-content-center">
 
           <!-- Form -->
-          <div class="col-6 mb-3" @enterAnimation>
+          <div class="col-10 mb-3" @enterAnimation>
             <div class="card">
               <div class="card-body text-white p-4">
                 <form [formGroup]="form" (ngSubmit)="submit(model)">
@@ -17,20 +17,12 @@
               <div class="card-footer bg-light">
                 <div class="d-flex justify-content-end">
                   <div class="my-auto">
-                    <a role="button" (click)="submit(model)" class="btn btn-sm btn-success">Save Settings</a>
+                    <button class="btn btn-success mr-2" role="button" (click)="submit(model)">Save Settings</button>
+                    <button class="btn btn-success mr-2" role="button" (click)="createWallet()">Create Wallet</button>
+                    <button class="btn btn-success mr-2" role="button" (click)="openWallet()">Open Wallet</button>
+                    <button class="btn btn-success" role="button" (click)="closeWallet()">Close Wallet</button>
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-6 mb-3" @enterAnimation>
-            <div class="card">
-              <div class="card-body text-white p-4">
-                <h5 class="card-title text-white mb-4">Wallet Controls</h5>
-                <button class="btn btn-success mr-2" role="button" (click)="createWallet()">Create Wallet</button>
-                <button class="btn btn-success" role="button" (click)="openWallet()">Open Wallet</button>
-                <button class="btn btn-success" role="button" (click)="closeWallet()">Close Wallet</button>
               </div>
             </div>
           </div>

@@ -1,21 +1,24 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import { Warehouse } from 'ngx-warehouse';
+
+export interface Settings {
+  app_sounds: boolean;
+  app_interval: number;
+  wallet_name: string;
+  wallet_password: string;
+  wallet_lang: string;
+}
+
+const storageKey = 'settings';
 
 @Injectable()
 export class SettingsService {
 
-  name;
-  username;
-  password;
-  interval;
+  public _settings: Settings;
   
-  constructor(public warehouse: Warehouse) { 
-    this.warehouse.get('settings').subscribe(
-      (response) => { 
-        this.username = response.username;
-        console.log(this.username);
-      }
-    )
+  constructor(private warehouse: Warehouse) {
+    
   }
-
+    
 }
