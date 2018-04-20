@@ -74,22 +74,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
     audio.play();
   }
 
-  // getSettings() {
-  //   this.warehouse.get('settings').subscribe(
-  //     data => {
-  //       let settings = JSON.parse(JSON.stringify(data));
-  //       this.settings.interval = settings.refresh;
-  //       //console.log(this.interval);
-  //       //console.log(data);
-  //     },
-  //     error => console.log(error)
-  //   );
-  // }
+  getSettings() {
+    console.log('Get app settings triggered');
+  }
 
   ngOnInit() {
+    // console.log(this.settingsService.settings.app_interval);
+
     // // Subscribe to routes
     this.route.params.subscribe( params => { const key = <string>params['key']; } );
-    // this.getSettings();
+    
     // // Check wallet status
     // Observable.timer(0, this.settingsService.settings)
     // .takeWhile(() => this.isAlive)

@@ -2,9 +2,7 @@ import { Component, OnInit, OnDestroy, ViewChild, ViewEncapsulation } from '@ang
 import { trigger, style, animate, transition } from '@angular/animations';
 import { makeUrl, Wallet } from 'rx-monero-wallet';
 import { Observable, } from 'rxjs';
-import {
-  delay
-} from 'rxjs/operators';
+import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-transactions',

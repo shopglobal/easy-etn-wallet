@@ -3,14 +3,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { trigger, style, animate, transition } from '@angular/animations';
 // Servvices
-import { SettingsService } from '../core/settings.service';
+import { WalletService } from '../core/wallet.service';
 // 3rd Party
 import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
 
 @Component({
   selector: 'app-settings',
-  templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.scss'],
+  templateUrl: './wallet.component.html',
+  styleUrls: ['./wallet.component.scss'],
   animations: [
     trigger(
       'enterAnimation', [
@@ -22,9 +22,7 @@ import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
     )
   ]
 })
-export class SettingsComponent implements OnInit {
-
-  constructor(private settingsService: SettingsService) { }
+export class WalletComponent implements OnInit {
 
   // Form Config
   isLoading = false; // States
@@ -36,58 +34,72 @@ export class SettingsComponent implements OnInit {
       fieldGroup: [
         {
           className: 'col-12',
-          key: 'display',
+          key: 'filename',
           type: 'input',
           templateOptions: {
             type: 'text',
-            label: 'First Name',
-            placeholder: 'John',
+            label: 'Wallet Name',
+            placeholder: 'MyWallet',
             required: true,
           },
         },
         {
           className: 'col-12',
-          key: 'interval',
+          key: 'password',
+          type: 'input',
+          templateOptions: {
+            type: 'password',
+            label: 'Wallet Password',
+            placeholder: 'Password1',
+            required: true,
+          },
+        },
+        {
+          className: 'col-12',
+          key: 'language',
           type: 'select',
           templateOptions: {
-            label: 'Refresh Interval',
+            label: 'Wallet Language',
             options: [
-              { label: '30 Seconds', value: '30000' },
+              { label: 'English', value: 'English' }
             ],
           },
         },
         {
           className: 'col-12',
-          key: 'sounds',
+          key: 'remember',
           type: 'checkbox',
           templateOptions: {
-            label: 'Enable Sounds?',
+            label: 'Remember Settings?',
           },
         },
       ],
     },
   ];
 
+  constructor(private walletService: WalletService) { }
+
   submit(model) {
     this.isLoading = true;
-    this.settingsService.setSettings(model)
+    this.walletService.setWallet(model)
     .finally(() => {
       this.isLoading = false;
+      console.log('Form submit completed');
     })
-    .subscribe(response => {
-      console.log(response);
+    .subscribe(wallet => {
+      console.log(wallet);
     }, error => {
       console.log(error);
     });
   }
 
-  getSettings() {
-    this.model = this.settingsService.application || null;
+  getWallet() {
+    this.model = this.walletService.wallet || null;
     console.log('Get app settings triggered');
   }
 
   ngOnInit() {
-    this.getSettings();
+    this.getWallet();
   }
 
 }

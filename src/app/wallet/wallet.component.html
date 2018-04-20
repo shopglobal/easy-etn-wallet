@@ -3,20 +3,20 @@
 
     <!-- Begin Page Content -->
     <div class="row mx-auto">
-      <div class="col-12">
+      <div class="col-12 p-4">
         <div class="d-flex justify-content-center">
 
           <!-- Form -->
           <div class="col-4 mb-3" @enterAnimation>
             <div class="card text-muted">
               <div class="card-body p-4">
-                <div class="card-title text-center mb-4">
-                  <h3>Settings</h3>
+                <div class="card-title mb-4">
+                  <h3>Wallet Settings</h3>
                 </div>
                 <form [formGroup]="form" (ngSubmit)="submit(model)">
                   <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
                 </form>
-                <button class="btn btn-success btn-block mr-2" role="button" (click)="submit(model)">Save Settings</button>
+                <button class="btn btn-success mr-2" role="button" (click)="submit(model)">Save Settings</button>
               </div>
             </div>
           </div>

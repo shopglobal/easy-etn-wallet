@@ -43,7 +43,6 @@
     "angularx-qrcode": "^1.1.0",
     "electron-settings": "^3.1.4",
     "electron-titlebar": "0.0.3",
-    "ngx-warehouse": "^1.0.2",
     "rx-monero-wallet": "^1.0.17"
   },
   "devDependencies": {
