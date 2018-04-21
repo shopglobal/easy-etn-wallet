@@ -7,9 +7,6 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
-// App Data Storage
-import { NgxWarehouseModule } from 'ngx-warehouse';
-
 import { TransactionsRoutingModule } from './transactions-routing.module';
 import { TransactionsComponent } from './transactions.component';
 
@@ -21,8 +18,7 @@ import { TransactionsComponent } from './transactions.component';
     MomentModule,
     NgSelectModule,
     NgbModule,
-    NgxDatatableModule,
-    NgxWarehouseModule
+    NgxDatatableModule
   ],
   declarations: [
     TransactionsComponent

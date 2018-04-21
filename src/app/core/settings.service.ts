@@ -3,8 +3,8 @@ import { Observable } from 'rxjs/Observable';
 
 export interface Application {
   display: string;
-  sounds: string;
-  interval: string;
+  sounds: boolean;
+  interval: number;
 }
 
 const applicationKey = 'application';
@@ -31,7 +31,7 @@ export class SettingsService {
    * @param {Application=} application The app settings.
    */
   setSettings(application?: Application) : Observable<Application> {
-    this._applicationSettings = application || null;
+    this._applicationSettings = application;
     if (application) {
       localStorage.setItem(applicationKey, JSON.stringify(application));
     } else {

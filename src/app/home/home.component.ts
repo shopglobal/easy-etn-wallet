@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { trigger, transition, query, style, stagger, animate } from '@angular/animations';
 import { makeUrl, Wallet, Atomic, Xmr, generatePaymentId } from 'rx-monero-wallet';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { Warehouse } from 'ngx-warehouse';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -54,8 +53,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   isOffline: boolean = true;
 
   constructor(
-    private modalService: NgbModal,
-    public warehouse: Warehouse
+    private modalService: NgbModal
   ) { }
 
   // Modal Window
@@ -207,15 +205,15 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   getSettings() {
-    this.warehouse.get('settings').subscribe(
-      data => {
-        let settings = JSON.parse(JSON.stringify(data));
-        this.interval = settings.refresh;
-        //console.log(this.interval);
-        //console.log(data);
-      },
-      error => console.log(error)
-    );
+    // this.warehouse.get('settings').subscribe(
+    //   data => {
+    //     let settings = JSON.parse(JSON.stringify(data));
+    //     this.interval = settings.refresh;
+    //     //console.log(this.interval);
+    //     //console.log(data);
+    //   },
+    //   error => console.log(error)
+    // );
   }
 
   ngOnInit() {

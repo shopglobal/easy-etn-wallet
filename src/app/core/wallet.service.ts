@@ -35,7 +35,7 @@ export class WalletService {
    * @param {boolean=} remember True to remember wallet settings across sessions.
    */
   setWallet(wallet?: Wallet, remember?: boolean) : Observable<Wallet> {
-    this._walletSettings = wallet || null;
+    this._walletSettings = wallet;
     if (wallet) {
       const storage = remember ? localStorage : sessionStorage;
       storage.setItem(walletKey, JSON.stringify(wallet));

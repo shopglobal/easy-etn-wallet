@@ -3,7 +3,6 @@ import { trigger, transition, query, style, stagger, animate } from '@angular/an
 import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { Warehouse } from 'ngx-warehouse';
 import { makeUrl, Wallet } from 'rx-monero-wallet';
 import { JsonPipe } from '@angular/common';
 import { toArray } from 'rxjs/operator/toArray';
@@ -41,7 +40,6 @@ export class ContactsComponent implements OnInit {
   isOffline: boolean = true;
 
   constructor(
-    public warehouse: Warehouse,
     private modalService: NgbModal
   ) {}
 

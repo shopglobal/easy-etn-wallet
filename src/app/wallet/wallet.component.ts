@@ -94,8 +94,10 @@ export class WalletComponent implements OnInit {
   }
 
   getWallet() {
-    this.model = this.walletService.wallet || null;
-    console.log('Get app settings triggered');
+    if (this.walletService.wallet) {
+      this.model = this.walletService.wallet;
+      console.log('Get app settings triggered');
+    }
   }
 
   ngOnInit() {

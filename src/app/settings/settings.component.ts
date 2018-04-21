@@ -82,8 +82,10 @@ export class SettingsComponent implements OnInit {
   }
 
   getSettings() {
-    this.model = this.settingsService.application || null;
-    console.log('Get app settings triggered');
+    if (this.settingsService.application) {
+      this.model = this.settingsService.application;
+      console.log('Get app settings triggered');
+    }
   }
 
   ngOnInit() {
