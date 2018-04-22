@@ -79,18 +79,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // console.log(this.settingsService.settings.app_interval);
-
     // // Subscribe to routes
     this.route.params.subscribe( params => { const key = <string>params['key']; } );
     
     // // Check wallet status
-    // Observable.timer(0, this.settingsService.settings)
-    // .takeWhile(() => this.isAlive)
-    // .subscribe(() => {
-    //   this.getWalletAddress();
-    //   }
-    // );
+    Observable.timer(0, this.settingsService.application.interval)
+    .takeWhile(() => this.isAlive)
+    .subscribe(() => {
+      this.getWalletAddress();
+      }
+    );
   }
 
   ngOnDestroy(){

@@ -1,12 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
-import { Route } from '../core/route.service';
 import { SettingsComponent } from './settings.component';
 
-const routes: Routes = Route.withShell([
+const routes: Routes = [
   { path: 'settings', component: SettingsComponent }
-]);
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

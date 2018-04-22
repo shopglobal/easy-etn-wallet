@@ -1,5 +1,9 @@
+// Angular Core
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { trigger, transition, query, style, stagger, animate } from '@angular/animations';
+// Services
+import { SettingsService } from '../core/settings.service';
+// 3rd Party 
 import { makeUrl, Wallet, Atomic, Xmr, generatePaymentId } from 'rx-monero-wallet';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
@@ -35,7 +39,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   // Wallet Connect
   url = makeUrl('http', '66.175.216.72', '80', 'json_rpc');
   wallet = Wallet(this.url);
-  interval; // 30 seconds
   balance: string;
   balance_unlocked: string;
   address: string;
@@ -53,7 +56,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   isOffline: boolean = true;
 
   constructor(
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private settingsService: SettingsService
   ) { }
 
   // Modal Window
@@ -204,29 +208,16 @@ export class HomeComponent implements OnInit, OnDestroy {
     document.body.removeChild(textarea);
   }
 
-  getSettings() {
-    // this.warehouse.get('settings').subscribe(
-    //   data => {
-    //     let settings = JSON.parse(JSON.stringify(data));
-    //     this.interval = settings.refresh;
-    //     //console.log(this.interval);
-    //     //console.log(data);
-    //   },
-    //   error => console.log(error)
-    // );
-  }
-
   ngOnInit() {
-    // this.getSettings();
-    // Observable.timer(0, this.interval)
-    // .takeWhile(() => this.isAlive)
-    // .subscribe(() => {
-    //   this.getWalletBalance();
-    //   this.getWalletAddress();
-    //   this.getWalletTransactions();
-    //   }
-    // )
-    // console.log(this.interval);
+
+    Observable.timer(0, this.settingsService.application.interval)
+    .takeWhile(() => this.isAlive)
+    .subscribe(() => {
+      this.getWalletBalance();
+      this.getWalletAddress();
+      this.getWalletTransactions();
+      }
+    )
   }
 
   ngOnDestroy(){

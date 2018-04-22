@@ -7,16 +7,17 @@
         <div class="d-flex justify-content-center">
 
           <!-- Form -->
-          <div class="col-4 mb-3" @enterAnimation>
-            <div class="card text-muted">
+          <div class="col-4" @enterAnimation>
+            <div class="card">
               <div class="card-body p-4">
-                <div class="card-title text-center mb-4">
-                  <h3>Settings</h3>
+                <div class="card-title mb-4">
+                  <h2 class="mb-2">Hi There!</h2>
+                  <h4 class="mb-4 text-muted">Just a few questions...</h4>
                 </div>
-                <form [formGroup]="form" (ngSubmit)="submit(model)">
+                <form [formGroup]="form" class="my-4" (ngSubmit)="submit(model)">
                   <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
                 </form>
-                <button class="btn btn-success btn-block mr-2" role="button" (click)="submit(model)">Save Settings</button>
+                <button class="btn btn-lg btn-success btn-block mr-2" role="button" (click)="submit(model)">Save and continue</button>
               </div>
             </div>
           </div>

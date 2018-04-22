@@ -37,8 +37,8 @@
   "dependencies": {
     "@ng-bootstrap/ng-bootstrap": "^2.0.0-alpha.0",
     "@ng-select/ng-select": "^0.36.2",
-    "@ngx-formly/bootstrap": "^2.0.0",
-    "@ngx-formly/core": "^2.0.0",
+    "@ngx-formly/bootstrap": "^2.1.1",
+    "@ngx-formly/core": "^2.1.1",
     "@swimlane/ngx-datatable": "^11.3.2",
     "angularx-qrcode": "^1.1.0",
     "electron-settings": "^3.1.4",
@@ -46,7 +46,7 @@
     "rx-monero-wallet": "^1.0.17"
   },
   "devDependencies": {
-    "@angular/animations": "^5.2.9",
+    "@angular/animations": "^5.2.10",
     "@angular/cli": "1.7.4",
     "@angular/common": "5.2.9",
     "@angular/compiler": "5.2.9",

@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+// 3rd Party 
+import { makeUrl, Wallet, Atomic, Xmr, generatePaymentId } from 'rx-monero-wallet';
 
 export interface Wallet {
   filename: string;
@@ -11,6 +13,10 @@ const walletKey = 'wallet';
 
 @Injectable()
 export class WalletService {
+  
+  // Wallet Connect
+  url = makeUrl('http', '66.175.216.72', '80', 'json_rpc');
+  mywallet = Wallet(this.url);
 
   public _walletSettings: Wallet;
   
@@ -34,7 +40,7 @@ export class WalletService {
    * @param {Wallet=} wallet The wallet settings.
    * @param {boolean=} remember True to remember wallet settings across sessions.
    */
-  setWallet(wallet?: Wallet, remember?: boolean) : Observable<Wallet> {
+  saveWallet(wallet?: Wallet, remember?: boolean) : Observable<Wallet> {
     this._walletSettings = wallet;
     if (wallet) {
       const storage = remember ? localStorage : sessionStorage;
@@ -45,26 +51,26 @@ export class WalletService {
     }
     return Observable.of(wallet);
   }
-    
+
+  createWallet() {
+    console.log('Create wallet triggered')
+    this.mywallet.create_wallet(this._walletSettings)
+    .map((res) => res, console.log())
+    .subscribe(console.log);
+  }
+
+  openWallet() {
+    console.log('Create wallet triggered')
+    this.mywallet.open_wallet(this._walletSettings)
+    .map((res) => res, console.log())
+    .subscribe(console.log);
+  }
+
+  closeWallet() {
+    console.log('Close wallet triggered')
+    this.mywallet.stop_wallet()
+    .map((res) => res, console.log())
+    .subscribe(console.log);
+  }
+
 }
-
-// createWallet() {
-//   console.log('Create wallet triggered')
-//   this.wallet.create_wallet(this.model)
-//   .map((res) => res, console.log())
-//   .subscribe(console.log);
-// }
-
-// openWallet() {
-//   console.log('Open wallet triggered')
-//   this.wallet.open_wallet(this.model)
-//   .map((res) => res, console.log())
-//   .subscribe(console.log);
-// }
-
-// closeWallet() {
-//   console.log('Close wallet triggered')
-//   this.wallet.stop_wallet()
-//   .map((res) => res, console.log())
-//   .subscribe(console.log);
-// }

@@ -13,6 +13,9 @@ import { NgSelectModule } from '@ng-select/ng-select';
 
 import { WalletRoutingModule } from './wallet-routing.module';
 import { WalletComponent } from './wallet.component';
+import { WalletOpenComponent } from './wallet-open.component';
+import { WalletCreateComponent } from './wallet-create.component';
+import { WalletRestoreComponent } from './wallet-restore.component';
 
 @NgModule({
   imports: [
@@ -27,7 +30,10 @@ import { WalletComponent } from './wallet.component';
     NgbModule
   ],
   declarations: [
-    WalletComponent
+    WalletComponent,
+    WalletOpenComponent,
+    WalletCreateComponent,
+    WalletRestoreComponent
   ]
 })
 export class WalletModule { }

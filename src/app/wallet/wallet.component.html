@@ -7,16 +7,47 @@
         <div class="d-flex justify-content-center">
 
           <!-- Form -->
-          <div class="col-4 mb-3" @enterAnimation>
+          <div class="col-9" @enterAnimation>
             <div class="card text-muted">
-              <div class="card-body p-4">
-                <div class="card-title mb-4">
-                  <h3>Wallet Settings</h3>
+              <div class="card-body p-5">
+                <div class="card-title text-centermy">
+                  <h1 class="text-dark">Welcome {{name}}</h1>
+                  <h4 class="mt-2 mb-5">Let's get you started with a wallet.</h4>
                 </div>
-                <form [formGroup]="form" (ngSubmit)="submit(model)">
-                  <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
-                </form>
-                <button class="btn btn-success mr-2" role="button" (click)="submit(model)">Save Settings</button>
+   
+                  <div class="card-deck text-center">
+                    <div class="card">
+                      <div class="card-header bg-light text-dark text-center">
+                        Create
+                      </div>
+                      <div class="card-body">
+                        <i class="fas fa-3x fa-plus-square my-3"></i>
+                        <p class="card-text mb-4">Need a wallet? <br /> Create a new wallet.</p>
+                        <a routerLink="/wallet-create" class="btn btn-lg btn-success btn-block">Create Wallet</a>
+                      </div>
+                    </div>
+                    <div class="card">
+                      <div class="card-header bg-light text-dark text-center">
+                        Open
+                      </div>
+                      <div class="card-body">
+                        <i class="fas fa-3x fa-folder-open my-3"></i>
+                        <p class="card-text mb-4">Got a wallet? <br /> Open existing wallet.</p>
+                        <a routerLink="/wallet-open" class="btn btn-lg btn-info btn-block">Open Wallet</a>
+                      </div>
+                    </div>
+                    <div class="card">
+                      <div class="card-header bg-light text-dark text-center">
+                        Restore
+                      </div>
+                      <div class="card-body">
+                        <i class="fas fa-3x fa-save my-3"></i>
+                        <p class="card-text mb-4">Lost a wallet? <br />Restore existing wallet.</p>
+                        <a routerLink="/wallet-restore" class="btn btn-lg btn-secondary btn-block">Restore Wallet</a>
+                      </div>
+                    </div>
+                  </div>
+
               </div>
             </div>
           </div>
