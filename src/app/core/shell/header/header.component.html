@@ -25,16 +25,17 @@
       </li>
       <li class="nav-item mx-2 dropdown" ngbDropdown>
         <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ngbDropdownToggle>
-          More
+          <strong>Options</strong>
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown" ngbDropdownMenu>
           <a class="dropdown-item" routerLink="/payments" routerLinkActive="active">Payment Schedule</a>
           <a class="dropdown-item" routerLink="/markets" routerLinkActive="active">Market / Price</a>
           <a class="dropdown-item" routerLink="/mining" routerLinkActive="active">CPU Mining</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" routerLink="/wallet" routerLinkActive="active"><i class="fas fa-credit-card mr-2"></i>Wallet</a>
-          <a class="dropdown-item" routerLink="/settings" routerLinkActive="active"><i class="fas fa-cog mr-2"></i>Settings</a>
-          <a class="dropdown-item" (click)="logout()"><i class="fas fa-power-off text-danger mr-2"></i>Logout</a>
+          <a class="dropdown-item" routerLink="/wallet" routerLinkActive="active">Wallet Settings</a>
+          <a class="dropdown-item" routerLink="/settings" routerLinkActive="active">App Settings</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" (click)="logout()"><i class="fas fa-power-off text-danger mr-2"></i>Shutdown</a>
         </div>
       </li>
     </ul>

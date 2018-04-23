@@ -106,14 +106,6 @@ export class WalletOpenComponent implements OnInit {
     }
   }
 
-  openWallet() {
-    this.walletService.openWallet();
-  }
-
-  closeWallet() {
-    this.walletService.closeWallet();
-  }
-
   ngOnInit() {
     this.getWallet();
   }

@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 // Services
 import { AuthenticationService } from '../../authentication/authentication.service';
 import { SettingsService } from '../../settings.service';
+import { WalletService } from '../../wallet.service';
 
 @Component({
   selector: 'app-header',
@@ -31,7 +32,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private authenticationService: AuthenticationService,
     public config: NgbDropdownConfig,
-    public settingsService: SettingsService
+    public settingsService: SettingsService,
+    public walletServices: WalletService
   ) { 
     // customize default values of dropdowns used by this component tree
     config.placement = 'bottom-right';
@@ -39,6 +41,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   logout() {
+    this.walletServices.closeWallet()
     this.authenticationService.logout()
     .subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
   }

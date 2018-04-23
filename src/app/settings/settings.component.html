@@ -11,13 +11,15 @@
             <div class="card">
               <div class="card-body p-4">
                 <div class="card-title mb-4">
-                  <h2 class="mb-2">Hi There!</h2>
-                  <h4 class="mb-4 text-muted">Just a few questions...</h4>
+                  <h4 class="text-muted">Just a few quick questions...</h4>
                 </div>
                 <form [formGroup]="form" class="my-4" (ngSubmit)="submit(model)">
                   <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
                 </form>
-                <button class="btn btn-lg btn-success btn-block mr-2" role="button" (click)="submit(model)">Save and continue</button>
+                <button class="btn btn-lg btn-success btn-block mr-2" role="button" (click)="submit(model)" [disabled]="form.invalid || isLoading">
+                  <i class="fa fa-cog fa-spin" [hidden]="!isLoading"></i>
+                  Save and continue
+                </button>
               </div>
             </div>
           </div>

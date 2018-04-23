@@ -53,24 +53,22 @@ export class WalletService {
   }
 
   createWallet() {
-    console.log('Create wallet triggered')
     this.mywallet.create_wallet(this._walletSettings)
     .map((res) => res, console.log())
     .subscribe(console.log);
   }
 
   openWallet() {
-    console.log('Create wallet triggered')
     this.mywallet.open_wallet(this._walletSettings)
     .map((res) => res, console.log())
     .subscribe(console.log);
   }
 
   closeWallet() {
-    console.log('Close wallet triggered')
     this.mywallet.stop_wallet()
     .map((res) => res, console.log())
     .subscribe(console.log);
+    console.log('Wallet Closed');
   }
 
 }

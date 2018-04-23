@@ -70,6 +70,28 @@ html, body {
   }
 }
 
+html {
+  font-size: .90rem;
+}
+
+@include media-breakpoint-up(sm) {
+  html {
+    font-size: .95rem;
+  }
+}
+
+@include media-breakpoint-up(md) {
+  html {
+    font-size: 1rem;
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  html {
+    font-size: 1.1rem;
+  }
+}
+
 .container-fluid {
   padding-top: 90px;
 }
@@ -126,6 +148,21 @@ select option {
   .progress-linear {
     background: #aad1f9;
   }
+}
+
+// Form control fixes for IE 11
+.form-control {
+  min-height: 2.4rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+  margin-top: 0.5rem;
+}
+
+.form-check-inline label {
+  margin-bottom: .4rem;
+  margin-top: .4rem;
 }
 
 @keyframes animate {
