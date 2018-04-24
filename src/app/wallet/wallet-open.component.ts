@@ -4,8 +4,9 @@ import { FormGroup } from '@angular/forms';
 import { trigger, style, animate, transition } from '@angular/animations';
 import { Router } from '@angular/router';
 // Servvices
-import { WalletService } from '../core/wallet.service';
 import { SettingsService } from '../core/settings.service';
+import { WalletService } from '../core/wallet.service';
+import { DaemonService } from '../core/daemon.service';
 // 3rd Party
 import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
 import { NgbProgressbarConfig } from '@ng-bootstrap/ng-bootstrap';
@@ -30,7 +31,7 @@ export class WalletOpenComponent implements OnInit {
 
   wallet_open: boolean;
   wallet_height: number = 0;
-  daemon_height: number = 255470;
+  daemon_height: number = 0;
 
   // Form Config
   isLoading = false; // States
@@ -86,10 +87,11 @@ export class WalletOpenComponent implements OnInit {
   ];
 
   constructor(
-    private walletService: WalletService,
+    private settingsService: SettingsService,
     private router: Router,
     private progressConfig: NgbProgressbarConfig,
-    private settingsService: SettingsService
+    private walletService: WalletService,
+    private daemonService: DaemonService,
   ) { }
 
   submit(model) {
@@ -119,12 +121,15 @@ export class WalletOpenComponent implements OnInit {
 
   getBlockHights() {
     Observable.timer(0, 10000)
-    .takeWhile(() => this.wallet_height != this.daemon_height)
+    .takeWhile(() => this.wallet_height <= this.daemon_height)
     .subscribe(() => {
       this.walletService.getWalletHeight()
       .map((res) => { this.wallet_height = res.height})
-      .subscribe()
-      console.log(this.wallet_height, this.daemon_height)
+      .subscribe();
+      this.daemonService.getDaemonHeight();
+      // .map((response) => console.log(response))
+      // //.map((response) => { this.daemon_height = response.height})
+      // .subscribe();
     })
   }
 

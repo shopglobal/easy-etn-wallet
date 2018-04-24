@@ -16,6 +16,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 // App Services & Directives
 import { SettingsService } from './core/settings.service';
 import { WalletService } from './core/wallet.service';
+import { DaemonService } from './core/daemon.service';
 import { ElectronService } from './core/electron.service';
 import { WebviewDirective } from './core/webview.directive';
 
@@ -64,7 +65,8 @@ import { WalletModule } from './wallet/wallet.module';
   providers: [
     ElectronService,
     SettingsService,
-    WalletService
+    WalletService,
+    DaemonService
   ],
   bootstrap: [AppComponent]
 })
