@@ -5,8 +5,11 @@ import { trigger, style, animate, transition } from '@angular/animations';
 import { Router } from '@angular/router';
 // Servvices
 import { WalletService } from '../core/wallet.service';
+import { SettingsService } from '../core/settings.service';
 // 3rd Party
 import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
+import { NgbProgressbarConfig } from '@ng-bootstrap/ng-bootstrap';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-wallet-open',
@@ -24,6 +27,10 @@ import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
   ]
 })
 export class WalletOpenComponent implements OnInit {
+
+  wallet_open: boolean;
+  wallet_height: number = 0;
+  daemon_height: number = 255470;
 
   // Form Config
   isLoading = false; // States
@@ -80,7 +87,9 @@ export class WalletOpenComponent implements OnInit {
 
   constructor(
     private walletService: WalletService,
-    private router: Router
+    private router: Router,
+    private progressConfig: NgbProgressbarConfig,
+    private settingsService: SettingsService
   ) { }
 
   submit(model) {
@@ -89,11 +98,13 @@ export class WalletOpenComponent implements OnInit {
     .finally(() => {
       this.isLoading = false;
       this.walletService.openWallet();
+      this.getBlockHights();
+      this.wallet_open = true;
       console.log('Form submit completed');
     })
     .subscribe(wallet => {
       console.log(wallet);
-      this.router.navigate(['/home'], { replaceUrl: true });
+      // this.router.navigate(['/home'], { replaceUrl: true });
     }, error => {
       console.log(error);
     });
@@ -104,6 +115,17 @@ export class WalletOpenComponent implements OnInit {
       this.model = this.walletService.wallet;
       console.log('Get app settings triggered');
     }
+  }
+
+  getBlockHights() {
+    Observable.timer(0, 10000)
+    .takeWhile(() => this.wallet_height != this.daemon_height)
+    .subscribe(() => {
+      this.walletService.getWalletHeight()
+      .map((res) => { this.wallet_height = res.height})
+      .subscribe()
+      console.log(this.wallet_height, this.daemon_height)
+    })
   }
 
   ngOnInit() {

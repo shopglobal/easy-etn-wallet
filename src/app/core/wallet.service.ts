@@ -24,7 +24,6 @@ export class WalletService {
     this._walletSettings = JSON.parse(sessionStorage.getItem(walletKey) || localStorage.getItem(walletKey));
   }
 
-
    /**
    * Gets the wallet settings.
    * @return {Wallet} wallet settings null
@@ -69,6 +68,10 @@ export class WalletService {
     .map((res) => res, console.log())
     .subscribe(console.log);
     console.log('Wallet Closed');
+  }
+
+  getWalletHeight() {
+    return this.mywallet.getheight()
   }
 
 }
