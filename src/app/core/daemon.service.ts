@@ -1,15 +1,16 @@
-
 import { Injectable } from '@angular/core';
-import { MoneroDaemon } from "./monerod.service";
+import { Observable } from 'rxjs/Observable';
+import { makeUrl, Daemon } from './monerod/monerod';
 
 @Injectable()
 export class DaemonService {
 
-  private monerod = new MoneroDaemon("66.175.216.72", 26968);
+  // Daemon Connect
+  url = makeUrl('http', '66.175.216.72', '26968', 'getheight');
+  mydaemon = Daemon(this.url);
 
   getDaemonHeight() {
-    this.monerod.getHeight();
-    console.log(this.monerod.getHeight());
+    return this.mydaemon.getheight()
   }
 
 }

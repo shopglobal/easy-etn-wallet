@@ -1,5 +1,5 @@
 // Angular Core
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { trigger, style, animate, transition } from '@angular/animations';
 import { Router } from '@angular/router';
@@ -32,9 +32,14 @@ export class WalletOpenComponent implements OnInit {
   wallet_open: boolean;
   wallet_height: number = 0;
   daemon_height: number = 0;
+  progressType: string = 'warning';
+  
+  // States
+  isLoading = false;
+  isAlive: boolean = true;
+  isSynced: boolean = false;
 
   // Form Config
-  isLoading = false; // States
   form = new FormGroup({});
   model = {};
   fields: FormlyFieldConfig[] = [
@@ -106,7 +111,6 @@ export class WalletOpenComponent implements OnInit {
     })
     .subscribe(wallet => {
       console.log(wallet);
-      // this.router.navigate(['/home'], { replaceUrl: true });
     }, error => {
       console.log(error);
     });
@@ -120,21 +124,28 @@ export class WalletOpenComponent implements OnInit {
   }
 
   getBlockHights() {
-    Observable.timer(0, 10000)
-    .takeWhile(() => this.wallet_height <= this.daemon_height)
+    Observable.timer(0, 8000)
+    .takeWhile(() => this.isAlive || this.isSynced)
     .subscribe(() => {
+      if (this.wallet_height = this.daemon_height) {
+        this.isSynced = true;
+        this.progressType = 'success';
+      }
       this.walletService.getWalletHeight()
-      .map((res) => { this.wallet_height = res.height})
+      .map((res) => { this.wallet_height = res.height })
       .subscribe();
-      this.daemonService.getDaemonHeight();
-      // .map((response) => console.log(response))
-      // //.map((response) => { this.daemon_height = response.height})
-      // .subscribe();
+      this.daemonService.getDaemonHeight()
+      .map((response) => { this.daemon_height = response.height})
+      .subscribe();
     })
   }
 
   ngOnInit() {
     this.getWallet();
+  }
+
+  ngOnDestroy(){
+    this.isAlive = false; // switches your Observable off
   }
 
 }
