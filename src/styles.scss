@@ -82,13 +82,13 @@ html {
 
 @include media-breakpoint-up(md) {
   html {
-    font-size: 1rem;
+    font-size: .98rem;
   }
 }
 
 @include media-breakpoint-up(lg) {
   html {
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
 }
 

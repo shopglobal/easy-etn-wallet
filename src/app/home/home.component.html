@@ -72,7 +72,7 @@
             Recent Transactions
             <a class="btn btn-sm btn-success float-right mt-2" routerLink="/transactions" role="button">Show All</a>
           </h2>
-          <div class="list-group" *ngFor="let key of transactionsIn" id="items">
+          <div class="list-group" *ngFor="let key of transactions" id="items">
             <a href="#" class="list-group-item list-group-item-action flex-column" [class.sent]="key.type == 'out'" [class.received]="key.type == 'in'">
               <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1">

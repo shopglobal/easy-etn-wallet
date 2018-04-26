@@ -96,37 +96,37 @@ export class WalletOpenComponent implements OnInit {
     this.walletService.saveWallet(model)
     .finally(() => {
       this.openWallet();
-      this.getBlockHights();
       console.log('Form submit completed');
     })
     .subscribe(wallet => {
       console.log(wallet);
     }, error => {
       console.log(error);
-    });
+    })
   }
 
-  getWallet() {
+  getCachedWallet() {
     if (this.walletService.wallet) {
       this.model = this.walletService.wallet;
-      console.log('Get app settings triggered');
+      console.log('Get stored wallet settings');
     }
   }
 
   openWallet() {
     this.walletService.openWallet()
-    .subscribe(response => {
+    .subscribe(() => {
       this.wallet_open = true;
       this.isLoading = false;
+      this.getBlockHights();
     }, error => {
       this.wallet_open = false;
       this.isLoading = true;
-    });
+    })
   }
 
   getBlockHights() {
-    Observable.timer(0, 8000)
-    .takeWhile(() => this.isAlive || this.isSynced)
+    Observable.timer(0, 10000)
+    .takeWhile(() => this.isAlive)
     .subscribe(() => {
       this.daemonService.getDaemonHeight()
       .map((response) => { this.daemon_height = response.height })
@@ -140,7 +140,7 @@ export class WalletOpenComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getWallet();
+    this.getCachedWallet();
   }
 
   ngOnDestroy(){

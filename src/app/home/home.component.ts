@@ -123,71 +123,61 @@ export class HomeComponent implements OnInit, OnDestroy {
   getWalletTransactions() {
     // Get Wallet Address
     this.isLoading = true;
-    this.wallet.get_transfers(
-      {
-        "in": true,
-        "out": true,
-        "failed": true,
-        "pending": true,
-        "pool":true
+    this.wallet.get_transfers({
+      "in": true,
+      "out": true,
+      "failed": true,
+      "pending": true,
+      "pool":true
+    })
+    .map((response) => {
+      // Add new property for each type of transaction
+      if (response.in !== undefined) {
+        this.transactionsIn = response.in;
+        this.transactionsIn.forEach(function(obj) { obj.status = "Completed"; });
       }
-    )
-    .map(
-      (response) => 
-        {
-          // Add new property for each type of transaction
-          if (response.in !== undefined) {
-            this.transactionsIn = response.in;
-            this.transactionsIn.forEach(function(obj) { obj.status = "Completed"; });
-          }
-          if (response.out !== undefined) {
-            this.transactionsOut = response.out;
-            this.transactionsOut.forEach(function(obj) { obj.status = "Completed"; });
-          }
-          if (response.pending !== undefined) {
-            this.transactionsPending = response.pending;
-            this.transactionsPending.forEach(function(obj) { obj.status = "Pending"; });
-          }
-          if (response.failed !== undefined) {
-            this.transactionsFailed = response.failed;
-            this.transactionsFailed.forEach(function(obj) { obj.status = "Failed"; });
-          }
-          if (response.pool !== undefined) {
-            this.transactionsPool = response.pool;
-            this.transactionsPool.forEach(function(obj) { obj.status = "Pool"; });
-          }
-        }
-    )
-    .subscribe(
-      {
-        next: (response) => {
-          // Merge transactions if they exsit
-          if (this.transactionsIn !== undefined) {
-            Array.prototype.push.apply(this.transactions, this.transactionsIn);
-          }
-          if (this.transactionsOut !== undefined) {
-            Array.prototype.push.apply(this.transactions, this.transactionsOut);
-          }
-          if (this.transactionsPending !== undefined) {
-            Array.prototype.push.apply(this.transactions, this.transactionsPending);
-          }
-          if (this.transactionsFailed !== undefined) {
-            Array.prototype.push.apply(this.transactions, this.transactionsFailed);
-          }
-          if (this.transactionsPool !== undefined) {
-            Array.prototype.push.apply(this.transactions, this.transactionsPool);
-          }
-          this.isLoading = false;
-          console.log(this.transactions);
-        },
-        error: (error) => {
-          this.transactions;
-          this.isLoading = false;
-          console.log(this.transactions);
-          console.log('Error while fetching wallet transactions');
-        }
+      if (response.out !== undefined) {
+        this.transactionsOut = response.out;
+        this.transactionsOut.forEach(function(obj) { obj.status = "Completed"; });
       }
-    )
+      if (response.pending !== undefined) {
+        this.transactionsPending = response.pending;
+        this.transactionsPending.forEach(function(obj) { obj.status = "Pending"; });
+      }
+      if (response.failed !== undefined) {
+        this.transactionsFailed = response.failed;
+        this.transactionsFailed.forEach(function(obj) { obj.status = "Failed"; });
+      }
+      if (response.pool !== undefined) {
+        this.transactionsPool = response.pool;
+        this.transactionsPool.forEach(function(obj) { obj.status = "Pool"; });
+      }
+    })
+    .subscribe(() => {
+      this.isLoading = false;
+      this.transactions = [];
+      // Merge transactions if they exsit
+      if (this.transactionsIn !== undefined) {
+        Array.prototype.push.apply(this.transactions, this.transactionsIn);
+      }
+      if (this.transactionsOut !== undefined) {
+        Array.prototype.push.apply(this.transactions, this.transactionsOut);
+      }
+      if (this.transactionsPending !== undefined) {
+        Array.prototype.push.apply(this.transactions, this.transactionsPending);
+      }
+      if (this.transactionsFailed !== undefined) {
+        Array.prototype.push.apply(this.transactions, this.transactionsFailed);
+      }
+      if (this.transactionsPool !== undefined) {
+        Array.prototype.push.apply(this.transactions, this.transactionsPool);
+      }
+      console.log(this.transactions);
+    }, error => {
+      this.isLoading = false;
+      this.transactions = [];
+      console.log('Error while fetching wallet transactions');
+    })
   }
 
   copyAddress(address: string){
@@ -222,6 +212,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(){
     this.isAlive = false; // switches your Observable off
+    console.log(this.settingsService.application.interval);
   }
 
 }
