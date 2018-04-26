@@ -7,19 +7,23 @@
         <div class="d-flex justify-content-center">
 
           <!-- Form -->
-          <div class="col-4" @enterAnimation>
+          <div class="col-5" @enterAnimation>
             <div class="card">
-              <div class="card-body p-4">
-                <div class="card-title mb-4">
-                  <h4 class="text-muted">Just a few quick questions...</h4>
-                </div>
-                <form [formGroup]="form" class="my-4" (ngSubmit)="submit(model)">
+              <div class="card-header text-muted">
+                Application Settings
+              </div>
+              <div class="card-body">
+                <form [formGroup]="form" (ngSubmit)="submit(model)">
                   <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
                 </form>
-                <button class="btn btn-lg btn-success btn-block mr-2" role="button" (click)="submit(model)" [disabled]="form.invalid || isLoading">
-                  <i class="fa fa-cog fa-spin" [hidden]="!isLoading"></i>
-                  Save and continue
-                </button>
+              </div>
+              <div class="card-footer">
+                <div class="d-flex justify-content-between">
+                  <button class="btn btn-danger" role="button" routerLink="/login">Back</button>
+                  <button class="btn btn-success" role="button" (click)="submit(model)" [disabled]="form.invalid || isLoading">
+                    <i class="fa fa-cog fa-spin mr-2" [hidden]="!isLoading"></i>Continue
+                  </button>
+                </div>
               </div>
             </div>
           </div>

@@ -47,23 +47,23 @@ export class WalletOpenComponent implements OnInit {
       fieldGroupClassName: 'row',
       fieldGroup: [
         {
-          className: 'col-12',
+          className: 'col-6',
           key: 'filename',
           type: 'input',
           templateOptions: {
             type: 'text',
-            label: 'Wallet Name',
+            label: 'Wallet name',
             placeholder: 'MyWallet',
             required: true,
           },
         },
         {
-          className: 'col-12',
+          className: 'col-6',
           key: 'password',
           type: 'input',
           templateOptions: {
             type: 'password',
-            label: 'Wallet Password',
+            label: 'Wallet password',
             placeholder: 'Password1',
             required: true,
           },
@@ -73,18 +73,10 @@ export class WalletOpenComponent implements OnInit {
           key: 'language',
           type: 'select',
           templateOptions: {
-            label: 'Wallet Language',
+            label: 'Wallet language',
             options: [
               { label: 'English', value: 'English' }
             ],
-          },
-        },
-        {
-          className: 'col-12',
-          key: 'remember',
-          type: 'checkbox',
-          templateOptions: {
-            label: 'Remember Settings?',
           },
         },
       ],
@@ -92,21 +84,19 @@ export class WalletOpenComponent implements OnInit {
   ];
 
   constructor(
-    private settingsService: SettingsService,
     private router: Router,
+    private settingsService: SettingsService,
     private progressConfig: NgbProgressbarConfig,
     private walletService: WalletService,
-    private daemonService: DaemonService,
+    private daemonService: DaemonService
   ) { }
 
   submit(model) {
     this.isLoading = true;
     this.walletService.saveWallet(model)
     .finally(() => {
-      this.isLoading = false;
-      this.walletService.openWallet();
+      this.openWallet();
       this.getBlockHights();
-      this.wallet_open = true;
       console.log('Form submit completed');
     })
     .subscribe(wallet => {
@@ -123,20 +113,29 @@ export class WalletOpenComponent implements OnInit {
     }
   }
 
+  openWallet() {
+    this.walletService.openWallet()
+    .subscribe(response => {
+      this.wallet_open = true;
+      this.isLoading = false;
+    }, error => {
+      this.wallet_open = false;
+      this.isLoading = true;
+    });
+  }
+
   getBlockHights() {
     Observable.timer(0, 8000)
     .takeWhile(() => this.isAlive || this.isSynced)
     .subscribe(() => {
+      this.daemonService.getDaemonHeight()
+      .map((response) => { this.daemon_height = response.height })
+      this.walletService.getWalletHeight()
+      .map((response) => { this.wallet_height = response.height })
       if (this.wallet_height = this.daemon_height) {
         this.isSynced = true;
         this.progressType = 'success';
       }
-      this.walletService.getWalletHeight()
-      .map((res) => { this.wallet_height = res.height })
-      .subscribe();
-      this.daemonService.getDaemonHeight()
-      .map((response) => { this.daemon_height = response.height})
-      .subscribe();
     })
   }
 

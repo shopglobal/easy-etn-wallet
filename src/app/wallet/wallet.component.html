@@ -7,45 +7,36 @@
         <div class="d-flex justify-content-center">
 
           <!-- Form -->
-          <div class="col-10" @enterAnimation>
-            <div class="card base text-muted">
-              <div class="card-body p-5">
-                <div class="d-flex justify-content-start mb-4">
+          <div class="col-8" @enterAnimation>
+            <div class="card base">
+              <div class="card-body p-4">
+                <div class="d-flex justify-content-start mb-3">
                   <div class="card-title">
-                    <h1 class="text-dark">Welcome {{name}}</h1>
+                    <h2 class="text-dark">Welcome {{name}}</h2>
                     <h4 class="text-muted">Let's get you started with a wallet.</h4>
                   </div>
                 </div>
    
                   <div class="card-deck text-center">
                     <div class="card">
-                      <div class="card-header bg-light text-dark">
-                        Create
-                      </div>
                       <div class="card-body">
-                        <i class="fas fa-3x fa-plus-square my-3"></i>
-                        <p class="card-text mb-4">Need a wallet? <br /> Create a new wallet.</p>
-                        <a routerLink="/wallet-create" class="btn btn-lg btn-success btn-block">Create Wallet</a>
+                        <i class="fas fa-3x fa-plus-square text-muted mb-3"></i>
+                        <p class="card-text mb-4">Need a wallet? <br /> Create a new wallet</p>
+                        <a routerLink="/wallet-create" class="btn btn-success btn-block">Create Wallet</a>
                       </div>
                     </div>
                     <div class="card">
-                      <div class="card-header bg-light text-dark">
-                        Open
-                      </div>
                       <div class="card-body">
-                        <i class="fas fa-3x fa-folder-open my-3"></i>
-                        <p class="card-text mb-4">Got a wallet? <br /> Open existing wallet.</p>
-                        <a routerLink="/wallet-open" class="btn btn-lg btn-info btn-block">Open Wallet</a>
+                        <i class="fas fa-3x fa-folder-open text-muted mb-3"></i>
+                        <p class="card-text mb-4">Got a wallet? <br /> Open existing wallet</p>
+                        <a routerLink="/wallet-open" class="btn btn-info btn-block">Open Wallet</a>
                       </div>
                     </div>
                     <div class="card">
-                      <div class="card-header bg-light text-dark">
-                        Restore
-                      </div>
                       <div class="card-body">
-                        <i class="fas fa-3x fa-save my-3"></i>
-                        <p class="card-text mb-4">Lost a wallet? <br />Restore existing wallet.</p>
-                        <a routerLink="/wallet-restore" class="btn btn-lg btn-secondary btn-block">Restore Wallet</a>
+                        <i class="fas fa-3x fa-save text-muted mb-3"></i>
+                        <p class="card-text mb-4">Lost a wallet? <br />Restore your wallet</p>
+                        <a routerLink="/wallet-restore" class="btn btn-secondary btn-block">Restore Wallet</a>
                       </div>
                     </div>
                   </div>

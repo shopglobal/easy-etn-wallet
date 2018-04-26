@@ -19,10 +19,6 @@ import { WalletService } from '../../wallet.service';
 
 export class HeaderComponent implements OnInit, OnDestroy {
 
-  // Wallet Connect
-  url = makeUrl('http', '66.175.216.72', '80', 'json_rpc');
-  wallet = Wallet(this.url);
-
   // States
   isAlive: boolean = true;
   isOffline: boolean = true;
@@ -31,13 +27,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
     public router: Router,
     private route: ActivatedRoute,
     private authenticationService: AuthenticationService,
-    public config: NgbDropdownConfig,
+    public dropdownConfig: NgbDropdownConfig,
     public settingsService: SettingsService,
     public walletServices: WalletService
   ) { 
     // customize default values of dropdowns used by this component tree
-    config.placement = 'bottom-right';
-    config.autoClose = true;
+    dropdownConfig.placement = 'bottom-right';
+    dropdownConfig.autoClose = true;
   }
 
   logout() {
@@ -47,20 +43,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   getWalletAddress() {
-    this.wallet.getaddress()
-    .map((res) => res.address)
-    .subscribe(
-      {
-        next: (response) => {
-          this.isOffline = false;
-          //this.playOnlineAudio();
-        },
-        error: (error) => {
-          this.isOffline = true;
-          //this.playOfflineAudio();
-        }
-      }
-    )
+    this.walletServices.getAddress()
+    .subscribe(() => {
+      this.isOffline = false;
+    }, error => {
+      this.isOffline = true;
+    })
   }
 
   playOfflineAudio() {
@@ -77,21 +65,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
     audio.play();
   }
 
-  getSettings() {
-    console.log('Get app settings triggered');
-  }
-
   ngOnInit() {
-    // // Subscribe to routes
-    this.route.params.subscribe( params => { const key = <string>params['key']; } );
-    
-    // // Check wallet status
+    // Subscribe to routes
+    this.route.params.subscribe( params => { const key = <string>params['key'] } );
+
+    // Check wallet status
     Observable.timer(0, this.settingsService.application.interval)
     .takeWhile(() => this.isAlive)
-    .subscribe(() => {
-      this.getWalletAddress();
-      }
-    );
+    .subscribe(() => this.getWalletAddress())
   }
 
   ngOnDestroy(){

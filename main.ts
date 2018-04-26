@@ -44,7 +44,7 @@ function createWindow() {
   }
 
   // Run with devtools enabled
-  // win.webContents.openDevTools();
+  win.webContents.openDevTools();
 
   // Open all links in external browser
   win.webContents.on('new-window', function(e, url) {

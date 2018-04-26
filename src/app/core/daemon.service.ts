@@ -10,7 +10,7 @@ export class DaemonService {
   mydaemon = Daemon(this.url);
 
   getDaemonHeight() {
-    return this.mydaemon.getheight()
+    return this.mydaemon.getheight();
   }
 
 }

@@ -33,23 +33,23 @@ export class WalletCreateComponent implements OnInit {
       fieldGroupClassName: 'row',
       fieldGroup: [
         {
-          className: 'col-12',
+          className: 'col-6',
           key: 'filename',
           type: 'input',
           templateOptions: {
             type: 'text',
-            label: 'Wallet Name',
+            label: 'Wallet name',
             placeholder: 'MyWallet',
             required: true,
           },
         },
         {
-          className: 'col-12',
+          className: 'col-6',
           key: 'password',
           type: 'input',
           templateOptions: {
             type: 'password',
-            label: 'Wallet Password',
+            label: 'Wallet password',
             placeholder: 'Password1',
             required: true,
           },
@@ -59,18 +59,10 @@ export class WalletCreateComponent implements OnInit {
           key: 'language',
           type: 'select',
           templateOptions: {
-            label: 'Wallet Language',
+            label: 'Wallet language',
             options: [
               { label: 'English', value: 'English' }
             ],
-          },
-        },
-        {
-          className: 'col-12',
-          key: 'remember',
-          type: 'checkbox',
-          templateOptions: {
-            label: 'Remember Settings?',
           },
         },
       ],

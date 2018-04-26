@@ -37,41 +37,36 @@ export class WalletService {
    * The wallet settings may be persisted across sessions by setting the `remember` parameter to true.
    * Otherwise, the wallet settings are only persisted for the current session.
    * @param {Wallet=} wallet The wallet settings.
-   * @param {boolean=} remember True to remember wallet settings across sessions.
    */
-  saveWallet(wallet?: Wallet, remember?: boolean) : Observable<Wallet> {
+  saveWallet(wallet?: Wallet) : Observable<Wallet> {
     this._walletSettings = wallet;
     if (wallet) {
-      const storage = remember ? localStorage : sessionStorage;
+      const storage = sessionStorage;
       storage.setItem(walletKey, JSON.stringify(wallet));
     } else {
       sessionStorage.removeItem(walletKey);
-      localStorage.removeItem(walletKey);
     }
     return Observable.of(wallet);
   }
 
   createWallet() {
-    this.mywallet.create_wallet(this._walletSettings)
-    .map((res) => res, console.log())
-    .subscribe(console.log);
+    return this.mywallet.create_wallet(this._walletSettings)
   }
 
   openWallet() {
-    this.mywallet.open_wallet(this._walletSettings)
-    .map((res) => res, console.log())
-    .subscribe(console.log);
+    return this.mywallet.open_wallet(this._walletSettings)
   }
 
   closeWallet() {
-    this.mywallet.stop_wallet()
-    .map((res) => res, console.log())
-    .subscribe(console.log);
-    console.log('Wallet Closed');
+    return this.mywallet.stop_wallet()
   }
 
   getWalletHeight() {
     return this.mywallet.getheight()
+  }
+
+  getAddress() {
+    return this.mywallet.getaddress()
   }
 
 }

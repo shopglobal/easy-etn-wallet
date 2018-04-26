@@ -50,28 +50,28 @@ export class SettingsComponent implements OnInit {
           },
         },
         {
-          className: "col-12",
+          className: "col-6",
           key: "interval",
           type: "select",
           templateOptions: {
-            label: "Wallet refresh speed?",
+            label: "Refresh speed?",
             options: [
-              { label: "As fast as possible", value: "20000" },
-              { label: "Not too fast, not to slow", value: "60000" },
-              { label: "Slightly faster then a turtle", value: "120000" },
+              { label: "Fast (20 seconds)", value: "20000" },
+              { label: "Normal (60 seconds)", value: "60000" },
+              { label: "Slow (120 seconds)", value: "120000" },
             ],
             required: true,
           },
         },
         {
-          className: "col-12",
+          className: "col-6",
           key: "sounds",
           type: "select",
           templateOptions: {
-            label: "Do you like sounds?",
+            label: "Enable sounds?",
             options: [
-              { label: "Hate them!", value: "true" },
-              { label: "Love them!", value: "false" },
+              { label: "Sure", value: "true" },
+              { label: "No Thanks", value: "false" },
             ],
             required: true,
           },
